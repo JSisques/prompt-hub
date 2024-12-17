@@ -1,0 +1,75 @@
+// Este es tu archivo de esquema Prisma
+// aprende más en la documentación: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  prompts Prompt[]
+  reviews Review[]
+
+  @@map("users")
+  @@index([email])
+}
+
+model Prompt {
+  id         String   @id @default(cuid()) 
+  userId     String   @map("user_id")
+  categoryId String   @map("category_id")
+  title      String   @db.VarChar(255)
+  content    String   @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  reviews Review[]
+
+  user User @relation(fields: [userId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@map("prompts")
+  @@index([userId])
+  @@index([categoryId])
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(100)
+  description String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at") 
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  prompts Prompt[]
+
+  @@map("categories")
+  @@index([name])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  promptId  String   @map("prompt_id")
+  userId    String   @map("user_id")
+  rating    Int      @db.SmallInt
+  comment   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  prompt Prompt @relation(fields: [promptId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("reviews")
+  @@index([promptId])
+  @@index([userId])
+}
