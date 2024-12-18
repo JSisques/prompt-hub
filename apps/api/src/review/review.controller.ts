@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Put, Delete, Body } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { Review } from '@prisma/client';
-import { ReviewDto } from 'src/common/dto/review.dto';
+import { ReviewDto } from './dto/review.dto';
 
 @Controller('review')
 export class ReviewController {

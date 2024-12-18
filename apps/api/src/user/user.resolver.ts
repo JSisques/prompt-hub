@@ -1,8 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { UserDto } from '../common/dto/user/user.dto';
-import { CreateUserDto } from '../common/dto/user/create-user.dto';
+import { UserDto } from './dto/user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Resolver()
 export class UserResolver {
@@ -18,13 +19,18 @@ export class UserResolver {
     return this.userService.getUser(id);
   }
 
-  @Mutation(() => CreateUserDto)
+  @Query(() => UserDto)
+  getUserByEmail(@Args('email') email: string): Promise<User> {
+    return this.userService.getUserByEmail(email);
+  }
+
+  @Mutation(() => UserDto)
   createUser(@Args('user') user: CreateUserDto): Promise<User> {
     return this.userService.createUser(user);
   }
 
   @Mutation(() => UserDto)
-  updateUser(@Args('id') id: string, @Args('user') user: UserDto): Promise<User> {
+  updateUser(@Args('id') id: string, @Args('user') user: UpdateUserDto): Promise<User> {
     return this.userService.updateUser(id, user);
   }
 

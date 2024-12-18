@@ -3,7 +3,7 @@ import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-vali
 
 @ObjectType('User')
 @InputType('UserInput')
-export abstract class UserDto {
+export class UserDto {
   @Field({ nullable: true })
   @IsOptional()
   @IsString()

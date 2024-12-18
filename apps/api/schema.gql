@@ -1,0 +1,67 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  email: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createReview(review: ReviewInput!): Review!
+  createUser(user: CreateUserInput!): User!
+  deleteReview(id: String!): Review!
+  deleteUser(id: String!): User!
+  updateReview(id: String!, review: ReviewInput!): Review!
+  updateUser(id: String!, user: UpdateUserInput!): User!
+}
+
+type Query {
+  getReview(id: String!): Review!
+  getReviews: [Review!]!
+  getUser(id: String!): User!
+  getUserByEmail(email: String!): User!
+  getUsers: [User!]!
+}
+
+type Review {
+  comment: String!
+  promptId: String!
+  rating: Float!
+  userId: String!
+}
+
+input ReviewInput {
+  comment: String!
+  promptId: String!
+  rating: Float!
+  userId: String!
+}
+
+input UpdateUserInput {
+  active: Boolean
+  email: String!
+}
+
+type User {
+  active: Boolean
+  createdAt: DateTime
+  email: String!
+  id: String
+  password: String!
+  updatedAt: DateTime
+}
+
+input UserInput {
+  active: Boolean = true
+  createdAt: DateTime
+  email: String!
+  id: String
+  password: String!
+  updatedAt: DateTime
+}

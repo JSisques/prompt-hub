@@ -1,7 +1,7 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { ReviewService } from './review.service';
 import { Review } from '@prisma/client';
-import { ReviewDto } from '../common/dto/review.dto';
+import { ReviewDto } from './dto/review.dto';
 
 @Resolver()
 export class ReviewResolver {
