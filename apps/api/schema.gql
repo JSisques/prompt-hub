@@ -17,6 +17,9 @@ type Mutation {
   createUser(user: CreateUserInput!): User!
   deleteReview(id: String!): Review!
   deleteUser(id: String!): User!
+  login(email: String!, password: String!): User!
+  logout(id: String!): User!
+  register(user: CreateUserInput!): User!
   updateReview(id: String!, review: ReviewInput!): Review!
   updateUser(id: String!, user: UpdateUserInput!): User!
 }

@@ -22,6 +22,8 @@ import { join } from 'path';
 import { CryptoModule } from './crypto/crypto.module';
 import { CryptoService } from './crypto/crypto.service';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { SessionModule } from './session/session.module';
 
 @Module({
   imports: [
@@ -40,6 +42,8 @@ import { ConfigModule } from '@nestjs/config';
     ReviewModule,
     UserModule,
     CryptoModule,
+    AuthModule,
+    SessionModule,
   ],
   controllers: [AppController, AuthController, PromptController, UserController, CategoryController, ReviewController],
   providers: [AppService, PrismaService, CategoryService, PromptService, UserService, ReviewService, CryptoService],

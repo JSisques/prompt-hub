@@ -20,6 +20,7 @@ model User {
 
   prompts Prompt[]
   reviews Review[]
+  sessions Session[]
 
   @@map("users")
   @@index([email])
@@ -71,5 +72,19 @@ model Review {
 
   @@map("reviews")
   @@index([promptId])
+  @@index([userId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  loginAt   DateTime @default(now()) @map("login_at")
+  logoutAt  DateTime @map("logout_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
   @@index([userId])
 }
