@@ -8,24 +8,14 @@ export class SessionService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createSession(userId: string): Promise<Session> {
-    return this.prisma.session.create({
-      data: {
-        userId: userId,
-        loginAt: new Date(),
-        logoutAt: null,
-      },
-    });
+    return this.prisma.session.create({ data: { userId } });
   }
 
   async getSessionsByUserId(userId: string): Promise<Session[]> {
-    return this.prisma.session.findMany({
-      where: { userId },
-    });
+    return this.prisma.session.findMany({ where: { userId } });
   }
 
   async deleteSession(id: string): Promise<Session> {
-    return this.prisma.session.delete({
-      where: { id },
-    });
+    return this.prisma.session.delete({ where: { id } });
   }
 }

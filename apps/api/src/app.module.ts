@@ -3,14 +3,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthController } from './auth/auth.controller';
-import { PromptController } from './prompt/prompt.controller';
 import { CategoryModule } from './category/category.module';
 import { PromptModule } from './prompt/prompt.module';
 import { PromptService } from './prompt/prompt.service';
-import { UserController } from './user/user.controller';
-import { CategoryController } from './category/category.controller';
-import { ReviewController } from './review/review.controller';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { CategoryService } from './category/category.service';
@@ -24,6 +19,7 @@ import { CryptoService } from './crypto/crypto.service';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { SessionModule } from './session/session.module';
+import { LlmModule } from './llm/llm.module';
 
 @Module({
   imports: [
@@ -44,8 +40,9 @@ import { SessionModule } from './session/session.module';
     CryptoModule,
     AuthModule,
     SessionModule,
+    LlmModule,
   ],
-  controllers: [AppController, AuthController, PromptController, UserController, CategoryController, ReviewController],
+  controllers: [AppController],
   providers: [AppService, PrismaService, CategoryService, PromptService, UserService, ReviewService, CryptoService],
 })
 export class AppModule {}

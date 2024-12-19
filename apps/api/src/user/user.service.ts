@@ -29,6 +29,7 @@ export class UserService {
 
   async createUser(user: CreateUserDto): Promise<User> {
     this.logger.log(`Entering createUser(user: ${JSON.stringify(user)})`);
+
     try {
       user.password = await this.cryptoService.hashPassword(user.password);
       return this.prisma.user.create({ data: user });

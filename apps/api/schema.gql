@@ -23,6 +23,19 @@ input CreateCategoryInput {
   name: String!
 }
 
+input CreateLlmInput {
+  description: String!
+  name: String!
+}
+
+input CreatePromptInput {
+  categoryId: String!
+  content: String!
+  llmId: String!
+  title: String!
+  userId: String!
+}
+
 input CreateUserInput {
   email: String!
   password: String!
@@ -33,26 +46,77 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Llm {
+  createdAt: DateTime!
+  description: String!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
+input LlmInput {
+  createdAt: DateTime!
+  description: String!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
 type Mutation {
   createCategory(data: CreateCategoryInput!): Category!
+  createLlm(llm: CreateLlmInput!): Llm!
+  createPrompt(prompt: CreatePromptInput!): Prompt!
   createReview(review: ReviewInput!): Review!
+  createSession(userId: String!): Session!
   createUser(user: CreateUserInput!): User!
   deleteCategory(id: String!): Category!
+  deleteLlm(id: String!): Llm!
+  deletePrompt(id: String!): Prompt!
   deleteReview(id: String!): Review!
+  deleteSession(id: String!): Session!
   deleteUser(id: String!): User!
   login(email: String!, password: String!): User!
   logout(id: String!): User!
   register(user: CreateUserInput!): User!
   updateCategory(data: UpdateCategoryInput!, id: String!): Category!
+  updateLlm(id: String!, llm: UpdateLlmInput!): Llm!
+  updatePrompt(id: String!, prompt: UpdatePromptInput!): Prompt!
   updateReview(id: String!, review: ReviewInput!): Review!
   updateUser(id: String!, user: UpdateUserInput!): User!
+}
+
+type Prompt {
+  categoryId: String!
+  content: String!
+  createdAt: DateTime!
+  id: String!
+  llmId: String!
+  title: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+input PromptInput {
+  categoryId: String!
+  content: String!
+  createdAt: DateTime!
+  id: String!
+  llmId: String!
+  title: String!
+  updatedAt: DateTime!
+  userId: String!
 }
 
 type Query {
   getCategories: [Category!]!
   getCategoryById(id: String!): Category!
+  getLlmById(id: String!): Llm!
+  getLlms: [Llm!]!
+  getPromptById(id: String!): Prompt!
+  getPrompts: [Prompt!]!
   getReview(id: String!): Review!
   getReviews: [Review!]!
+  getSessionsByUserId(userId: String!): [Session!]!
   getUser(id: String!): User!
   getUserByEmail(email: String!): User!
   getUsers: [User!]!
@@ -72,9 +136,40 @@ input ReviewInput {
   userId: String!
 }
 
+type Session {
+  createdAt: DateTime
+  id: String
+  loginAt: DateTime
+  updatedAt: DateTime
+  user: User!
+  userId: String!
+}
+
+input SessionInput {
+  createdAt: DateTime
+  id: String
+  loginAt: DateTime
+  updatedAt: DateTime
+  user: UserInput!
+  userId: String!
+}
+
 input UpdateCategoryInput {
   description: String!
   name: String!
+}
+
+input UpdateLlmInput {
+  description: String!
+  name: String!
+}
+
+input UpdatePromptInput {
+  categoryId: String!
+  content: String!
+  llmId: String!
+  title: String!
+  userId: String!
 }
 
 input UpdateUserInput {

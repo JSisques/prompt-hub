@@ -1,5 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { UserDto } from 'src/user/dto/user.dto';
 
 @ObjectType('Session')
 @InputType('SessionInput')
@@ -14,18 +15,9 @@ export class SessionDto {
   @IsString()
   userId: string;
 
-  @Field()
-  @IsNotEmpty()
-  @IsString()
-  token: string;
-
   @Field({ nullable: true })
   @IsOptional()
   loginAt?: Date;
-
-  @Field({ nullable: true })
-  @IsOptional()
-  logoutAt?: Date;
 
   @Field({ nullable: true })
   @IsOptional()
@@ -34,4 +26,9 @@ export class SessionDto {
   @Field({ nullable: true })
   @IsOptional()
   updatedAt?: Date;
+
+  @Field(() => UserDto)
+  @IsNotEmpty()
+  @IsString()
+  user: UserDto;
 }

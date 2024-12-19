@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { PromptController } from './prompt.controller';
 import { PromptService } from './prompt.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { PromptResolver } from './prompt.resolver';
 
-@Module({})
-export class PromptModule {
-  imports: [PrismaModule];
-  controllers: [PromptController];
-  providers: [PromptService];
-}
+@Module({
+  imports: [PrismaModule],
+  providers: [PromptResolver, PromptService],
+  exports: [PromptService],
+})
+export class PromptModule {}

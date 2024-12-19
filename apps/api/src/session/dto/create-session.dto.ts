@@ -8,14 +8,4 @@ export class CreateSessionDto {
   @IsNotEmpty()
   @IsString()
   userId: string;
-
-  @Field({ nullable: true })
-  @IsNotEmpty()
-  @IsDate()
-  loginAt: Date;
-
-  @Field({ nullable: true })
-  @IsOptional()
-  @IsDate()
-  logoutAt?: Date;
 }

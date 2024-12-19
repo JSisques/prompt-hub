@@ -4,27 +4,20 @@ import { UserService } from 'src/user/user.service';
 import { UserDto } from 'src/user/dto/user.dto';
 import { User } from '@prisma/client';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { AuthService } from './auth.service';
 
 @Resolver()
 export class AuthResolver {
-  constructor(
-    private readonly userService: UserService,
-    private readonly cryptoService: CryptoService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => UserDto)
   async login(@Args('email') email: string, @Args('password') password: string): Promise<User> {
-    const user = await this.userService.getUserByEmail(email);
-    const isPasswordValid = await this.cryptoService.comparePassword(password, user.password);
-    if (!isPasswordValid) {
-      throw new Error('Invalid password');
-    }
-    return user;
+    return this.authService.login(email, password);
   }
 
   @Mutation(() => UserDto)
   async register(@Args('user') user: CreateUserDto): Promise<User> {
-    return this.userService.createUser(user);
+    return this.authService.register(user);
   }
 
   @Mutation(() => UserDto)

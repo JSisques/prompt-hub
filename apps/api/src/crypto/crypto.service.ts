@@ -10,6 +10,6 @@ export class CryptoService {
   }
 
   async comparePassword(password: string, hashedPassword: string): Promise<boolean> {
-    return bcrypt.compare(password, hashedPassword);
+    return bcrypt.compare(await this.hashPassword(password), hashedPassword);
   }
 }

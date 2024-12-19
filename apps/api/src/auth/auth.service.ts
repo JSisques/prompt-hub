@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { CryptoService } from 'src/crypto/crypto.service';
 import { User } from '@prisma/client';
@@ -8,13 +8,19 @@ import { SessionService } from 'src/session/session.service';
 
 @Injectable()
 export class AuthService {
+  private logger: Logger;
+
   constructor(
     private readonly userService: UserService,
     private readonly cryptoService: CryptoService,
     private readonly sessionService: SessionService,
-  ) {}
+  ) {
+    this.logger = new Logger('AuthService');
+  }
 
   async login(email: string, password: string): Promise<User> {
+    this.logger.log(`Entering login(email: ${email})`);
+
     const user = await this.userService.getUserByEmail(email);
     const isPasswordValid = await this.cryptoService.comparePassword(password, user.password);
 
