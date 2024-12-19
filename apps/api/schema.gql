@@ -2,6 +2,27 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Category {
+  createdAt: DateTime!
+  description: String!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
+input CategoryInput {
+  createdAt: DateTime!
+  description: String!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
+input CreateCategoryInput {
+  description: String!
+  name: String!
+}
+
 input CreateUserInput {
   email: String!
   password: String!
@@ -13,18 +34,23 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
+  createCategory(data: CreateCategoryInput!): Category!
   createReview(review: ReviewInput!): Review!
   createUser(user: CreateUserInput!): User!
+  deleteCategory(id: String!): Category!
   deleteReview(id: String!): Review!
   deleteUser(id: String!): User!
   login(email: String!, password: String!): User!
   logout(id: String!): User!
   register(user: CreateUserInput!): User!
+  updateCategory(data: UpdateCategoryInput!, id: String!): Category!
   updateReview(id: String!, review: ReviewInput!): Review!
   updateUser(id: String!, user: UpdateUserInput!): User!
 }
 
 type Query {
+  getCategories: [Category!]!
+  getCategoryById(id: String!): Category!
   getReview(id: String!): Review!
   getReviews: [Review!]!
   getUser(id: String!): User!
@@ -44,6 +70,11 @@ input ReviewInput {
   promptId: String!
   rating: Float!
   userId: String!
+}
+
+input UpdateCategoryInput {
+  description: String!
+  name: String!
 }
 
 input UpdateUserInput {

@@ -32,6 +32,7 @@ model Prompt {
   categoryId String   @map("category_id")
   title      String   @db.VarChar(255)
   content    String   @db.Text
+  llmId      String   @map("llm_id")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
@@ -39,10 +40,12 @@ model Prompt {
 
   user User @relation(fields: [userId], references: [id])
   category Category @relation(fields: [categoryId], references: [id])
+  llm Llm @relation(fields: [llmId], references: [id])
 
   @@map("prompts")
   @@index([userId])
   @@index([categoryId])
+  @@index([llmId])
 }
 
 model Category {
@@ -56,6 +59,16 @@ model Category {
 
   @@map("categories")
   @@index([name])
+}
+
+model Llm {
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(100)
+  description String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at") 
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  prompts Prompt[]
 }
 
 model Review {

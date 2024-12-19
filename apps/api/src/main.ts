@@ -1,23 +1,20 @@
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from '@nestjs/graphql';
-import { printSchema } from 'graphql';
-import * as fs from 'fs';
-import { UserResolver } from './user/user.resolver';
-import { ReviewResolver } from './review/review.resolver';
 
 async function bootstrap() {
+  const logger = new Logger('Main');
   const app = await NestFactory.create(AppModule);
 
-  //const gqlSchemaFactory = app.get(GraphQLSchemaFactory);
-  //const schema = await gqlSchemaFactory.create([UserResolver, ReviewResolver]);
-
-  //fs.writeFileSync('./schema.gql', printSchema(schema));
-
-  app.useGlobalPipes(new ValidationPipe());
+  // Configuración global
   app.enableCors();
   app.setGlobalPrefix('api/v1');
+  app.useGlobalPipes(new ValidationPipe());
+
+  // Iniciar servidor
   await app.listen(process.env.API_PORT ?? 3000);
+  const appUrl = await app.getUrl();
+  logger.log(`🚀 Server ready at ${appUrl}`);
 }
+
 bootstrap();
