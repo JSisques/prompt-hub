@@ -7,6 +7,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["src"],
+  "include": ["components/**/*.ts", "components/**/*.tsx", "lib/**/*.ts", "hooks/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
