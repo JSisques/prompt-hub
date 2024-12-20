@@ -10,7 +10,7 @@ import { UpdateLlmDto } from './dto/update-llm.dto';
 export class LlmResolver {
   private logger: Logger;
   constructor(private readonly llmService: LlmService) {
-    this.logger = new Logger('LlmResolver');
+    this.logger = new Logger(LlmResolver.name);
   }
 
   @Query(() => [LlmDto])

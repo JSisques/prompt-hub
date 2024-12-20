@@ -11,7 +11,7 @@ export class CategoryResolver {
   private logger: Logger;
 
   constructor(private readonly categoryService: CategoryService) {
-    this.logger = new Logger('CategoryResolver');
+    this.logger = new Logger(CategoryResolver.name);
   }
 
   @Query(() => [CategoryDto])

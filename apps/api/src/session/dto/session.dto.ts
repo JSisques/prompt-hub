@@ -26,9 +26,4 @@ export class SessionDto {
   @Field({ nullable: true })
   @IsOptional()
   updatedAt?: Date;
-
-  @Field(() => UserDto)
-  @IsNotEmpty()
-  @IsString()
-  user: UserDto;
 }

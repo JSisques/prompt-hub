@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ReviewDto } from './dto/review.dto';
 import { Review } from '@prisma/client';
+import { CreateReviewDto } from './dto/create-review.dto';
+import { UpdateReviewDto } from './dto/update-review.dto';
 
 @Injectable()
 export class ReviewService {
@@ -15,11 +16,11 @@ export class ReviewService {
     return this.prisma.review.findUnique({ where: { id } });
   }
 
-  async createReview(review: ReviewDto): Promise<Review> {
+  async createReview(review: CreateReviewDto): Promise<Review> {
     return this.prisma.review.create({ data: review });
   }
 
-  async updateReview(id: string, review: ReviewDto): Promise<Review> {
+  async updateReview(id: string, review: UpdateReviewDto): Promise<Review> {
     return this.prisma.review.update({ where: { id }, data: review });
   }
 

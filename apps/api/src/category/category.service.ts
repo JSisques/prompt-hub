@@ -9,7 +9,7 @@ export class CategoryService {
   private logger: Logger;
 
   constructor(private readonly prisma: PrismaService) {
-    this.logger = new Logger('CategoryService');
+    this.logger = new Logger(CategoryService.name);
   }
 
   async getCategories(): Promise<Category[]> {

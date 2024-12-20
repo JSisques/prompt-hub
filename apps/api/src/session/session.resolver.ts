@@ -7,14 +7,24 @@ import { Session } from '@prisma/client';
 export class SessionResolver {
   constructor(private readonly sessionService: SessionService) {}
 
-  @Mutation(() => SessionDto)
-  async createSession(@Args('userId') userId: string): Promise<Session> {
-    return this.sessionService.createSession(userId);
+  @Query(() => [SessionDto])
+  async getSessions(): Promise<Session[]> {
+    return this.sessionService.getSessions();
+  }
+
+  @Query(() => [SessionDto])
+  async getSessionsById(@Args('id') id: string): Promise<Session[]> {
+    return this.sessionService.getSessionsById(id);
   }
 
   @Query(() => [SessionDto])
   async getSessionsByUserId(@Args('userId') userId: string): Promise<Session[]> {
     return this.sessionService.getSessionsByUserId(userId);
+  }
+
+  @Mutation(() => SessionDto)
+  async createSession(@Args('userId') userId: string): Promise<Session> {
+    return this.sessionService.createSession(userId);
   }
 
   @Mutation(() => SessionDto)

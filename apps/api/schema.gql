@@ -36,6 +36,13 @@ input CreatePromptInput {
   userId: String!
 }
 
+input CreateReviewInput {
+  comment: String!
+  promptId: String!
+  rating: Int!
+  userId: String!
+}
+
 input CreateUserInput {
   email: String!
   password: String!
@@ -45,6 +52,10 @@ input CreateUserInput {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Health {
+  isHealthy: Boolean!
+}
 
 type Llm {
   createdAt: DateTime!
@@ -66,7 +77,7 @@ type Mutation {
   createCategory(data: CreateCategoryInput!): Category!
   createLlm(llm: CreateLlmInput!): Llm!
   createPrompt(prompt: CreatePromptInput!): Prompt!
-  createReview(review: ReviewInput!): Review!
+  createReview(review: CreateReviewInput!): Review!
   createSession(userId: String!): Session!
   createUser(user: CreateUserInput!): User!
   deleteCategory(id: String!): Category!
@@ -81,7 +92,7 @@ type Mutation {
   updateCategory(data: UpdateCategoryInput!, id: String!): Category!
   updateLlm(id: String!, llm: UpdateLlmInput!): Llm!
   updatePrompt(id: String!, prompt: UpdatePromptInput!): Prompt!
-  updateReview(id: String!, review: ReviewInput!): Review!
+  updateReview(id: String!, review: UpdateReviewInput!): Review!
   updateUser(id: String!, user: UpdateUserInput!): User!
 }
 
@@ -110,12 +121,15 @@ input PromptInput {
 type Query {
   getCategories: [Category!]!
   getCategoryById(id: String!): Category!
+  getHealth: Health!
   getLlmById(id: String!): Llm!
   getLlms: [Llm!]!
   getPromptById(id: String!): Prompt!
   getPrompts: [Prompt!]!
-  getReview(id: String!): Review!
+  getReviewById(id: String!): Review!
   getReviews: [Review!]!
+  getSessions: [Session!]!
+  getSessionsById(id: String!): [Session!]!
   getSessionsByUserId(userId: String!): [Session!]!
   getUser(id: String!): User!
   getUserByEmail(email: String!): User!
@@ -124,15 +138,21 @@ type Query {
 
 type Review {
   comment: String!
+  createdAt: DateTime!
+  id: String!
   promptId: String!
   rating: Float!
+  updatedAt: DateTime!
   userId: String!
 }
 
 input ReviewInput {
   comment: String!
+  createdAt: DateTime!
+  id: String!
   promptId: String!
   rating: Float!
+  updatedAt: DateTime!
   userId: String!
 }
 
@@ -141,7 +161,6 @@ type Session {
   id: String
   loginAt: DateTime
   updatedAt: DateTime
-  user: User!
   userId: String!
 }
 
@@ -150,7 +169,6 @@ input SessionInput {
   id: String
   loginAt: DateTime
   updatedAt: DateTime
-  user: UserInput!
   userId: String!
 }
 
@@ -170,6 +188,11 @@ input UpdatePromptInput {
   llmId: String!
   title: String!
   userId: String!
+}
+
+input UpdateReviewInput {
+  comment: String!
+  rating: Int!
 }
 
 input UpdateUserInput {

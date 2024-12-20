@@ -8,7 +8,7 @@ import { UpdatePromptDto } from './dto/update-prompt.dto';
 export class PromptService {
   private logger: Logger;
   constructor(private readonly prisma: PrismaService) {
-    this.logger = new Logger('PromptService');
+    this.logger = new Logger(PromptService.name);
   }
 
   async getPrompts(): Promise<Prompt[]> {

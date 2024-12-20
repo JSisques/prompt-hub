@@ -7,12 +7,20 @@ import { CreateSessionDto } from './dto/create-session.dto';
 export class SessionService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createSession(userId: string): Promise<Session> {
-    return this.prisma.session.create({ data: { userId } });
+  async getSessions(): Promise<Session[]> {
+    return this.prisma.session.findMany();
+  }
+
+  async getSessionsById(id: string): Promise<Session[]> {
+    return this.prisma.session.findMany({ where: { id } });
   }
 
   async getSessionsByUserId(userId: string): Promise<Session[]> {
     return this.prisma.session.findMany({ where: { userId } });
+  }
+
+  async createSession(userId: string): Promise<Session> {
+    return this.prisma.session.create({ data: { userId } });
   }
 
   async deleteSession(id: string): Promise<Session> {

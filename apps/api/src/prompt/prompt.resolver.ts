@@ -10,7 +10,7 @@ import { UpdatePromptDto } from './dto/update-prompt.dto';
 export class PromptResolver {
   private logger: Logger;
   constructor(private readonly promptService: PromptService) {
-    this.logger = new Logger('PromptResolver');
+    this.logger = new Logger(PromptResolver.name);
   }
 
   @Query(() => [PromptDto])

@@ -15,7 +15,7 @@ export class AuthService {
     private readonly cryptoService: CryptoService,
     private readonly sessionService: SessionService,
   ) {
-    this.logger = new Logger('AuthService');
+    this.logger = new Logger(AuthService.name);
   }
 
   async login(email: string, password: string): Promise<User> {

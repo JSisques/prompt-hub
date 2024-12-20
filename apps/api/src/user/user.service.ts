@@ -14,7 +14,7 @@ export class UserService {
     private prisma: PrismaService,
     private cryptoService: CryptoService,
   ) {
-    this.logger = new Logger('UserService');
+    this.logger = new Logger(UserService.name);
   }
 
   async getUsers(): Promise<User[]> {

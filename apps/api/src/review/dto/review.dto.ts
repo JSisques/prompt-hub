@@ -25,4 +25,19 @@ export class ReviewDto {
   @IsNotEmpty()
   @IsString()
   promptId: string;
+
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  id: string;
+
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  createdAt: Date;
+
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  updatedAt: Date;
 }

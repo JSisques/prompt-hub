@@ -8,7 +8,7 @@ import { UpdateLlmDto } from './dto/update-llm.dto';
 export class LlmService {
   private logger: Logger;
   constructor(private readonly prisma: PrismaService) {
-    this.logger = new Logger('LlmService');
+    this.logger = new Logger(LlmService.name);
   }
 
   async getLlms(): Promise<Llm[]> {

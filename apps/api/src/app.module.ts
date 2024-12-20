@@ -20,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { SessionModule } from './session/session.module';
 import { LlmModule } from './llm/llm.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { LlmModule } from './llm/llm.module';
     AuthModule,
     SessionModule,
     LlmModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, CategoryService, PromptService, UserService, ReviewService, CryptoService],
