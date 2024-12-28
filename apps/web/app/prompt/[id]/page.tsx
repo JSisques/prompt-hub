@@ -1,11 +1,10 @@
 import { PromptDetail } from '@/components/prompts/detail';
 import { Metadata } from 'next';
 
-interface Props {
-  params: {
-    id: string;
-  };
-}
+type PageProps = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
 async function getPromptById(id: string) {
   // TODO: Implementar la llamada a la API para obtener el prompt
@@ -48,7 +47,7 @@ async function getPromptById(id: string) {
   };
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const prompt = await getPromptById(params.id);
   return {
     title: prompt.title,
@@ -56,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PromptDetailPage({ params }: Props) {
-  const prompt = await getPromptById(params.id);
+export default async function PromptDetailPage(props: PageProps) {
+  const prompt = await getPromptById(props.params.id);
   return <PromptDetail {...prompt} />;
 }
