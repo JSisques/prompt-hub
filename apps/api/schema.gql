@@ -18,6 +18,24 @@ input CategoryInput {
   updatedAt: DateTime!
 }
 
+type Comment {
+  content: String!
+  createdAt: DateTime!
+  id: String!
+  reviewId: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+input CommentInput {
+  content: String!
+  createdAt: DateTime!
+  id: String!
+  reviewId: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
 input CreateCategoryInput {
   description: String!
   name: String!
@@ -97,22 +115,24 @@ type Mutation {
 }
 
 type Prompt {
-  categoryId: String!
+  category: Category!
   content: String!
   createdAt: DateTime!
   id: String!
-  llmId: String!
+  llm: Llm!
+  reviews: [Review!]
   title: String!
   updatedAt: DateTime!
   userId: String!
 }
 
 input PromptInput {
-  categoryId: String!
+  category: CategoryInput!
   content: String!
   createdAt: DateTime!
   id: String!
-  llmId: String!
+  llm: LlmInput!
+  reviews: [ReviewInput!]
   title: String!
   updatedAt: DateTime!
   userId: String!
@@ -138,8 +158,10 @@ type Query {
 
 type Review {
   comment: String!
+  comments: [Comment!]
   createdAt: DateTime!
   id: String!
+  likes: Float!
   promptId: String!
   rating: Float!
   updatedAt: DateTime!
@@ -148,8 +170,10 @@ type Review {
 
 input ReviewInput {
   comment: String!
+  comments: [CommentInput!]
   createdAt: DateTime!
   id: String!
+  likes: Float!
   promptId: String!
   rating: Float!
   updatedAt: DateTime!

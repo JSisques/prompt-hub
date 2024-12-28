@@ -20,6 +20,7 @@ model User {
 
   prompts Prompt[]
   reviews Review[]
+  comments Comment[]
   sessions Session[]
 
   @@map("users")
@@ -37,6 +38,7 @@ model Prompt {
   updatedAt  DateTime @updatedAt @map("updated_at")
 
   reviews Review[]
+  comments Comment[]
 
   user User @relation(fields: [userId], references: [id])
   category Category @relation(fields: [categoryId], references: [id])
@@ -76,6 +78,7 @@ model Review {
   promptId  String   @map("prompt_id")
   userId    String   @map("user_id")
   rating    Int      @db.SmallInt
+  likes     Int      @default(0)
   comment   String   @db.Text
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -84,6 +87,22 @@ model Review {
   user User @relation(fields: [userId], references: [id])
 
   @@map("reviews")
+  @@index([promptId])
+  @@index([userId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  promptId  String   @map("prompt_id")
+  userId    String   @map("user_id")
+  content   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  prompt Prompt @relation(fields: [promptId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("comments")
   @@index([promptId])
   @@index([userId])
 }

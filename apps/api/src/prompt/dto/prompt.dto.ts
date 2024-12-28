@@ -1,5 +1,10 @@
 import { Field, ObjectType, InputType } from '@nestjs/graphql';
 import { IsNotEmpty } from 'class-validator';
+import { CategoryDto } from 'src/category/dto/category.dto';
+import { CommentDto } from 'src/comment/dto/comment.dto';
+import { LlmDto } from 'src/llm/dto/llm.dto';
+import { ReviewDto } from 'src/review/dto/review.dto';
+import { UserDto } from 'src/user/dto/user.dto';
 
 @ObjectType('Prompt')
 @InputType('PromptInput')
@@ -8,13 +13,13 @@ export class PromptDto {
   @IsNotEmpty()
   id: string;
 
-  @Field(() => String)
+  @Field(() => UserDto)
   @IsNotEmpty()
-  userId: string;
+  author: UserDto;
 
-  @Field(() => String)
+  @Field(() => CategoryDto)
   @IsNotEmpty()
-  categoryId: string;
+  category: CategoryDto;
 
   @Field(() => String)
   @IsNotEmpty()
@@ -24,9 +29,24 @@ export class PromptDto {
   @IsNotEmpty()
   content: string;
 
-  @Field(() => String)
+  @Field(() => [String])
   @IsNotEmpty()
-  llmId: string;
+  tags: string[];
+
+  @Field(() => [String])
+  @IsNotEmpty()
+  likes: string[];
+
+  @Field(() => [CommentDto])
+  @IsNotEmpty()
+  comments: CommentDto[];
+
+  @Field(() => LlmDto)
+  @IsNotEmpty()
+  llm: LlmDto;
+
+  @Field(() => [ReviewDto], { nullable: true })
+  reviews?: ReviewDto[];
 
   @Field(() => Date)
   @IsNotEmpty()

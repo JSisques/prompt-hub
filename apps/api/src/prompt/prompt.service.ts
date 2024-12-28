@@ -13,7 +13,14 @@ export class PromptService {
 
   async getPrompts(): Promise<Prompt[]> {
     this.logger.log('Entering getPrompts()');
-    return this.prisma.prompt.findMany();
+    return this.prisma.prompt.findMany({
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        comments: true,
+      },
+    });
   }
 
   async getPromptById(id: string): Promise<Prompt | null> {

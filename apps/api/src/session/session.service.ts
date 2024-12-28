@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Session } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateSessionDto } from './dto/create-session.dto';
@@ -24,6 +24,16 @@ export class SessionService {
   }
 
   async deleteSession(id: string): Promise<Session> {
-    return this.prisma.session.delete({ where: { id } });
+    const session = await this.prisma.session.findUnique({
+      where: { id },
+    });
+
+    if (!session) {
+      throw new NotFoundException(`Sesión con ID ${id} no encontrada`);
+    }
+
+    return this.prisma.session.delete({
+      where: { id },
+    });
   }
 }

@@ -1,9 +1,15 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
+import { CommentDto } from '../../comment/dto/comment.dto';
 
 @ObjectType('Review')
 @InputType('ReviewInput')
 export class ReviewDto {
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  id: string;
+
   @Field()
   @IsNotEmpty()
   @IsString()
@@ -18,6 +24,15 @@ export class ReviewDto {
 
   @Field()
   @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  likes: number;
+
+  @Field(() => [CommentDto], { nullable: true })
+  comments?: CommentDto[];
+
+  @Field()
+  @IsNotEmpty()
   @IsString()
   userId: string;
 
@@ -28,16 +43,9 @@ export class ReviewDto {
 
   @Field()
   @IsNotEmpty()
-  @IsString()
-  id: string;
-
-  @Field()
-  @IsNotEmpty()
-  @IsString()
   createdAt: Date;
 
   @Field()
   @IsNotEmpty()
-  @IsString()
   updatedAt: Date;
 }
