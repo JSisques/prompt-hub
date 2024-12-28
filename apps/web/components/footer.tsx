@@ -1,8 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
-import { Instagram, Linkedin, Youtube } from 'lucide-react';
+import { GitHubLogoIcon, TwitterLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
 import { useState, useEffect } from 'react';
 
 const footerLinks = [
@@ -53,17 +52,12 @@ const socialLinks = [
   {
     label: 'LinkedIn',
     href: 'https://linkedin.com/in/jsisques',
-    icon: Linkedin,
+    icon: LinkedInLogoIcon,
   },
   {
     label: 'Instagram',
     href: 'https://instagram.com/jsisques',
-    icon: Instagram,
-  },
-  {
-    label: 'YouTube',
-    href: 'https://youtube.com/@jsisques',
-    icon: Youtube,
+    icon: InstagramLogoIcon,
   },
 ];
 

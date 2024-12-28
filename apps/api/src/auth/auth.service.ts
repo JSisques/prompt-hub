@@ -4,7 +4,6 @@ import { CryptoService } from 'src/crypto/crypto.service';
 import { User } from '@prisma/client';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { SessionService } from 'src/session/session.service';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +12,6 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly cryptoService: CryptoService,
-    private readonly sessionService: SessionService,
   ) {
     this.logger = new Logger(AuthService.name);
   }
@@ -27,9 +25,6 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new Error('Invalid password');
     }
-
-    // Registramos la sesión
-    await this.sessionService.createSession(user.id);
 
     return user;
   }

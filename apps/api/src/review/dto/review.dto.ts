@@ -2,7 +2,7 @@ import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 import { CommentDto } from '../../comment/dto/comment.dto';
 
-@ObjectType('Review')
+@ObjectType('ReviewType')
 @InputType('ReviewInput')
 export class ReviewDto {
   @Field()

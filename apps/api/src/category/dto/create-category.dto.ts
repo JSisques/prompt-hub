@@ -1,16 +1,16 @@
-import { IsString, IsNotEmpty } from 'class-validator';
-import { InputType, Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-@ObjectType('CreateCategory')
+@ObjectType('CreateCategoryOutput')
 @InputType('CreateCategoryInput')
 export class CreateCategoryDto {
-  @Field(() => String)
-  @IsString()
+  @Field()
   @IsNotEmpty()
+  @IsString()
   name: string;
 
-  @Field(() => String)
-  @IsString()
+  @Field()
   @IsNotEmpty()
+  @IsString()
   description: string;
 }

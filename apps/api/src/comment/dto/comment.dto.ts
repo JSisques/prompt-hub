@@ -1,13 +1,9 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-@ObjectType('Comment')
+@ObjectType('CommentType')
+@InputType('CommentInput')
 export class CommentDto {
-  @Field()
-  @IsNotEmpty()
-  @IsString()
-  id: string;
-
   @Field()
   @IsNotEmpty()
   @IsString()
@@ -18,16 +14,11 @@ export class CommentDto {
   @IsString()
   userId: string;
 
-  @Field()
-  @IsNotEmpty()
+  @Field({ nullable: true })
   @IsString()
-  promptId: string;
+  promptId?: string;
 
-  @Field()
-  @IsNotEmpty()
-  createdAt: Date;
-
-  @Field()
-  @IsNotEmpty()
-  updatedAt: Date;
+  @Field({ nullable: true })
+  @IsString()
+  postId?: string;
 }

@@ -1,7 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 
-@ObjectType('Llm')
+@ObjectType('LlmType')
 @InputType('LlmInput')
 export class LlmDto {
   @Field(() => String)

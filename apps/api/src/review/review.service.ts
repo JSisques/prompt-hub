@@ -17,7 +17,14 @@ export class ReviewService {
   }
 
   async createReview(review: CreateReviewDto): Promise<Review> {
-    return this.prisma.review.create({ data: review });
+    return this.prisma.review.create({
+      data: {
+        promptId: review.promptId,
+        userId: review.userId,
+        rating: review.rating,
+        content: review.content,
+      },
+    });
   }
 
   async updateReview(id: string, review: UpdateReviewDto): Promise<Review> {

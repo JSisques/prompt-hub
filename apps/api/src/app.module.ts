@@ -18,7 +18,6 @@ import { CryptoModule } from './crypto/crypto.module';
 import { CryptoService } from './crypto/crypto.service';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { SessionModule } from './session/session.module';
 import { LlmModule } from './llm/llm.module';
 import { HealthModule } from './health/health.module';
 import { CommentModule } from './comment/comment.module';
@@ -42,7 +41,6 @@ import { BlogModule } from './blog/blog.module';
     UserModule,
     CryptoModule,
     AuthModule,
-    SessionModule,
     LlmModule,
     HealthModule,
     CommentModule,

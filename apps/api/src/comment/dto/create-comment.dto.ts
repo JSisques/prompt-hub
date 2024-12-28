@@ -1,9 +1,9 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-@ObjectType('CreateCommentInput')
+@ObjectType('CreateCommentOutput')
 @InputType('CreateCommentInput')
-export class CreateCommentInputDto {
+export class CreateCommentDto {
   @Field()
   @IsNotEmpty()
   @IsString()

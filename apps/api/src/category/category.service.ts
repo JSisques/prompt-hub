@@ -3,6 +3,7 @@ import { Category } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import slugify from 'slugify';
 
 @Injectable()
 export class CategoryService {
@@ -24,7 +25,8 @@ export class CategoryService {
 
   async createCategory(data: CreateCategoryDto): Promise<Category> {
     this.logger.log(`Entering createCategory(data: ${JSON.stringify(data)})`);
-    return this.prisma.category.create({ data });
+    const slug = slugify(data.name, { lower: true });
+    return this.prisma.category.create({ data: { ...data, slug } });
   }
 
   async updateCategory(id: string, data: UpdateCategoryDto): Promise<Category> {

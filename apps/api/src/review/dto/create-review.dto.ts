@@ -7,7 +7,7 @@ export class CreateReviewDto {
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
-  comment: string;
+  content: string;
 
   @Field(() => Int)
   @IsInt()

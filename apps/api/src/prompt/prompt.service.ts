@@ -30,7 +30,9 @@ export class PromptService {
 
   async createPrompt(data: CreatePromptDto): Promise<Prompt> {
     this.logger.log(`Entering createPrompt(data: ${JSON.stringify(data)})`);
-    return this.prisma.prompt.create({ data });
+    return this.prisma.prompt.create({
+      data,
+    });
   }
 
   async updatePrompt(id: string, data: UpdatePromptDto): Promise<Prompt> {
