@@ -48,7 +48,7 @@ async function getPromptById(id: string) {
   };
 }
 
-export default async function PromptDetailPage({ params }: Props) {
+export default async function PromptDetailPage({ params }: { params: { id: string } }) {
   const prompt = await getPromptById(params.id);
 
   return <PromptDetail {...prompt} />;
