@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
+import { Instagram, Linkedin, Youtube } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const footerLinks = [
@@ -16,17 +17,17 @@ const footerLinks = [
   {
     title: 'Recursos',
     links: [
-      { label: 'Guía', href: '#' },
-      { label: 'Blog', href: '#' },
+      { label: 'Guía', href: '/guide' },
+      { label: 'Blog', href: '/blog' },
       { label: 'FAQ', href: '/faq' },
     ],
   },
   {
     title: 'Legal',
     links: [
-      { label: 'Privacidad', href: '#' },
-      { label: 'Términos', href: '#' },
-      { label: 'Cookies', href: '#' },
+      { label: 'Privacidad', href: '/privacy' },
+      { label: 'Términos', href: '/terms' },
+      { label: 'Cookies', href: '/cookies' },
     ],
   },
 ];
@@ -48,6 +49,21 @@ const socialLinks = [
     label: 'Twitter',
     href: 'https://twitter.com/jsisques',
     icon: TwitterLogoIcon,
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/in/jsisques',
+    icon: Linkedin,
+  },
+  {
+    label: 'Instagram',
+    href: 'https://instagram.com/jsisques',
+    icon: Instagram,
+  },
+  {
+    label: 'YouTube',
+    href: 'https://youtube.com/@jsisques',
+    icon: Youtube,
   },
 ];
 

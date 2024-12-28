@@ -13,36 +13,49 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
+  name      String   @db.VarChar(100)
   password  String
+  avatar    String?  @db.Text
+  bio       String?  @db.Text
+  role      Role     @default(USER)
   active    Boolean  @default(true)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  prompts Prompt[]
-  reviews Review[]
-  comments Comment[]
-  sessions Session[]
+  prompts    Prompt[]
+  reviews    Review[]
+  comments   Comment[]
+  sessions   Session[]
+  posts      Post[]      // Relación con blog posts
+  favorites  Favorite[]  // Prompts favoritos
+  likes      Like[]      // Likes en posts y prompts
 
   @@map("users")
   @@index([email])
 }
 
 model Prompt {
-  id         String   @id @default(cuid()) 
-  userId     String   @map("user_id")
-  categoryId String   @map("category_id")
-  title      String   @db.VarChar(255)
-  content    String   @db.Text
-  llmId      String   @map("llm_id")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id          String   @id @default(cuid()) 
+  userId      String   @map("user_id")
+  categoryId  String   @map("category_id")
+  title       String   @db.VarChar(255)
+  description String   @db.Text
+  content     String   @db.Text
+  llmId       String   @map("llm_id")
+  published   Boolean  @default(false)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
-  reviews Review[]
-  comments Comment[]
+  reviews    Review[]
+  comments   Comment[]
+  favorites  Favorite[]
+  likes      Like[]
+  tags       TagsOnPrompts[]
 
-  user User @relation(fields: [userId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
-  llm Llm @relation(fields: [llmId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  category  Category  @relation(fields: [categoryId], references: [id])
+  llm       Llm       @relation(fields: [llmId], references: [id])
 
   @@map("prompts")
   @@index([userId])
@@ -51,26 +64,33 @@ model Prompt {
 }
 
 model Category {
-  id        String   @id @default(cuid())
-  name      String   @db.VarChar(100)
+  id          String   @id @default(cuid())
+  name        String   @unique @db.VarChar(100)
   description String   @db.Text
-  createdAt DateTime @default(now()) @map("created_at") 
-  updatedAt DateTime @updatedAt @map("updated_at")
+  slug        String   @unique @db.VarChar(100)
+  createdAt   DateTime @default(now()) @map("created_at") 
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
-  prompts Prompt[]
+  prompts     Prompt[]
+  posts       Post[]   // Categorías también para blog posts
 
   @@map("categories")
   @@index([name])
+  @@index([slug])
 }
 
 model Llm {
-  id        String   @id @default(cuid())
-  name      String   @db.VarChar(100)
+  id          String   @id @default(cuid())
+  name        String   @unique @db.VarChar(100)
   description String   @db.Text
-  createdAt DateTime @default(now()) @map("created_at") 
-  updatedAt DateTime @updatedAt @map("updated_at")
+  icon        String?  @db.Text
+  createdAt   DateTime @default(now()) @map("created_at") 
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
-  prompts Prompt[]
+  prompts     Prompt[]
+
+  @@map("llms")
+  @@index([name])
 }
 
 model Review {
@@ -78,13 +98,13 @@ model Review {
   promptId  String   @map("prompt_id")
   userId    String   @map("user_id")
   rating    Int      @db.SmallInt
-  likes     Int      @default(0)
-  comment   String   @db.Text
+  content   String   @db.Text
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  prompt Prompt @relation(fields: [promptId], references: [id])
-  user User @relation(fields: [userId], references: [id])
+  prompt    Prompt   @relation(fields: [promptId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  likes     Like[]
 
   @@map("reviews")
   @@index([promptId])
@@ -93,29 +113,153 @@ model Review {
 
 model Comment {
   id        String   @id @default(cuid())
-  promptId  String   @map("prompt_id")
+  promptId  String?  @map("prompt_id")
+  postId    String?  @map("post_id")
   userId    String   @map("user_id")
   content   String   @db.Text
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  prompt Prompt @relation(fields: [promptId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
+  prompt    Prompt?  @relation(fields: [promptId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  likes     Like[]
 
   @@map("comments")
   @@index([promptId])
+  @@index([postId])
   @@index([userId])
 }
 
 model Session {
   id        String   @id @default(cuid())
   userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
   loginAt   DateTime @default(now()) @map("login_at")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("sessions")
   @@index([userId])
+  @@index([token])
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  categoryId  String   @map("category_id")
+  title       String   @db.VarChar(255)
+  slug        String   @unique @db.VarChar(255)
+  excerpt     String   @db.Text
+  content     String   @db.Text
+  coverImage  String   @db.Text @map("cover_image")
+  published   Boolean  @default(false)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user      User      @relation(fields: [userId], references: [id])
+  category  Category  @relation(fields: [categoryId], references: [id])
+  comments  Comment[]
+  likes     Like[]
+  tags      TagsOnPosts[]
+
+  @@map("posts")
+  @@index([userId])
+  @@index([categoryId])
+  @@index([slug])
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique @db.VarChar(50)
+  slug      String   @unique @db.VarChar(50)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  prompts   TagsOnPrompts[]
+  posts     TagsOnPosts[]
+
+  @@map("tags")
+  @@index([name])
+  @@index([slug])
+}
+
+model TagsOnPrompts {
+  promptId  String   @map("prompt_id")
+  tagId     String   @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  prompt    Prompt   @relation(fields: [promptId], references: [id])
+  tag       Tag      @relation(fields: [tagId], references: [id])
+
+  @@id([promptId, tagId])
+  @@map("tags_on_prompts")
+  @@index([promptId])
+  @@index([tagId])
+}
+
+model TagsOnPosts {
+  postId    String   @map("post_id")
+  tagId     String   @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  post      Post     @relation(fields: [postId], references: [id])
+  tag       Tag      @relation(fields: [tagId], references: [id])
+
+  @@id([postId, tagId])
+  @@map("tags_on_posts")
+  @@index([postId])
+  @@index([tagId])
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  promptId  String   @map("prompt_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id])
+  prompt    Prompt   @relation(fields: [promptId], references: [id])
+
+  @@map("favorites")
+  @@index([userId])
+  @@index([promptId])
+  @@unique([userId, promptId])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  promptId  String?  @map("prompt_id")
+  postId    String?  @map("post_id")
+  reviewId  String?  @map("review_id")
+  commentId String?  @map("comment_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id])
+  prompt    Prompt?  @relation(fields: [promptId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  review    Review?  @relation(fields: [reviewId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
+
+  @@map("likes")
+  @@index([userId])
+  @@index([promptId])
+  @@index([postId])
+  @@index([reviewId])
+  @@index([commentId])
+  @@unique([userId, promptId])
+  @@unique([userId, postId])
+  @@unique([userId, reviewId])
+  @@unique([userId, commentId])
+}
+
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
 }

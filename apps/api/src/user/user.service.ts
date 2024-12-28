@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UserDto } from 'src/user/dto/user.dto';
 import { CryptoService } from 'src/crypto/crypto.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 

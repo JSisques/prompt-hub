@@ -24,7 +24,7 @@ export function SidebarNav({ className, items, user, ...props }: SidebarNavProps
   return (
     <nav className={cn('flex flex-col space-y-4', className)} {...props}>
       {user && (
-        <div className="hidden lg:flex items-center space-x-4 p-4 rounded-lg bg-card">
+        <div className="hidden lg:flex space-x-4 p-4 rounded-lg bg-card">
           <Avatar className="h-10 w-10">
             <AvatarImage src={user.avatar} alt={user.name} />
             <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>

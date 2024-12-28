@@ -22,6 +22,7 @@ import { SessionModule } from './session/session.module';
 import { LlmModule } from './llm/llm.module';
 import { HealthModule } from './health/health.module';
 import { CommentModule } from './comment/comment.module';
+import { BlogModule } from './blog/blog.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { CommentModule } from './comment/comment.module';
     LlmModule,
     HealthModule,
     CommentModule,
+    BlogModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, CategoryService, PromptService, UserService, ReviewService, CryptoService],

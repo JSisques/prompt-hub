@@ -59,100 +59,98 @@ const categories = [
 
 export default function TrendingPage() {
   return (
-    <div className="container py-8">
-      <div className="space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Flame className="h-8 w-8 text-primary" />
-            Trending
-          </h1>
-          <p className="text-muted-foreground mt-2">Descubre los prompts más populares y tendencias actuales.</p>
-        </div>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold flex items-center gap-2">
+          <TrendingUp className="h-8 w-8 text-primary" />
+          Trending
+        </h1>
+        <p className="text-muted-foreground mt-2">Descubre los prompts más populares y tendencias actuales.</p>
+      </div>
 
-        {/* Categorías */}
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {categories.map(category => (
-            <Button key={category.id} variant="outline" className="flex items-center gap-2 whitespace-nowrap">
-              <category.icon className="h-4 w-4" />
-              {category.label}
-            </Button>
-          ))}
-        </div>
+      {/* Categorías */}
+      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+        {categories.map(category => (
+          <Button key={category.id} variant="outline" className="flex items-center gap-2 whitespace-nowrap">
+            <category.icon className="h-4 w-4" />
+            {category.label}
+          </Button>
+        ))}
+      </div>
 
-        {/* Períodos de tiempo */}
-        <Tabs defaultValue="today" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="today" className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              Hoy
-            </TabsTrigger>
-            <TabsTrigger value="week" className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4" />
-              Esta Semana
-            </TabsTrigger>
-            <TabsTrigger value="month" className="flex items-center gap-2">
-              <Star className="h-4 w-4" />
-              Este Mes
-            </TabsTrigger>
-          </TabsList>
+      {/* Períodos de tiempo */}
+      <Tabs defaultValue="today" className="space-y-6">
+        <TabsList className="w-full grid grid-cols-3">
+          <TabsTrigger value="today" className="flex-1 flex items-center justify-center gap-2">
+            <Clock className="h-4 w-4" />
+            Hoy
+          </TabsTrigger>
+          <TabsTrigger value="week" className="flex-1 flex items-center justify-center gap-2">
+            <TrendingUp className="h-4 w-4" />
+            Esta Semana
+          </TabsTrigger>
+          <TabsTrigger value="month" className="flex-1 flex items-center justify-center gap-2">
+            <Star className="h-4 w-4" />
+            Este Mes
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="today" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockTrendingPrompts.today.map(prompt => (
-                <PromptCard key={prompt.id} {...prompt} />
-              ))}
-            </div>
-          </TabsContent>
+        <TabsContent value="today" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mockTrendingPrompts.today.map(prompt => (
+              <PromptCard key={prompt.id} {...prompt} />
+            ))}
+          </div>
+        </TabsContent>
 
-          <TabsContent value="week" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockTrendingPrompts.week.map(prompt => (
-                <PromptCard key={prompt.id} {...prompt} />
-              ))}
-            </div>
-          </TabsContent>
+        <TabsContent value="week" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mockTrendingPrompts.week.map(prompt => (
+              <PromptCard key={prompt.id} {...prompt} />
+            ))}
+          </div>
+        </TabsContent>
 
-          <TabsContent value="month" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockTrendingPrompts.month.map(prompt => (
-                <PromptCard key={prompt.id} {...prompt} />
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+        <TabsContent value="month" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mockTrendingPrompts.month.map(prompt => (
+              <PromptCard key={prompt.id} {...prompt} />
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
 
-        {/* Estadísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Prompts Populares</CardTitle>
-              <CardDescription>En las últimas 24 horas</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-primary">1,234</div>
-            </CardContent>
-          </Card>
+      {/* Estadísticas */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Prompts Populares</CardTitle>
+            <CardDescription>En las últimas 24 horas</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-primary">1,234</div>
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Interacciones</CardTitle>
-              <CardDescription>Likes y comentarios</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-primary">5,678</div>
-            </CardContent>
-          </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Interacciones</CardTitle>
+            <CardDescription>Likes y comentarios</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-primary">5,678</div>
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Usuarios Activos</CardTitle>
-              <CardDescription>Creadores de contenido</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-primary">890</div>
-            </CardContent>
-          </Card>
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Usuarios Activos</CardTitle>
+            <CardDescription>Creadores de contenido</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-primary">890</div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

@@ -79,59 +79,60 @@ export default function ExplorePage() {
   const [showFilters, setShowFilters] = useState(false);
 
   return (
-    <div className="container px-4 md:px-6 py-8">
-      <div className="space-y-8">
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">Explorar Prompts</h1>
-          <p className="text-muted-foreground mt-2">Descubre prompts útiles para diferentes propósitos y modelos de IA.</p>
-        </div>
+    <div className="space-y-8">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold flex items-center gap-2">
+          <Search className="h-8 w-8 text-primary" />
+          Explorar Prompts
+        </h1>
+        <p className="text-muted-foreground mt-2">Descubre prompts útiles para diferentes propósitos y modelos de IA.</p>
+      </div>
 
-        {/* Búsqueda y Filtros */}
-        <div className="space-y-4">
-          <div className="flex gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input placeholder="Buscar prompts..." className="pl-9" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-            </div>
-            <Button variant="outline" className="flex items-center gap-2" onClick={() => setShowFilters(!showFilters)}>
-              <SlidersHorizontal className="h-4 w-4" />
-              Filtros
-            </Button>
+      {/* Búsqueda y Filtros */}
+      <div className="space-y-4">
+        <div className="flex gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input placeholder="Buscar prompts..." className="pl-9" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
           </div>
-
-          {/* Filtros expandibles */}
-          {showFilters && (
-            <Card className="p-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {filters.map(filter => (
-                  <div key={filter.id} className="space-y-2">
-                    <label className="text-sm font-medium">{filter.label}</label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder={`Seleccionar ${filter.label.toLowerCase()}`} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {filter.options.map(option => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
+          <Button variant="outline" className="flex items-center gap-2" onClick={() => setShowFilters(!showFilters)}>
+            <SlidersHorizontal className="h-4 w-4" />
+            Filtros
+          </Button>
         </div>
 
-        {/* Resultados */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {mockPrompts.map(prompt => (
-            <PromptCard key={prompt.id} {...prompt} />
-          ))}
-        </div>
+        {/* Filtros expandibles */}
+        {showFilters && (
+          <Card className="p-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {filters.map(filter => (
+                <div key={filter.id} className="space-y-2">
+                  <label className="text-sm font-medium">{filter.label}</label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder={`Seleccionar ${filter.label.toLowerCase()}`} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {filter.options.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+      </div>
+
+      {/* Resultados */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {mockPrompts.map(prompt => (
+          <PromptCard key={prompt.id} {...prompt} />
+        ))}
       </div>
     </div>
   );

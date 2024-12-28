@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, Star, TrendingUp, Filter, Tag } from 'lucide-react';
+import { Search, Star, TrendingUp, Filter, Tag, ShoppingBag } from 'lucide-react';
 
 // Datos de ejemplo - esto vendría de una API
 const mockPrompts = {
@@ -77,148 +77,155 @@ const priceRanges = [
 
 export default function MarketplacePage() {
   return (
-    <div className="container px-4 md:px-6 py-8">
-      <div className="space-y-8">
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">Marketplace</h1>
-          <p className="text-muted-foreground mt-2">Descubre y adquiere prompts premium creados por expertos.</p>
-        </div>
-
-        {/* Búsqueda y Filtros */}
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Buscar prompts premium..." className="pl-9" />
-          </div>
-          <Button variant="outline" className="flex items-center gap-2">
-            <Filter className="h-4 w-4" />
-            Filtros
-          </Button>
-          <Button variant="outline" className="flex items-center gap-2">
-            <Tag className="h-4 w-4" />
-            Categorías
-          </Button>
-        </div>
-
-        {/* Categorías */}
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {categories.map(category => (
-            <Button key={category.id} variant="outline" className="flex items-center gap-2 whitespace-nowrap">
-              <category.icon className="h-4 w-4" />
-              {category.label}
-            </Button>
-          ))}
-        </div>
-
-        {/* Contenido Principal */}
-        <Tabs defaultValue="featured" className="space-y-8">
-          <TabsList>
-            <TabsTrigger value="featured">Destacados</TabsTrigger>
-            <TabsTrigger value="new">Nuevos</TabsTrigger>
-            <TabsTrigger value="trending">Tendencias</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="featured" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockPrompts.featured.map(prompt => (
-                <Card key={prompt.id} className="flex flex-col">
-                  <CardHeader>
-                    <CardTitle>{prompt.title}</CardTitle>
-                    <CardDescription>{prompt.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2">
-                        <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        <span className="font-medium">{prompt.rating}</span>
-                        <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {prompt.tags.map(tag => (
-                          <span key={tag} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold">{prompt.price}€</span>
-                        <Button>Comprar Ahora</Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="new" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockPrompts.new.map(prompt => (
-                <Card key={prompt.id} className="flex flex-col">
-                  <CardHeader>
-                    <CardTitle>{prompt.title}</CardTitle>
-                    <CardDescription>{prompt.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2">
-                        <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        <span className="font-medium">{prompt.rating}</span>
-                        <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {prompt.tags.map(tag => (
-                          <span key={tag} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold">{prompt.price}€</span>
-                        <Button>Comprar Ahora</Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="trending" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockPrompts.trending.map(prompt => (
-                <Card key={prompt.id} className="flex flex-col">
-                  <CardHeader>
-                    <CardTitle>{prompt.title}</CardTitle>
-                    <CardDescription>{prompt.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2">
-                        <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        <span className="font-medium">{prompt.rating}</span>
-                        <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {prompt.tags.map(tag => (
-                          <span key={tag} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold">{prompt.price}€</span>
-                        <Button>Comprar Ahora</Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+    <div className="space-y-8">
+      {/* Hero Section */}
+      <div>
+        <h1 className="text-3xl font-bold flex items-center gap-2">
+          <ShoppingBag className="h-8 w-8 text-primary" />
+          Marketplace
+        </h1>
+        <p className="text-muted-foreground mt-2">Descubre y adquiere prompts premium creados por expertos.</p>
       </div>
+
+      {/* Búsqueda y Filtros */}
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input placeholder="Buscar prompts premium..." className="pl-9" />
+        </div>
+        <Button variant="outline" className="flex items-center gap-2">
+          <Filter className="h-4 w-4" />
+          Filtros
+        </Button>
+        <Button variant="outline" className="flex items-center gap-2">
+          <Tag className="h-4 w-4" />
+          Categorías
+        </Button>
+      </div>
+
+      {/* Categorías */}
+      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+        {categories.map(category => (
+          <Button key={category.id} variant="outline" className="flex items-center gap-2 whitespace-nowrap">
+            <category.icon className="h-4 w-4" />
+            {category.label}
+          </Button>
+        ))}
+      </div>
+
+      {/* Contenido Principal */}
+      <Tabs defaultValue="featured" className="space-y-8">
+        <TabsList className="w-full grid grid-cols-3">
+          <TabsTrigger value="featured" className="flex-1">
+            Destacados
+          </TabsTrigger>
+          <TabsTrigger value="new" className="flex-1">
+            Nuevos
+          </TabsTrigger>
+          <TabsTrigger value="trending" className="flex-1">
+            Tendencias
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="featured" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mockPrompts.featured.map(prompt => (
+              <Card key={prompt.id} className="flex flex-col">
+                <CardHeader>
+                  <CardTitle>{prompt.title}</CardTitle>
+                  <CardDescription>{prompt.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                      <span className="font-medium">{prompt.rating}</span>
+                      <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {prompt.tags.map(tag => (
+                        <span key={tag} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold">{prompt.price}€</span>
+                      <Button>Comprar Ahora</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="new" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mockPrompts.new.map(prompt => (
+              <Card key={prompt.id} className="flex flex-col">
+                <CardHeader>
+                  <CardTitle>{prompt.title}</CardTitle>
+                  <CardDescription>{prompt.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                      <span className="font-medium">{prompt.rating}</span>
+                      <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {prompt.tags.map(tag => (
+                        <span key={tag} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold">{prompt.price}€</span>
+                      <Button>Comprar Ahora</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="trending" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mockPrompts.trending.map(prompt => (
+              <Card key={prompt.id} className="flex flex-col">
+                <CardHeader>
+                  <CardTitle>{prompt.title}</CardTitle>
+                  <CardDescription>{prompt.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                      <span className="font-medium">{prompt.rating}</span>
+                      <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {prompt.tags.map(tag => (
+                        <span key={tag} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold">{prompt.price}€</span>
+                      <Button>Comprar Ahora</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
