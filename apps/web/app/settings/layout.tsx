@@ -24,26 +24,30 @@ const sidebarNavItems = [
   },
 ];
 
+const user = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  avatar: 'https://github.com/shadcn.png',
+};
+
 interface SettingsLayoutProps {
   children: React.ReactNode;
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
-    <div className="px-4 md:px-8 py-8 md:py-12">
+    <div className="container mx-auto px-4 py-6 md:py-8 lg:py-10">
       <div className="space-y-6">
-        <div className="space-y-0.5">
-          <h1 className="text-3xl font-bold tracking-tight">Configuración</h1>
-          <p className="text-muted-foreground">Gestiona tu cuenta y configura tus preferencias.</p>
+        <div className="space-y-1">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Configuración</h1>
+          <p className="text-sm md:text-base text-muted-foreground">Gestiona tu cuenta y configura tus preferencias.</p>
         </div>
-        <Separator />
+        <Separator className="my-4 md:my-6" />
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="w-full overflow-x-auto lg:w-1/5">
-            <nav className="flex lg:flex-col">
-              <SidebarNav items={sidebarNavItems} className="w-full flex-none flex lg:flex-col gap-2" />
-            </nav>
+          <aside className="-mx-4 lg:mx-0 lg:w-1/4 xl:w-1/5">
+            <SidebarNav items={sidebarNavItems} user={user} className="lg:sticky lg:top-8" />
           </aside>
-          <main className="flex-1 lg:max-w-3xl">{children}</main>
+          <div className="flex-1 lg:max-w-2xl xl:max-w-3xl">{children}</div>
         </div>
       </div>
     </div>
