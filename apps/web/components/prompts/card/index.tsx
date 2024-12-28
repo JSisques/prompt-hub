@@ -1,21 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
-import { Badge } from './ui/badge';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Clock, User, MessageSquare, ThumbsUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
-export interface PromptCardProps {
-  id: string;
-  title: string;
-  description: string;
-  tags: string[];
-  author?: string;
-  createdAt?: Date;
-  likes?: number;
-  comments?: number;
-}
+import { PromptCardProps } from '@/types/prompt';
 
 export function PromptCard({ id, title, description, tags, author, createdAt, likes = 0, comments = 0 }: PromptCardProps) {
   const router = useRouter();

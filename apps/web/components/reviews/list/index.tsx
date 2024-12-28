@@ -1,24 +1,10 @@
-import { Card } from './ui/card';
-import { ReviewCard } from './review-card';
-import { Button } from './ui/button';
-import { Textarea } from './ui/textarea';
+import { Card } from '@/components/ui/card';
+import { ReviewCard } from '../card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import { Star } from 'lucide-react';
-
-interface Review {
-  id: string;
-  comment: string;
-  rating: number;
-  userId: string;
-  promptId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface ReviewsSectionProps {
-  promptId: string;
-  reviews: Review[];
-}
+import { ReviewsSectionProps } from '@/types/review';
 
 export function ReviewsSection({ promptId, reviews }: ReviewsSectionProps) {
   const [rating, setRating] = useState(0);
@@ -33,6 +19,14 @@ export function ReviewsSection({ promptId, reviews }: ReviewsSectionProps) {
 
   return (
     <div className="space-y-6">
+      {/* Título y contador */}
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold">Reviews</h2>
+        <span className="text-muted-foreground">
+          {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
+        </span>
+      </div>
+
       {/* Formulario de Review */}
       <Card className="p-6">
         <h3 className="text-lg font-semibold mb-4">Añadir Review</h3>
@@ -40,7 +34,7 @@ export function ReviewsSection({ promptId, reviews }: ReviewsSectionProps) {
           {/* Rating Selector */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Valoración</label>
-            <div className="flex gap-1">
+            <div className="flex justify-between w-full">
               {[1, 2, 3, 4, 5].map(value => (
                 <button
                   key={value}
@@ -48,10 +42,10 @@ export function ReviewsSection({ promptId, reviews }: ReviewsSectionProps) {
                   onClick={() => setRating(value)}
                   onMouseEnter={() => setHoveredRating(value)}
                   onMouseLeave={() => setHoveredRating(0)}
-                  className="p-1 hover:scale-110 transition-transform"
+                  className="p-2 hover:scale-110 transition-transform"
                 >
                   <Star
-                    size={24}
+                    size={28}
                     className={`${value <= (hoveredRating || rating) ? 'fill-primary text-primary' : 'text-muted'} transition-colors`}
                   />
                 </button>
@@ -82,13 +76,6 @@ export function ReviewsSection({ promptId, reviews }: ReviewsSectionProps) {
 
       {/* Lista de Reviews */}
       <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Reviews</h2>
-          <span className="text-muted-foreground">
-            {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
-          </span>
-        </div>
-
         {reviews.length > 0 ? (
           <div className="space-y-4">
             {reviews.map(review => (

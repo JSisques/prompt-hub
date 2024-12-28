@@ -1,12 +1,6 @@
-import { Card } from './ui/card';
+import { Card } from '@/components/ui/card';
 import { Star, User } from 'lucide-react';
-
-interface ReviewCardProps {
-  comment: string;
-  rating: number;
-  userId: string; // TODO: Cambiar por nombre de usuario cuando esté disponible
-  createdAt: Date;
-}
+import { ReviewCardProps } from '@/types/review';
 
 export function ReviewCard({ comment, rating, userId, createdAt }: ReviewCardProps) {
   return (

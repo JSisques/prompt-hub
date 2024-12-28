@@ -1,22 +1,28 @@
-import { PromptDetail } from '@/components/prompt-detail';
+import { PromptDetail } from '@/components/prompts/detail';
 
-interface Props {
+type Props = {
   params: {
     id: string;
   };
-}
+  searchParams: Record<string, string | string[] | undefined>;
+};
 
 async function getPromptById(id: string) {
   // TODO: Implementar la llamada a la API para obtener el prompt
   // Por ahora retornamos datos de ejemplo
   return {
-    id,
+    id: '1',
     title: 'Ejemplo de Prompt',
     prompt: 'Este es un prompt de ejemplo...',
     category: 'Desarrollo',
     tags: ['IA', 'Programación', 'Productividad'],
-    author: 'Usuario',
+    description: 'Este es un prompt de ejemplo...',
+    author: {
+      id: '1',
+      username: 'Usuario',
+    },
     createdAt: new Date(),
+    updatedAt: new Date(),
     likes: 42,
     comments: 5,
     reviews: [

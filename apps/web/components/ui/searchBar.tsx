@@ -2,7 +2,7 @@
 
 import { Search } from 'lucide-react';
 import { Input } from './input';
-import { useSearch } from '@/context/searchContext';
+import { useSearch } from '@/providers/search';
 import { useEffect } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
 interface SearchBarProps {

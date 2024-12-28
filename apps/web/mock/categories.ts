@@ -1,0 +1,155 @@
+import { MockCategory } from '@/types/mock';
+
+export const mockCategories: MockCategory[] = [
+  {
+    id: '1',
+    title: 'Desarrollo de Software',
+    description: 'Prompts para mejorar tu productividad como desarrollador',
+    prompts: [
+      {
+        id: '1',
+        title: 'Code Review Assistant',
+        description: 'Un prompt que te ayuda a realizar mejores code reviews y encontrar problemas potenciales en el código.',
+        tags: ['Programación', 'Code Review', 'Buenas Prácticas'],
+        author: {
+          id: '1',
+          username: 'techmaster',
+        },
+        createdAt: '2024-01-15T10:00:00Z',
+        likes: 156,
+        comments: 23,
+      },
+      {
+        id: '2',
+        title: 'Refactoring Guide',
+        description: 'Asistente para refactorizar código y mejorar su calidad siguiendo las mejores prácticas.',
+        tags: ['Refactoring', 'Clean Code', 'Optimización'],
+        author: {
+          id: '2',
+          username: 'codeartist',
+        },
+        createdAt: '2024-01-16T15:30:00Z',
+        likes: 98,
+        comments: 15,
+      },
+      {
+        id: '3',
+        title: 'Debug Master',
+        description: 'Prompt especializado en ayudarte a encontrar y resolver bugs de manera eficiente.',
+        tags: ['Debugging', 'Solución de Problemas', 'Productividad'],
+        author: {
+          id: '3',
+          username: 'bugbuster',
+        },
+        createdAt: '2024-01-17T09:45:00Z',
+        likes: 78,
+        comments: 12,
+      },
+      {
+        id: '4',
+        title: 'API Designer',
+        description: 'Ayuda en el diseño de APIs RESTful siguiendo las mejores prácticas y estándares.',
+        tags: ['API', 'REST', 'Diseño'],
+        author: {
+          id: '4',
+          username: 'apiexpert',
+        },
+        createdAt: '2024-01-18T14:20:00Z',
+        likes: 112,
+        comments: 18,
+      },
+    ],
+  },
+  {
+    id: '2',
+    title: 'Marketing Digital',
+    description: 'Prompts para optimizar tus estrategias de marketing y contenido',
+    prompts: [
+      {
+        id: '5',
+        title: 'Copy Creativo',
+        description: 'Genera copys creativos y persuasivos para tus campañas de marketing.',
+        tags: ['Copywriting', 'Marketing', 'Creatividad'],
+        author: {
+          id: '5',
+          username: 'copymaster',
+        },
+        createdAt: '2024-01-19T11:15:00Z',
+        likes: 245,
+        comments: 34,
+      },
+      {
+        id: '6',
+        title: 'SEO Optimizer',
+        description: 'Optimiza tu contenido para motores de búsqueda y mejora tu posicionamiento.',
+        tags: ['SEO', 'Contenido', 'Optimización'],
+        author: {
+          id: '6',
+          username: 'seoexpert',
+        },
+        createdAt: '2024-01-20T16:40:00Z',
+        likes: 189,
+        comments: 27,
+      },
+      {
+        id: '7',
+        title: 'Social Media Manager',
+        description: 'Planifica y crea contenido efectivo para redes sociales.',
+        tags: ['Redes Sociales', 'Contenido', 'Engagement'],
+        author: {
+          id: '7',
+          username: 'socialmedia',
+        },
+        createdAt: '2024-01-21T13:25:00Z',
+        likes: 167,
+        comments: 21,
+      },
+    ],
+  },
+  {
+    id: '3',
+    title: 'Diseño y UX',
+    description: 'Prompts para mejorar tus diseños y la experiencia de usuario',
+    prompts: [
+      {
+        id: '8',
+        title: 'UI Pattern Generator',
+        description: 'Genera patrones de diseño UI modernos y efectivos para tus aplicaciones.',
+        tags: ['UI', 'Diseño', 'Patrones'],
+        author: {
+          id: '8',
+          username: 'uidesigner',
+        },
+        createdAt: '2024-01-22T10:30:00Z',
+        likes: 134,
+        comments: 19,
+      },
+      {
+        id: '9',
+        title: 'UX Writer',
+        description: 'Crea microcopy y textos UX que mejoren la experiencia de usuario.',
+        tags: ['UX', 'Copywriting', 'Microcopy'],
+        author: {
+          id: '9',
+          username: 'uxwriter',
+        },
+        createdAt: '2024-01-23T15:50:00Z',
+        likes: 156,
+        comments: 23,
+      },
+      {
+        id: '10',
+        title: 'Color Palette Creator',
+        description: 'Genera paletas de colores armoniosas y accesibles para tus diseños.',
+        tags: ['Color', 'Diseño', 'Accesibilidad'],
+        author: {
+          id: '10',
+          username: 'colormaster',
+        },
+        createdAt: '2024-01-24T12:15:00Z',
+        likes: 198,
+        comments: 29,
+      },
+    ],
+  },
+];

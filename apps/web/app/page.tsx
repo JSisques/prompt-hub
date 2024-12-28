@@ -1,4 +1,4 @@
-import { PromptCard } from '@/components/prompt-card';
+import { PromptCard } from '@/components/prompts/card';
 import { SearchBar } from '@/components/ui/searchBar';
 
 // Datos de ejemplo - En producción vendrían de una API
