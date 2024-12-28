@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu } from 'lucide-react';
+import { Menu, Plus, Heart, TrendingUp, BookOpen, Search, ShoppingBag, HelpCircle, Mail, Home } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -14,9 +14,20 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const menuItems = [
-    { href: '/prompts', label: 'Prompts' },
-    { href: '/categories', label: 'Categorías' },
-    { href: '/faq', label: 'FAQ' },
+    { href: '/prompts', label: 'Explorar', icon: Search },
+    { href: '/trending', label: 'Trending', icon: TrendingUp },
+    { href: '/marketplace', label: 'Marketplace', icon: ShoppingBag },
+  ];
+
+  const userItems = [
+    { href: '/prompts/create', label: 'Crear Prompt', icon: Plus },
+    { href: '/favorites', label: 'Mis Favoritos', icon: Heart },
+  ];
+
+  const resourceItems = [
+    { href: '/learn', label: 'Aprende', icon: BookOpen },
+    { href: '/about', label: 'Sobre Nosotros', icon: HelpCircle },
+    { href: '/contact', label: 'Contacto', icon: Mail },
   ];
 
   // Usuario de ejemplo - esto debería venir de tu sistema de autenticación
@@ -81,20 +92,75 @@ const Navbar = () => {
             <Separator />
 
             {/* Navegación principal */}
-            <nav className="flex-1 p-6">
-              <div className="flex flex-col gap-1">
-                {menuItems.map(item => (
+            <nav className="flex-1 overflow-y-auto">
+              <div className="flex flex-col gap-6 p-6">
+                {/* Acciones principales */}
+                <div className="space-y-1">
                   <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                      pathname.startsWith(item.href) ? 'bg-primary/10 text-primary hover:bg-primary/20' : 'hover:bg-muted'
+                    href="/"
+                    className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                      pathname === '/' ? 'bg-primary/10 text-primary hover:bg-primary/20' : 'hover:bg-muted'
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
-                    {item.label}
+                    <Home className="h-4 w-4" />
+                    Inicio
                   </Link>
-                ))}
+                </div>
+
+                {/* Explorar */}
+                <div className="space-y-1">
+                  <span className="px-4 text-xs font-medium text-muted-foreground">Explorar</span>
+                  {menuItems.map(item => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                        pathname.startsWith(item.href) ? 'bg-primary/10 text-primary hover:bg-primary/20' : 'hover:bg-muted'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Acciones de usuario */}
+                <div className="space-y-1">
+                  <span className="px-4 text-xs font-medium text-muted-foreground">Tu Espacio</span>
+                  {userItems.map(item => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                        pathname.startsWith(item.href) ? 'bg-primary/10 text-primary hover:bg-primary/20' : 'hover:bg-muted'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Recursos */}
+                <div className="space-y-1">
+                  <span className="px-4 text-xs font-medium text-muted-foreground">Recursos</span>
+                  {resourceItems.map(item => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                        pathname.startsWith(item.href) ? 'bg-primary/10 text-primary hover:bg-primary/20' : 'hover:bg-muted'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </nav>
 
