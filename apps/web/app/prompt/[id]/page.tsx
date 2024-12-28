@@ -1,10 +1,8 @@
-import { PromptDetail } from '@/components/prompts/detail';
-import { Metadata } from 'next';
+'use client';
 
-type PageProps = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+import { PromptDetail } from '@/components/prompts/detail';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 async function getPromptById(id: string) {
   // TODO: Implementar la llamada a la API para obtener el prompt
@@ -47,15 +45,24 @@ async function getPromptById(id: string) {
   };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const prompt = await getPromptById(params.id);
-  return {
-    title: prompt.title,
-    description: prompt.description,
-  };
-}
+export default function PromptDetailPage() {
+  const params = useParams();
+  const [prompt, setPrompt] = useState<any>(null);
 
-export default async function PromptDetailPage(props: PageProps) {
-  const prompt = await getPromptById(props.params.id);
+  useEffect(() => {
+    const fetchPrompt = async () => {
+      if (params.id) {
+        const data = await getPromptById(params.id as string);
+        setPrompt(data);
+      }
+    };
+
+    fetchPrompt();
+  }, [params.id]);
+
+  if (!prompt) {
+    return <div>Cargando...</div>;
+  }
+
   return <PromptDetail {...prompt} />;
 }
