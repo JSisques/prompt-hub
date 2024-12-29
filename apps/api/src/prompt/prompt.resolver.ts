@@ -26,15 +26,15 @@ export class PromptResolver {
   }
 
   @Mutation(() => PromptDto)
-  async createPrompt(@Args('prompt') prompt: CreatePromptDto): Promise<Prompt> {
-    this.logger.log(`Entering createPrompt(prompt: ${JSON.stringify(prompt)})`);
-    return this.promptService.createPrompt(prompt);
+  async createPrompt(@Args('input') input: CreatePromptDto): Promise<Prompt> {
+    this.logger.log(`Entering createPrompt(input: ${JSON.stringify(input)})`);
+    return this.promptService.createPrompt(input);
   }
 
   @Mutation(() => PromptDto)
-  async updatePrompt(@Args('id') id: string, @Args('prompt') prompt: UpdatePromptDto): Promise<Prompt> {
-    this.logger.log(`Entering updatePrompt(id: ${id}, prompt: ${JSON.stringify(prompt)})`);
-    return this.promptService.updatePrompt(id, prompt);
+  async updatePrompt(@Args('id') id: string, @Args('input') input: UpdatePromptDto): Promise<Prompt> {
+    this.logger.log(`Entering updatePrompt(id: ${id}, input: ${JSON.stringify(input)})`);
+    return this.promptService.updatePrompt(id, input);
   }
 
   @Mutation(() => PromptDto)

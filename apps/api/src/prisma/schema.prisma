@@ -43,6 +43,8 @@ model Prompt {
   llmId       String   @map("llm_id")
   published   Boolean  @default(false)
   views       Int      @default(0)
+  prompt      String   @db.Text
+  example     String   @db.Text
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 

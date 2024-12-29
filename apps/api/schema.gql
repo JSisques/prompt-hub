@@ -125,7 +125,7 @@ type Mutation {
   createCategory(data: CreateCategoryInput!): CategoryType!
   createLlm(llm: CreateLlmInput!): LlmType!
   createPost(input: CreatePostInput!): Post!
-  createPrompt(prompt: CreatePromptInput!): Prompt!
+  createPrompt(input: CreatePromptInput!): Prompt!
   createReview(review: CreateReviewInput!): ReviewType!
   createUser(user: CreateUserInput!): UserType!
   deleteCategory(id: String!): CategoryType!
@@ -138,7 +138,7 @@ type Mutation {
   updateCategory(data: UpdateCategoryInput!, id: String!): CategoryType!
   updateLlm(id: String!, llm: UpdateLlmInput!): LlmType!
   updatePost(id: String!, input: UpdatePostInput!): Post!
-  updatePrompt(id: String!, prompt: UpdatePromptInput!): Prompt!
+  updatePrompt(id: String!, input: UpdatePromptInput!): Prompt!
   updateReview(id: String!, review: UpdateReviewInput!): ReviewType!
   updateUser(id: String!, user: UpdateUserInput!): UserType!
 }
@@ -173,9 +173,13 @@ type Prompt {
   comments: [CommentType!]!
   content: String!
   createdAt: DateTime!
+  description: String!
+  example: String!
   id: String!
   likes: [String!]!
   llm: LlmType!
+  prompt: String!
+  published: Boolean!
   reviews: [ReviewType!]
   tags: [String!]!
   title: String!
@@ -188,9 +192,13 @@ input PromptInput {
   comments: [CommentInput!]!
   content: String!
   createdAt: DateTime!
+  description: String!
+  example: String!
   id: String!
   likes: [String!]!
   llm: LlmInput!
+  prompt: String!
+  published: Boolean!
   reviews: [ReviewInput!]
   tags: [String!]!
   title: String!

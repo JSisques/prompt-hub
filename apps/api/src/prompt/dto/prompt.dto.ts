@@ -23,6 +23,22 @@ export class PromptDto {
 
   @Field(() => String)
   @IsNotEmpty()
+  description: string;
+
+  @Field(() => String)
+  @IsNotEmpty()
+  prompt: string;
+
+  @Field(() => String)
+  @IsNotEmpty()
+  example: string;
+
+  @Field(() => Boolean)
+  @IsNotEmpty()
+  published: boolean;
+
+  @Field(() => String)
+  @IsNotEmpty()
   title: string;
 
   @Field(() => String)

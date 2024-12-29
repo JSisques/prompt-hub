@@ -7,11 +7,15 @@ export const CREATE_PROMPT = gql`
       title
       description
       prompt
-      category
+      example
+      category {
+        id
+        name
+      }
       tags
       author {
         id
-        username
+        name
       }
       createdAt
     }
