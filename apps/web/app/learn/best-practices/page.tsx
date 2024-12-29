@@ -291,7 +291,7 @@ function isMethodologyItem(item: PracticeItem): item is MethodologyItem {
 
 export default function BestPracticesPage() {
   return (
-    <div className="container max-w-4xl mx-auto py-8 px-4 md:px-0">
+    <div className="container max-w-4xl mx-auto py-4 px-4 md:px-0">
       <div className="space-y-6">
         <div className="flex items-center gap-3">
           <BookOpen className="h-8 w-8 text-primary" />
