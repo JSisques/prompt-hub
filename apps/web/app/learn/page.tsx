@@ -14,18 +14,18 @@ const guides = [
     level: 'Principiante',
   },
   {
-    title: 'Técnicas Avanzadas',
-    description: 'Domina técnicas avanzadas para mejorar tus resultados.',
-    icon: Target,
-    href: '/learn/advanced',
-    level: 'Avanzado',
-  },
-  {
     title: 'Mejores Prácticas',
     description: 'Descubre las mejores prácticas y consejos de expertos.',
     icon: Star,
     href: '/learn/best-practices',
     level: 'Intermedio',
+  },
+  {
+    title: 'Técnicas Avanzadas',
+    description: 'Domina técnicas avanzadas para mejorar tus resultados.',
+    icon: Target,
+    href: '/learn/advanced',
+    level: 'Avanzado',
   },
 ];
 

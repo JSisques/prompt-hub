@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { GitHubLogoIcon, TwitterLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
+import { GitHubLogoIcon, TwitterLogoIcon, InstagramLogoIcon, LinkedInLogoIcon, DiscordLogoIcon } from '@radix-ui/react-icons';
 import { useState, useEffect } from 'react';
 
 const footerLinks = [
@@ -9,7 +9,7 @@ const footerLinks = [
     title: 'Producto',
     links: [
       { label: 'Prompts', href: '/prompts' },
-      { label: 'Categorías', href: '/categories' },
+      { label: 'Explorar', href: '/explore' },
       { label: 'Novedades', href: '#' },
     ],
   },
@@ -58,6 +58,11 @@ const socialLinks = [
     label: 'Instagram',
     href: 'https://instagram.com/jsisques',
     icon: InstagramLogoIcon,
+  },
+  {
+    label: 'Discord',
+    href: 'https://discord.gg/jsisques',
+    icon: DiscordLogoIcon,
   },
 ];
 
