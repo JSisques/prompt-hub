@@ -33,7 +33,7 @@ const footerLinks = [
 
 const mobileLinks = [
   { label: 'Prompts', href: '/prompts' },
-  { label: 'Categorías', href: '/categories' },
+  { label: 'Explorar', href: '/explore' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Blog', href: '#' },
 ];

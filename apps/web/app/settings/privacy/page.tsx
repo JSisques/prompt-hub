@@ -11,9 +11,7 @@ import { FormFieldContext } from '@/types/form';
 
 const privacyFormSchema = z.object({
   profileVisibility: z.boolean().default(true),
-  searchable: z.boolean().default(true),
   showEmail: z.boolean().default(false),
-  allowMessages: z.boolean().default(true),
 });
 
 type PrivacyFormValues = z.infer<typeof privacyFormSchema>;
@@ -23,9 +21,7 @@ export default function PrivacyPage() {
     resolver: zodResolver(privacyFormSchema),
     defaultValues: {
       profileVisibility: true,
-      searchable: true,
       showEmail: false,
-      allowMessages: true,
     },
   });
 
@@ -50,7 +46,7 @@ export default function PrivacyPage() {
                 <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5 mb-4 sm:mb-0">
                     <FormLabel className="text-base">Perfil público</FormLabel>
-                    <FormDescription>Permite que otros usuarios vean tu perfil.</FormDescription>
+                    <FormDescription>Permite que otros usuarios vean tu perfil y tus prompts.</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -59,24 +55,6 @@ export default function PrivacyPage() {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="searchable"
-              render={({ field }: FormFieldContext<PrivacyFormValues>) => (
-                <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Aparecer en búsquedas</FormLabel>
-                    <FormDescription>Permite que otros usuarios te encuentren en las búsquedas.</FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </SettingsSection>
-
-          <SettingsSection title="Datos personales" description="Controla qué información personal es visible.">
             <FormField
               control={form.control}
               name="showEmail"
@@ -85,22 +63,6 @@ export default function PrivacyPage() {
                   <div className="space-y-0.5 mb-4 sm:mb-0">
                     <FormLabel className="text-base">Mostrar email</FormLabel>
                     <FormDescription>Permite que otros usuarios vean tu dirección de email.</FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="allowMessages"
-              render={({ field }: FormFieldContext<PrivacyFormValues>) => (
-                <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Permitir mensajes</FormLabel>
-                    <FormDescription>Permite que otros usuarios te envíen mensajes directos.</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
