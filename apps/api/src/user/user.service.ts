@@ -34,7 +34,6 @@ export class UserService {
 
     try {
       user.password = await this.cryptoService.hashPassword(user.password);
-      const newSettings = await this.prisma.userSettings.create({ data: {} });
       return this.prisma.user.create({
         data: {
           ...user,

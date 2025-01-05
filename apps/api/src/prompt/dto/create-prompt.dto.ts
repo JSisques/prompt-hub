@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 @ObjectType('CreatePromptOutput')
 @InputType('CreatePromptInput')
@@ -17,12 +17,12 @@ export class CreatePromptDto {
   @Field()
   @IsNotEmpty()
   @IsString()
-  description: string;
+  title: string;
 
   @Field()
   @IsNotEmpty()
   @IsString()
-  title: string;
+  description: string;
 
   @Field()
   @IsNotEmpty()
@@ -38,4 +38,19 @@ export class CreatePromptDto {
   @IsNotEmpty()
   @IsBoolean()
   published: boolean;
+
+  @Field()
+  @IsNumber()
+  @IsOptional()
+  views?: number;
+
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  prompt: string;
+
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  example: string;
 }

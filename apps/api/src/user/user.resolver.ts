@@ -25,7 +25,7 @@ export class UserResolver {
   }
 
   @Mutation(() => UserDto)
-  createUser(@Args('user') user: CreateUserDto): Promise<User> {
+  createUser(@Args('input') user: CreateUserDto): Promise<User> {
     return this.userService.createUser(user);
   }
 

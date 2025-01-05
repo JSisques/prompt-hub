@@ -20,7 +20,6 @@ import { AuthModule } from './auth/auth.module';
 import { LlmModule } from './llm/llm.module';
 import { HealthModule } from './health/health.module';
 import { CommentModule } from './comment/comment.module';
-import { BlogModule } from './blog/blog.module';
 import { UserSettingsModule } from './user-settings/user-settings.module';
 
 @Module({
@@ -43,7 +42,6 @@ import { UserSettingsModule } from './user-settings/user-settings.module';
     LlmModule,
     HealthModule,
     CommentModule,
-    BlogModule,
     UserSettingsModule,
   ],
   controllers: [AppController],

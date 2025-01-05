@@ -91,7 +91,6 @@ model Category {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   prompts Prompt[]
-  posts   Post[] // Categorías también para blog posts
 
   @@index([name])
   @@index([slug])
@@ -133,19 +132,16 @@ model Review {
 model Comment {
   id        String   @id @default(cuid())
   promptId  String?  @map("prompt_id")
-  postId    String?  @map("post_id")
   userId    String   @map("user_id")
   content   String   @db.Text
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   prompt Prompt? @relation(fields: [promptId], references: [id])
-  post   Post?   @relation(fields: [postId], references: [id])
   user   User    @relation(fields: [userId], references: [id])
   likes  Like[]
 
   @@index([promptId])
-  @@index([postId])
   @@index([userId])
   @@map("comments")
 }
@@ -197,7 +193,6 @@ model Like {
   id        String   @id @default(cuid())
   userId    String   @map("user_id")
   promptId  String?  @map("prompt_id")
-  postId    String?  @map("post_id")
   reviewId  String?  @map("review_id")
   commentId String?  @map("comment_id")
   createdAt DateTime @default(now()) @map("created_at")
@@ -208,12 +203,10 @@ model Like {
   comment Comment? @relation(fields: [commentId], references: [id])
 
   @@unique([userId, promptId])
-  @@unique([userId, postId])
   @@unique([userId, reviewId])
   @@unique([userId, commentId])
   @@index([userId])
   @@index([promptId])
-  @@index([postId])
   @@index([reviewId])
   @@index([commentId])
   @@map("likes")

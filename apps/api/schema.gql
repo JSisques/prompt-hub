@@ -2,16 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Category {
-  createdAt: DateTime!
-  description: String
-  id: ID!
-  name: String!
-  posts: [Post!]!
-  slug: String!
-  updatedAt: DateTime!
-}
-
 input CategoryInput {
   createdAt: DateTime!
   description: String!
@@ -26,17 +16,6 @@ type CategoryType {
   id: String!
   name: String!
   updatedAt: DateTime!
-}
-
-type Comment {
-  content: String!
-  createdAt: DateTime!
-  id: ID!
-  post: Post!
-  postId: String!
-  updatedAt: DateTime!
-  user: User!
-  userId: String!
 }
 
 input CommentInput {
@@ -63,24 +42,17 @@ input CreateLlmInput {
   name: String!
 }
 
-input CreatePostInput {
-  categoryId: String!
-  content: String!
-  coverImage: String!
-  excerpt: String!
-  published: Boolean
-  tagIds: [String!]
-  title: String!
-}
-
 input CreatePromptInput {
   categoryId: String!
   content: String!
   description: String!
+  example: String!
   llmId: String!
+  prompt: String!
   published: Boolean!
   title: String!
   userId: String!
+  views: Float!
 }
 
 input CreateReviewInput {
@@ -93,6 +65,17 @@ input CreateReviewInput {
 input CreateUserInput {
   email: String!
   password: String!
+}
+
+input CreateUserSettingsInput {
+  language: String!
+  notifyMarketingEmail: Boolean!
+  notifyNewComments: Boolean!
+  notifyNewLikes: Boolean!
+  notifyNewPrompts: Boolean!
+  notifyNewReviews: Boolean!
+  theme: String!
+  userId: String!
 }
 
 """
@@ -121,50 +104,27 @@ type LlmType {
 }
 
 type Mutation {
-  addComment(content: String!, postId: String!): Comment!
   createCategory(data: CreateCategoryInput!): CategoryType!
   createLlm(llm: CreateLlmInput!): LlmType!
-  createPost(input: CreatePostInput!): Post!
   createPrompt(input: CreatePromptInput!): Prompt!
   createReview(review: CreateReviewInput!): ReviewType!
-  createUser(user: CreateUserInput!): UserType!
+  createUser(input: CreateUserInput!): UserType!
+  createUserSettings(createUserSettingsInput: CreateUserSettingsInput!): UserSettings!
   deleteCategory(id: String!): CategoryType!
   deleteLlm(id: String!): LlmType!
-  deletePost(id: String!): Boolean!
   deletePrompt(id: String!): Prompt!
   deleteReview(id: String!): ReviewType!
   deleteUser(id: String!): UserType!
-  likePost(postId: String!): Boolean!
+  deleteUserSettings(id: String!): UserSettings!
+  login(email: String!, password: String!): UserType!
+  logout(id: String!): UserType!
+  register(input: CreateUserInput!): UserType!
   updateCategory(data: UpdateCategoryInput!, id: String!): CategoryType!
   updateLlm(id: String!, llm: UpdateLlmInput!): LlmType!
-  updatePost(id: String!, input: UpdatePostInput!): Post!
   updatePrompt(id: String!, input: UpdatePromptInput!): Prompt!
   updateReview(id: String!, review: UpdateReviewInput!): ReviewType!
   updateUser(id: String!, user: UpdateUserInput!): UserType!
-}
-
-type Post {
-  category: Category!
-  categoryId: String!
-  comments: [Comment!]!
-  content: String!
-  coverImage: String!
-  createdAt: DateTime!
-  excerpt: String!
-  id: ID!
-  published: Boolean!
-  slug: String!
-  tags: [Tag!]!
-  title: String!
-  updatedAt: DateTime!
-  user: User!
-  userId: String!
-  views: Int!
-}
-
-type PostsResponse {
-  posts: [Post!]!
-  total: Int!
+  updateUserSettings(id: String!, updateUserSettingsInput: UpdateUserSettingsInput!): UserSettings!
 }
 
 type Prompt {
@@ -217,10 +177,9 @@ type Query {
   getReviews: [ReviewType!]!
   getUser(id: String!): UserType!
   getUserByEmail(email: String!): UserType!
+  getUserSettings(userId: String!): UserSettings!
+  getUserSettingsById(id: String!): UserSettings!
   getUsers: [UserType!]!
-  post(id: String!): Post!
-  postBySlug(slug: String!): Post!
-  posts(categoryId: String, published: Boolean, searchQuery: String, skip: Int, tagId: String, take: Int): PostsResponse!
 }
 
 input ReviewInput {
@@ -247,16 +206,6 @@ type ReviewType {
   userId: String!
 }
 
-type Tag {
-  createdAt: DateTime!
-  description: String
-  id: ID!
-  name: String!
-  posts: [Post!]!
-  slug: String!
-  updatedAt: DateTime!
-}
-
 input UpdateCategoryInput {
   description: String!
   name: String!
@@ -265,16 +214,6 @@ input UpdateCategoryInput {
 input UpdateLlmInput {
   description: String!
   name: String!
-}
-
-input UpdatePostInput {
-  categoryId: String
-  content: String
-  coverImage: String
-  excerpt: String
-  published: Boolean
-  tagIds: [String!]
-  title: String
 }
 
 input UpdatePromptInput {
@@ -295,31 +234,62 @@ input UpdateUserInput {
   email: String!
 }
 
-type User {
-  avatar: String
-  comments: [Comment!]!
-  createdAt: DateTime!
-  email: String!
-  id: ID!
-  name: String!
-  posts: [Post!]!
-  updatedAt: DateTime!
+input UpdateUserSettingsInput {
+  language: String!
+  notifyMarketingEmail: Boolean!
+  notifyNewComments: Boolean!
+  notifyNewLikes: Boolean!
+  notifyNewPrompts: Boolean!
+  notifyNewReviews: Boolean!
+  theme: String!
 }
 
 input UserInput {
   active: Boolean = true
+  avatar: String!
+  bio: String!
   createdAt: DateTime
   email: String!
   id: String!
   name: String!
   updatedAt: DateTime
+  userSettings: UserSettingsInput!
+  username: String!
+}
+
+type UserSettings {
+  id: String!
+  language: String!
+  notifyMarketingEmail: Boolean!
+  notifyNewComments: Boolean!
+  notifyNewLikes: Boolean!
+  notifyNewPrompts: Boolean!
+  notifyNewReviews: Boolean!
+  theme: String!
+  userId: String!
+}
+
+input UserSettingsInput {
+  id: String!
+  language: String!
+  notifyMarketingEmail: Boolean!
+  notifyNewComments: Boolean!
+  notifyNewLikes: Boolean!
+  notifyNewPrompts: Boolean!
+  notifyNewReviews: Boolean!
+  theme: String!
+  userId: String!
 }
 
 type UserType {
   active: Boolean
+  avatar: String!
+  bio: String!
   createdAt: DateTime
   email: String!
   id: String!
   name: String!
   updatedAt: DateTime
+  userSettings: UserSettings!
+  username: String!
 }

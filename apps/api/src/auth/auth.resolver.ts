@@ -1,6 +1,4 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { CryptoService } from 'src/crypto/crypto.service';
-import { UserService } from 'src/user/user.service';
 import { UserDto } from 'src/user/dto/user.dto';
 import { User } from '@prisma/client';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
@@ -16,7 +14,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => UserDto)
-  async register(@Args('user') user: CreateUserDto): Promise<User> {
+  async register(@Args('input') user: CreateUserDto): Promise<User> {
     return this.authService.register(user);
   }
 

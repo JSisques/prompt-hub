@@ -1,7 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsString, IsBoolean } from 'class-validator';
 
-@ObjectType('CreateUserSettingsInput')
+@ObjectType('CreateUserSettings')
 @InputType('CreateUserSettingsInput')
 export class CreateUserSettingsDto {
   @Field()
