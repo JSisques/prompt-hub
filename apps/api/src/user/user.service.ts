@@ -18,12 +18,15 @@ export class UserService {
 
   async getUsers(): Promise<User[]> {
     this.logger.log('Entering getUsers()');
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({ include: { settings: true } });
   }
 
   async getUser(id: string): Promise<User> {
     this.logger.log(`Entering getUser(id: ${id})`);
-    return this.prisma.user.findUnique({ where: { id } });
+    return this.prisma.user.findUnique({
+      where: { id },
+      include: { settings: true },
+    });
   }
 
   async createUser(user: CreateUserDto): Promise<User> {
@@ -31,7 +34,16 @@ export class UserService {
 
     try {
       user.password = await this.cryptoService.hashPassword(user.password);
-      return this.prisma.user.create({ data: user });
+      const newSettings = await this.prisma.userSettings.create({ data: {} });
+      return this.prisma.user.create({
+        data: {
+          ...user,
+          settings: {
+            create: {},
+          },
+        },
+        include: { settings: true },
+      });
     } catch (error) {
       this.logger.error(`Error creating user: ${error}`);
       throw error;
@@ -40,16 +52,26 @@ export class UserService {
 
   async updateUser(id: string, user: UpdateUserDto): Promise<User> {
     this.logger.log(`Entering updateUser(id: ${id}, user: ${JSON.stringify(user)})`);
-    return this.prisma.user.update({ where: { id }, data: user });
+    return this.prisma.user.update({
+      where: { id },
+      data: user,
+      include: { settings: true },
+    });
   }
 
   async deleteUser(id: string): Promise<User> {
     this.logger.log(`Entering deleteUser(id: ${id})`);
-    return this.prisma.user.delete({ where: { id } });
+    return this.prisma.user.delete({
+      where: { id },
+      include: { settings: true },
+    });
   }
 
   async getUserByEmail(email: string): Promise<User> {
     this.logger.log(`Entering getUserByEmail(email: ${email})`);
-    return this.prisma.user.findUnique({ where: { email } });
+    return this.prisma.user.findUnique({
+      where: { email },
+      include: { settings: true },
+    });
   }
 }

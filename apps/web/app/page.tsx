@@ -1,47 +1,12 @@
 import { PromptCard } from '@/components/prompts/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Metadata } from 'next';
 
-// Datos de ejemplo - En producción vendrían de una API
-const examplePrompts = [
-  {
-    id: '1',
-    title: 'Asistente de Programación',
-    description: 'Un prompt especializado para ayudarte con la programación y debugging de código...',
-    tags: ['Programación', 'Desarrollo', 'Debugging'],
-    author: 'María García',
-    createdAt: new Date(),
-    likes: 42,
-    comments: 5,
-  },
-  {
-    id: '2',
-    title: 'Escritor Creativo',
-    description: 'Genera historias creativas y contenido original con este prompt especializado...',
-    tags: ['Escritura', 'Creatividad', 'Contenido'],
-    author: 'Juan Pérez',
-    createdAt: new Date(),
-    likes: 38,
-    comments: 7,
-  },
-  {
-    id: '3',
-    title: 'Análisis de Datos',
-    description: 'Prompt optimizado para el análisis y visualización de datos complejos...',
-    tags: ['Datos', 'Análisis', 'IA'],
-    author: 'Ana Martínez',
-    createdAt: new Date(),
-    likes: 56,
-    comments: 12,
-  },
-];
-
-const categories = [
-  { name: 'Programación', icon: '💻', count: 150 },
-  { name: 'Escritura', icon: '✍️', count: 89 },
-  { name: 'Marketing', icon: '📈', count: 120 },
-  { name: 'Diseño', icon: '🎨', count: 95 },
-];
+export const metadata: Metadata = {
+  title: 'Prompt Hub',
+  description: 'Descubre, comparte y monetiza los mejores prompts para ChatGPT, Midjourney, DALL-E y más.',
+};
 
 export default function Home() {
   return (

@@ -27,20 +27,12 @@ const appearanceFormSchema = z.object({
   theme: z.enum(['light', 'dark', 'system'], {
     required_error: 'Por favor selecciona un tema.',
   }),
-  fontSize: z.enum(['small', 'medium', 'large'], {
-    required_error: 'Por favor selecciona un tamaño de fuente.',
-  }),
-  reduceMotion: z.boolean().default(false),
-  enableSounds: z.boolean().default(true),
 });
 
 type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
 
 const defaultValues: Partial<AppearanceFormValues> = {
   theme: 'system',
-  fontSize: 'medium',
-  reduceMotion: false,
-  enableSounds: true,
 };
 
 export default function AppearancePage() {
@@ -82,63 +74,6 @@ export default function AppearancePage() {
                     </SelectContent>
                   </Select>
                   <FormDescription>El tema del sistema se adaptará automáticamente a tus preferencias.</FormDescription>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="fontSize"
-              render={({ field }: FormFieldContext<AppearanceFormValues>) => (
-                <FormItem>
-                  <FormLabel>Tamaño de fuente</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecciona un tamaño" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="small">Pequeño</SelectItem>
-                      <SelectItem value="medium">Mediano</SelectItem>
-                      <SelectItem value="large">Grande</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>Ajusta el tamaño del texto en toda la aplicación.</FormDescription>
-                </FormItem>
-              )}
-            />
-          </SettingsSection>
-
-          <SettingsSection title="Accesibilidad" description="Configura las opciones de accesibilidad.">
-            <FormField
-              control={form.control}
-              name="reduceMotion"
-              render={({ field }: FormFieldContext<AppearanceFormValues>) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">Reducir movimiento</FormLabel>
-                    <FormDescription>Minimiza las animaciones y transiciones.</FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="enableSounds"
-              render={({ field }: FormFieldContext<AppearanceFormValues>) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">Sonidos de la interfaz</FormLabel>
-                    <FormDescription>Reproduce sonidos al interactuar con elementos.</FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                  </FormControl>
                 </FormItem>
               )}
             />

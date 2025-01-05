@@ -10,7 +10,6 @@ import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { CategoryService } from './category/category.service';
 import { ReviewModule } from './review/review.module';
-import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { ReviewService } from './review/review.service';
 import { join } from 'path';
@@ -22,6 +21,7 @@ import { LlmModule } from './llm/llm.module';
 import { HealthModule } from './health/health.module';
 import { CommentModule } from './comment/comment.module';
 import { BlogModule } from './blog/blog.module';
+import { UserSettingsModule } from './user-settings/user-settings.module';
 
 @Module({
   imports: [
@@ -38,13 +38,13 @@ import { BlogModule } from './blog/blog.module';
     PromptModule,
     CategoryModule,
     ReviewModule,
-    UserModule,
     CryptoModule,
     AuthModule,
     LlmModule,
     HealthModule,
     CommentModule,
     BlogModule,
+    UserSettingsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, CategoryService, PromptService, UserService, ReviewService, CryptoService],

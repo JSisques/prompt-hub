@@ -118,6 +118,27 @@ export default function SettingsPage() {
           <SettingsSection title="Información General" description="Actualiza tu información personal básica.">
             <FormField
               control={form.control}
+              name="username"
+              render={({ field }: FormFieldContext<ProfileFormValues>) => (
+                <FormItem>
+                  <FormLabel>Nombre de usuario</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Tu nombre de usuario" {...field} />
+                  </FormControl>
+                  <FormDescription>Este es tu nombre de usuario visible en tu perfil.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="space-y-2">
+              <FormLabel>Email</FormLabel>
+              <Input type="email" value="usuario@ejemplo.com" disabled className="bg-muted" />
+              <FormDescription>Tu dirección de email no se puede cambiar.</FormDescription>
+            </div>
+
+            <FormField
+              control={form.control}
               name="name"
               render={({ field }: FormFieldContext<ProfileFormValues>) => (
                 <FormItem>
@@ -130,27 +151,6 @@ export default function SettingsPage() {
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }: FormFieldContext<ProfileFormValues>) => (
-                <FormItem>
-                  <FormLabel>Nombre de usuario</FormLabel>
-                  <FormControl>
-                    <Input placeholder="tu-nombre" {...field} />
-                  </FormControl>
-                  <FormDescription>Este es tu identificador único en la plataforma.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="space-y-2">
-              <FormLabel>Email</FormLabel>
-              <Input type="email" value="usuario@ejemplo.com" disabled className="bg-muted" />
-              <FormDescription>Tu dirección de email no se puede cambiar.</FormDescription>
-            </div>
           </SettingsSection>
 
           <SettingsSection title="Bio" description="Cuéntanos un poco sobre ti.">

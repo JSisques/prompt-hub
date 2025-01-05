@@ -92,30 +92,6 @@ export default function AccountPage() {
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="timezone"
-              render={({ field }: FormFieldContext<AccountFormValues>) => (
-                <FormItem>
-                  <FormLabel>Zona horaria</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecciona una zona horaria" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Europe/Madrid">Madrid (GMT+1)</SelectItem>
-                      <SelectItem value="Europe/London">Londres (GMT)</SelectItem>
-                      <SelectItem value="America/New_York">Nueva York (GMT-5)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>Tu zona horaria actual.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </SettingsSection>
 
           <SettingsSection title="Contraseña" description="Cambia tu contraseña actual.">
