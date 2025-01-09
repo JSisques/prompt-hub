@@ -1,12 +1,9 @@
-import { PromptCard } from '@/components/prompts/card';
+'use client';
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Prompt Hub',
-  description: 'Descubre, comparte y monetiza los mejores prompts para ChatGPT, Midjourney, DALL-E y más.',
-};
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   return (
