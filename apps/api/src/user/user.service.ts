@@ -34,6 +34,7 @@ export class UserService {
 
     try {
       user.password = await this.cryptoService.hashPassword(user.password);
+      this.logger.debug(`Hashed password: ${user.password}`);
       return this.prisma.user.create({
         data: {
           ...user,

@@ -20,9 +20,13 @@ export class AuthService {
     this.logger.log(`Entering login(email: ${email})`);
 
     const user = await this.userService.getUserByEmail(email);
+
+    this.logger.log(`User found: ${JSON.stringify(user)}`);
+
     const isPasswordValid = await this.cryptoService.comparePassword(password, user.password);
 
     if (!isPasswordValid) {
+      this.logger.error('Invalid password');
       throw new Error('Invalid password');
     }
 
@@ -30,7 +34,7 @@ export class AuthService {
   }
 
   async register(user: CreateUserDto): Promise<User> {
-    user.password = await this.cryptoService.hashPassword(user.password);
+    this.logger.log(`Entering register(user: ${JSON.stringify(user)})`);
     return this.userService.createUser(user);
   }
 

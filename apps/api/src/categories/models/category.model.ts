@@ -1,5 +1,4 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Post } from '../../blog/models/post.model';
 
 @ObjectType()
 export class Category {
@@ -14,9 +13,6 @@ export class Category {
 
   @Field({ nullable: true })
   description?: string;
-
-  @Field(() => [Post])
-  posts: Post[];
 
   @Field(() => Date)
   createdAt: Date;

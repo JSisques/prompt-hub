@@ -1,13 +1,57 @@
+'use client';
+
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { LOGIN } from '@/lib/graphql/auth/mutations';
+import { graphqlClient } from '@/lib/apollo-client';
+import { signIn } from 'next-auth/react';
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const response = await graphqlClient.mutate({
+        mutation: LOGIN,
+        variables: {
+          email,
+          password,
+        },
+      });
+
+      const result = await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: '/',
+      });
+
+      if (result?.error) {
+        throw new Error(result.error);
+      }
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Algo salió mal');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <Link href="/" className="flex items-center gap-2 font-medium">
@@ -25,11 +69,11 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
           <div className="flex flex-col gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="tu@email.com" required />
+              <Input id="email" type="email" placeholder="tu@email.com" required value={email} onChange={e => setEmail(e.target.value)} />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Contraseña</Label>
-              <Input id="password" type="password" required />
+              <Input id="password" type="password" required value={password} onChange={e => setPassword(e.target.value)} />
             </div>
             <div className="flex justify-center">
               <Link href="#" className="text-sm text-muted-foreground hover:text-primary">

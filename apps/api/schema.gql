@@ -246,15 +246,15 @@ input UpdateUserSettingsInput {
 
 input UserInput {
   active: Boolean = true
-  avatar: String!
-  bio: String!
+  avatar: String
+  bio: String
   createdAt: DateTime
   email: String!
   id: String!
-  name: String!
+  name: String
   updatedAt: DateTime
   userSettings: UserSettingsInput!
-  username: String!
+  username: String
 }
 
 type UserSettings {
@@ -283,13 +283,13 @@ input UserSettingsInput {
 
 type UserType {
   active: Boolean
-  avatar: String!
-  bio: String!
+  avatar: String
+  bio: String
   createdAt: DateTime
   email: String!
   id: String!
-  name: String!
+  name: String
   updatedAt: DateTime
   userSettings: UserSettings!
-  username: String!
+  username: String
 }
