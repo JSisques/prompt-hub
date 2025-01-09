@@ -9,10 +9,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { usePathname } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+
+  const { data: session } = useSession();
 
   const menuItems = [
     { href: '/explore', label: 'Explorar', icon: Search },
@@ -30,13 +33,6 @@ const Navbar = () => {
     { href: '/about', label: 'Sobre Nosotros', icon: HelpCircle },
     { href: '/contact', label: 'Contacto', icon: Mail },
   ];
-
-  // Usuario de ejemplo - esto debería venir de tu sistema de autenticación
-  const user = {
-    name: 'John Doe',
-    email: 'john@example.com',
-    avatar: 'https://github.com/shadcn.png',
-  };
 
   // Combinamos los elementos para la navegación desktop
   const desktopNavItems = [
@@ -70,8 +66,8 @@ const Navbar = () => {
         ))}
         <Link href="/settings" className="flex items-center gap-2 ml-4">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarImage src={session?.user?.avatar} alt={session?.user?.username} />
+            <AvatarFallback>{session?.user?.username.slice(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
         </Link>
       </div>
@@ -92,12 +88,12 @@ const Navbar = () => {
                 <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
                 <div className="flex items-center gap-4">
                   <Avatar className="h-12 w-12">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    <AvatarImage src={session?.user?.avatar} alt={session?.user?.username} />
+                    <AvatarFallback>{session?.user?.username.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
-                    <span className="font-semibold text-lg">{user.name}</span>
-                    <span className="text-sm text-muted-foreground">{user.email}</span>
+                    <span className="font-semibold text-lg">{session?.user?.username}</span>
+                    <span className="text-sm text-muted-foreground">{session?.user?.email}</span>
                   </div>
                 </div>
               </SheetHeader>

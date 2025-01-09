@@ -10,7 +10,10 @@ import { SettingsSection } from '@/components/settings/section';
 import { FormFieldContext } from '@/types/form';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ImageIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { graphqlClient } from '@/lib/apollo-client';
+import { UPDATE_USER } from '@/lib/graphql';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
@@ -46,23 +49,66 @@ const profileFormSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export default function SettingsPage() {
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const { data: session, update } = useSession();
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: '',
-      username: '',
-      bio: '',
+      name: session?.user?.name || '',
+      username: session?.user?.username || '',
+      bio: session?.user?.bio || '',
     },
     mode: 'onChange',
   });
 
-  function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: 'Has actualizado tu perfil',
-      description: 'Los cambios han sido guardados correctamente.',
-    });
+  useEffect(() => {
+    if (session?.user) {
+      form.reset({
+        name: session.user.name || '',
+        username: session.user.username || '',
+        bio: session.user.bio || '',
+      });
+    }
+  }, [session, form]);
+
+  async function onSubmit(data: ProfileFormValues) {
+    try {
+      const { data: responseData } = await graphqlClient.mutate({
+        mutation: UPDATE_USER,
+        variables: {
+          id: session?.user?.id,
+          input: {
+            ...data,
+          },
+        },
+      });
+
+      if (responseData?.updateUser) {
+        const updatedUser = responseData.updateUser;
+
+        await update({
+          ...session,
+          user: {
+            ...session?.user,
+            name: updatedUser.name,
+            username: updatedUser.username,
+            bio: updatedUser.bio,
+            avatar: updatedUser.avatar,
+          },
+        });
+
+        toast({
+          title: 'Has actualizado tu perfil',
+          description: 'Los cambios han sido guardados correctamente.',
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Error',
+        description: 'Ha ocurrido un error al actualizar tu perfil.',
+      });
+    }
   }
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +116,13 @@ export default function SettingsPage() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatarPreview(reader.result as string);
+        update({
+          ...session,
+          user: {
+            ...session?.user,
+            avatar: reader.result as string,
+          },
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -92,7 +144,7 @@ export default function SettingsPage() {
                   <FormControl>
                     <div className="flex items-center gap-4">
                       <Avatar className="h-24 w-24">
-                        <AvatarImage src={avatarPreview || ''} />
+                        <AvatarImage src={session?.user?.avatar || ''} />
                         <AvatarFallback>
                           <ImageIcon className="h-12 w-12 text-muted-foreground" />
                         </AvatarFallback>
@@ -133,7 +185,7 @@ export default function SettingsPage() {
 
             <div className="space-y-2">
               <FormLabel>Email</FormLabel>
-              <Input type="email" value="usuario@ejemplo.com" disabled className="bg-muted" />
+              <Input type="email" value={session?.user?.email || ''} disabled className="bg-muted" />
               <FormDescription>Tu dirección de email no se puede cambiar.</FormDescription>
             </div>
 
@@ -151,9 +203,7 @@ export default function SettingsPage() {
                 </FormItem>
               )}
             />
-          </SettingsSection>
 
-          <SettingsSection title="Bio" description="Cuéntanos un poco sobre ti.">
             <FormField
               control={form.control}
               name="bio"

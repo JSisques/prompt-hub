@@ -30,6 +30,10 @@ export const authOptions: AuthOptions = {
                   login(email: $email, password: $password) {
                     id
                     email
+                    username
+                    name
+                    avatar
+                    bio
                   }
                 }
               `,
@@ -47,6 +51,10 @@ export const authOptions: AuthOptions = {
             return {
               id: user.id,
               email: user.email,
+              username: user.username,
+              name: user.name,
+              avatar: user.avatar,
+              bio: user.bio,
             };
           }
 
@@ -65,14 +73,21 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.username = user.username;
+        token.bio = user.bio;
+        token.avatar = user.avatar;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
+        session.user.id = token.id as string;
         session.user.email = token.email as string;
         session.user.name = token.name as string;
         session.user.image = token.image as string;
+        session.user.username = token.username as string;
+        session.user.bio = token.bio as string;
+        session.user.avatar = token.avatar as string;
       }
       return session;
     },

@@ -3,11 +3,14 @@
 import { ApolloProvider } from '@apollo/client';
 import { graphqlClient } from '@/lib/apollo-client';
 import { SearchProvider } from './search';
+import { SessionProvider } from 'next-auth/react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ApolloProvider client={graphqlClient}>
-      <SearchProvider>{children}</SearchProvider>
+      <SessionProvider>
+        <SearchProvider>{children}</SearchProvider>
+      </SessionProvider>
     </ApolloProvider>
   );
 }
