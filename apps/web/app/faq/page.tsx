@@ -67,7 +67,7 @@ const faqs: FAQ[] = [
 
 export default function FAQPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="space-y-8">
       <FAQSection title="Preguntas Frecuentes" description="Encuentra respuestas a las preguntas más comunes sobre Prompt Hub" faqs={faqs} />
     </div>
   );
