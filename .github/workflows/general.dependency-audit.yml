@@ -17,18 +17,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'yarn'
 
       - name: Audit API dependencies
         working-directory: ./apps/api
         run: |
-          npm install
-          npm audit
+          yarn install --frozen-lockfile
+          yarn audit
 
       - name: Audit Web dependencies
         working-directory: ./apps/web
         run: |
-          npm install
-          npm audit
+          yarn install --frozen-lockfile
+          yarn audit
 
       - name: Run Dependency Review
         uses: actions/dependency-review-action@v3
