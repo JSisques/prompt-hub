@@ -1,0 +1,32 @@
+name: Web Build
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'apps/web/**'
+  pull_request:
+    branches: [main, dev]
+    paths:
+      - 'apps/web/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: ./apps/web
+        run: npm install
+
+      - name: Build
+        working-directory: ./apps/web
+        run: npm run build
