@@ -2,11 +2,11 @@ name: Web Lint and Test
 
 on:
   push:
-    branches: [main, dev]
+    branches: [master, dev]
     paths:
       - 'apps/web/**'
   pull_request:
-    branches: [main, dev]
+    branches: [master, dev]
     paths:
       - 'apps/web/**'
 
