@@ -2,11 +2,11 @@ name: API Lint and Test
 
 on:
   push:
-    branches: [main, dev]
+    branches: [master, dev]
     paths:
       - 'apps/api/**'
   pull_request:
-    branches: [main, dev]
+    branches: [master, dev]
     paths:
       - 'apps/api/**'
 
