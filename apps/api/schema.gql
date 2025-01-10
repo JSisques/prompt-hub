@@ -65,6 +65,7 @@ input CreateReviewInput {
 input CreateUserInput {
   email: String!
   password: String!
+  username: String!
 }
 
 input CreateUserSettingsInput {

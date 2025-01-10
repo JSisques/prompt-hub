@@ -3,7 +3,6 @@ import { UserService } from 'src/user/user.service';
 import { CryptoService } from 'src/crypto/crypto.service';
 import { User } from '@prisma/client';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
@@ -35,6 +34,19 @@ export class AuthService {
 
   async register(user: CreateUserDto): Promise<User> {
     this.logger.log(`Entering register(user: ${JSON.stringify(user)})`);
+
+    const existingUserByEmail = await this.userService.getUserByEmail(user.email);
+    if (existingUserByEmail) {
+      this.logger.error(`User with email ${user.email} already exists`);
+      throw new Error('El email ya está registrado');
+    }
+
+    const existingUserByUsername = await this.userService.getUserByUsername(user.username);
+    if (existingUserByUsername) {
+      this.logger.error(`User with username ${user.username} already exists`);
+      throw new Error('El nombre de usuario ya está en uso');
+    }
+
     return this.userService.createUser(user);
   }
 

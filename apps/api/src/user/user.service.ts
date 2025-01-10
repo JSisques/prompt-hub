@@ -74,4 +74,12 @@ export class UserService {
       include: { settings: true },
     });
   }
+
+  async getUserByUsername(username: string): Promise<User> {
+    this.logger.log(`Entering getUserByUsername(username: ${username})`);
+    return this.prisma.user.findUnique({
+      where: { username },
+      include: { settings: true },
+    });
+  }
 }
