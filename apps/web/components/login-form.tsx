@@ -25,16 +25,18 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     setError('');
 
     try {
+      const trimmedEmail = email.trim();
+
       const response = await graphqlClient.mutate({
         mutation: LOGIN,
         variables: {
-          email,
+          email: trimmedEmail,
           password,
         },
       });
 
       const result = await signIn('credentials', {
-        email,
+        email: trimmedEmail,
         password,
         callbackUrl: '/',
       });

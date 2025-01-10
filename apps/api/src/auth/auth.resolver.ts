@@ -10,12 +10,17 @@ export class AuthResolver {
 
   @Mutation(() => UserDto)
   async login(@Args('email') email: string, @Args('password') password: string): Promise<User> {
-    return this.authService.login(email, password);
+    return this.authService.login(email.trim(), password);
   }
 
   @Mutation(() => UserDto)
   async register(@Args('input') user: CreateUserDto): Promise<User> {
-    return this.authService.register(user);
+    const trimmedUser = {
+      ...user,
+      email: user.email.trim(),
+      username: user.username.trim(),
+    };
+    return this.authService.register(trimmedUser);
   }
 
   @Mutation(() => UserDto)

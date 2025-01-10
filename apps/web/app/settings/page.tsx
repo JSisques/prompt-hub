@@ -185,7 +185,12 @@ export default function SettingsPage() {
 
             <div className="space-y-2">
               <FormLabel>Email</FormLabel>
-              <Input type="email" value={session?.user?.email || ''} disabled className="bg-muted" />
+              <Input
+                type="email"
+                value={(session?.user?.email || '').charAt(0).toUpperCase() + (session?.user?.email || '').slice(1).toLowerCase()}
+                disabled
+                className="bg-muted"
+              />
               <FormDescription>Tu dirección de email no se puede cambiar.</FormDescription>
             </div>
 
