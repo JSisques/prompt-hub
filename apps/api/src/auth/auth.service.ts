@@ -3,7 +3,6 @@ import { UserService } from 'src/user/user.service';
 import { CryptoService } from 'src/crypto/crypto.service';
 import { User } from '@prisma/client';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
