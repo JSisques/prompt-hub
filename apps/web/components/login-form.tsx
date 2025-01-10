@@ -116,11 +116,11 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
       </form>
       <div className="text-balance text-center text-xs text-muted-foreground">
         Al continuar, aceptas nuestros{' '}
-        <Link href="#" className="hover:text-primary underline underline-offset-4">
+        <Link href="/terms" className="hover:text-primary underline underline-offset-4">
           Términos de Servicio
         </Link>{' '}
         y{' '}
-        <Link href="#" className="hover:text-primary underline underline-offset-4">
+        <Link href="/privacy" className="hover:text-primary underline underline-offset-4">
           Política de Privacidad
         </Link>
         .
