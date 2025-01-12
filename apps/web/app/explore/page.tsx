@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Search, SlidersHorizontal } from 'lucide-react';
 import { useState } from 'react';
 import { PromptCard } from '@/components/prompts/card';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 // Datos de ejemplo - esto vendría de una API
 const mockPrompts = [
@@ -45,9 +47,9 @@ const mockPrompts = [
 const filters = [
   {
     id: 'model',
-    label: 'Modelo',
+    label: t('pages.explore.filterOptions.model.label'),
     options: [
-      { value: 'all', label: 'Todos' },
+      { value: 'all', label: t('pages.explore.filterOptions.model.all') },
       { value: 'gpt-4', label: 'GPT-4' },
       { value: 'gpt-3.5', label: 'GPT-3.5' },
       { value: 'claude', label: 'Claude' },
@@ -55,18 +57,18 @@ const filters = [
   },
   {
     id: 'language',
-    label: 'Idioma',
+    label: t('pages.explore.filterOptions.language.label'),
     options: [
-      { value: 'all', label: 'Todos' },
+      { value: 'all', label: t('pages.explore.filterOptions.language.all') },
       { value: 'es', label: 'Español' },
       { value: 'en', label: 'Inglés' },
     ],
   },
   {
     id: 'category',
-    label: 'Categoría',
+    label: t('pages.explore.filterOptions.category.label'),
     options: [
-      { value: 'all', label: 'Todas' },
+      { value: 'all', label: t('pages.explore.filterOptions.category.all') },
       { value: 'writing', label: 'Escritura' },
       { value: 'programming', label: 'Programación' },
       { value: 'design', label: 'Diseño' },
@@ -78,15 +80,17 @@ export default function ExplorePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold flex items-center gap-2">
           <Search className="h-8 w-8 text-primary" />
-          Explorar Prompts
+          {t('pages.explore.title')}
         </h1>
-        <p className="text-muted-foreground mt-2">Descubre prompts útiles para diferentes propósitos y modelos de IA.</p>
+        <p className="text-muted-foreground mt-2">{t('pages.explore.subtitle')}</p>
       </div>
 
       {/* Búsqueda y Filtros */}
@@ -94,11 +98,11 @@ export default function ExplorePage() {
         <div className="flex gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Buscar prompts..." className="pl-9" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+            <Input placeholder={t('pages.explore.search')} className="pl-9" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
           </div>
           <Button variant="outline" className="flex items-center gap-2" onClick={() => setShowFilters(!showFilters)}>
             <SlidersHorizontal className="h-4 w-4" />
-            Filtros
+            {t('pages.explore.filters')}
           </Button>
         </div>
 
@@ -111,7 +115,7 @@ export default function ExplorePage() {
                   <label className="text-sm font-medium">{filter.label}</label>
                   <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder={`Seleccionar ${filter.label.toLowerCase()}`} />
+                      <SelectValue placeholder={t('pages.explore.select.placeholder', { field: filter.label })} />
                     </SelectTrigger>
                     <SelectContent>
                       {filter.options.map(option => (

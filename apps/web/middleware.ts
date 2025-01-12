@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Rutas que requieren autenticación
-const protectedPaths = ['/settings', '/favorites', '/prompts/create', '/prompts/edit', '/marketplace/sell'];
+const protectedPaths = ['/settings', '/favorites', '/prompt/create', '/prompts/edit', '/marketplace/sell'];
 
 // Rutas públicas (no requieren autenticación)
 const publicPaths = ['/auth/login', '/auth/register', '/auth/forgot-password'];

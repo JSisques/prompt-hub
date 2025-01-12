@@ -1,0 +1,75 @@
+{
+  "appName": "Prompt Hub",
+  "welcome": "Bienvenido",
+  "navigation": {
+    "home": "Inicio",
+    "explore": "Explorar",
+    "trending": "Tendencias",
+    "marketplace": "Marketplace",
+    "learn": "Aprende",
+    "createPrompt": "Crear Prompt",
+    "favorites": "Favoritos",
+    "about": "Acerca de",
+    "settings": "Configuración"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "loading": "Cargando..."
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "signUp": "Registrarse",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "rememberMe": "Recordarme"
+  },
+  "pages": {
+    "home": {
+      "title": "Potencia tu Creatividad con IA",
+      "description": "Descubre, comparte y monetiza los mejores prompts para ChatGPT, Midjourney, DALL-E y más.",
+      "createPrompt": "Crear mi Primer Prompt",
+      "explorePrompts": "Explorar Prompts",
+      "features": {
+        "verified": {
+          "title": "Prompts Verificados",
+          "description": "Todos los prompts son probados y validados por nuestra comunidad de expertos."
+        },
+        "marketplace": {
+          "title": "Marketplace",
+          "description": "Vende tus mejores prompts o encuentra joyas creadas por otros expertos."
+        },
+        "customization": {
+          "title": "Personalización Total",
+          "description": "Adapta y personaliza los prompts según tus necesidades específicas."
+        }
+      }
+    },
+    "explore": {
+      "title": "Explorar Prompts",
+      "subtitle": "Descubre prompts útiles para diferentes propósitos y modelos de IA",
+      "search": "Buscar prompts...",
+      "filters": "Filtros",
+      "filterOptions": {
+        "model": {
+          "label": "Modelo",
+          "all": "Todos"
+        },
+        "language": {
+          "label": "Idioma",
+          "all": "Todos"
+        },
+        "category": {
+          "label": "Categoría",
+          "all": "Todas"
+        }
+      },
+      "select": {
+        "placeholder": "Seleccionar {{field}}"
+      }
+    }
+  }
+}

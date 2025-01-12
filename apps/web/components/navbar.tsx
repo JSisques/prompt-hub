@@ -10,35 +10,38 @@ import { usePathname } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useSession } from 'next-auth/react';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  const { t } = useTranslation();
+
   const { data: session } = useSession();
 
   const menuItems = [
-    { href: '/explore', label: 'Explorar', icon: Search },
-    { href: '/trending', label: 'Trending', icon: TrendingUp },
-    { href: '/marketplace', label: 'Marketplace', icon: ShoppingBag },
-    { href: '/learn', label: 'Aprende', icon: BookOpen },
+    { href: '/explore', label: t('navigation.explore'), icon: Search },
+    { href: '/trending', label: t('navigation.trending'), icon: TrendingUp },
+    { href: '/marketplace', label: t('navigation.marketplace'), icon: ShoppingBag },
+    { href: '/learn', label: t('navigation.learn'), icon: BookOpen },
   ];
 
   const userItems = [
-    { href: '/prompts/create', label: 'Crear Prompt', icon: Plus },
-    { href: '/favorites', label: 'Mis Favoritos', icon: Heart },
+    { href: '/prompt/create', label: t('navigation.createPrompt'), icon: Plus },
+    { href: '/favorites', label: t('navigation.favorites'), icon: Heart },
   ];
 
   const resourceItems = [
-    { href: '/about', label: 'Sobre Nosotros', icon: HelpCircle },
-    { href: '/contact', label: 'Contacto', icon: Mail },
+    { href: '/about', label: t('navigation.about'), icon: HelpCircle },
+    { href: '/contact', label: t('navigation.contact'), icon: Mail },
   ];
 
   // Combinamos los elementos para la navegación desktop
   const desktopNavItems = [
     ...menuItems,
-    { href: '/favorites', label: 'Favoritos', icon: Heart },
-    { href: '/prompts/create', label: 'Crear', icon: Plus },
+    { href: '/favorites', label: t('navigation.favorites'), icon: Heart },
+    { href: '/prompt/create', label: t('navigation.createPrompt'), icon: Plus },
   ];
 
   return (
@@ -46,7 +49,7 @@ const Navbar = () => {
       <div className="flex items-center gap-2">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">PH</div>
-          <span className="font-semibold text-lg">Prompt Hub</span>
+          <span className="font-semibold text-lg">{t('appName')}</span>
         </Link>
       </div>
 
@@ -183,7 +186,7 @@ const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                 >
                   <Settings className="h-5 w-5" />
-                  Configuración
+                  {t('navigation.settings')}
                 </Link>
               </div>
             </div>
