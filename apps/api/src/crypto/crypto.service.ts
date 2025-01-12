@@ -1,15 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { ConfigService } from '@nestjs/config';
+
 @Injectable()
 export class CryptoService {
-  constructor(private readonly configService: ConfigService) {}
+  private readonly logger;
 
-  async hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, 10);
+  constructor() {
+    this.logger = new Logger(CryptoService.name);
   }
 
-  async comparePassword(password: string, hashedPassword: string): Promise<boolean> {
-    return bcrypt.compare(await this.hashPassword(password), hashedPassword);
+  async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 10);
+  }
+
+  async comparePassword(inputPassword: string, originalPassword: string): Promise<boolean> {
+    this.logger.log(`Entering comparePassword()`);
+    this.logger.debug(`Comparing password: ${inputPassword} with stored password: ${originalPassword}`);
+    return await bcrypt.compare(inputPassword, originalPassword);
   }
 }

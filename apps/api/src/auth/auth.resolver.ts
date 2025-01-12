@@ -1,6 +1,4 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { CryptoService } from 'src/crypto/crypto.service';
-import { UserService } from 'src/user/user.service';
 import { UserDto } from 'src/user/dto/user.dto';
 import { User } from '@prisma/client';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
@@ -12,12 +10,17 @@ export class AuthResolver {
 
   @Mutation(() => UserDto)
   async login(@Args('email') email: string, @Args('password') password: string): Promise<User> {
-    return this.authService.login(email, password);
+    return this.authService.login(email.trim(), password);
   }
 
   @Mutation(() => UserDto)
-  async register(@Args('user') user: CreateUserDto): Promise<User> {
-    return this.authService.register(user);
+  async register(@Args('input') user: CreateUserDto): Promise<User> {
+    const trimmedUser = {
+      ...user,
+      email: user.email.trim(),
+      username: user.username.trim(),
+    };
+    return this.authService.register(trimmedUser);
   }
 
   @Mutation(() => UserDto)

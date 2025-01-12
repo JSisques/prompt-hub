@@ -50,56 +50,7 @@ export default function NotificationsPage() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <SettingsSection title="Resumen por Email" description="Configura la frecuencia de los resúmenes por email.">
-            <FormField
-              control={form.control}
-              name="emailDigest"
-              render={({ field }: FormFieldContext<NotificationsFormValues>) => (
-                <FormItem className="space-y-3">
-                  <FormControl>
-                    <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-1">
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="daily" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Diario</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="weekly" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Semanal</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="never" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Nunca</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </SettingsSection>
-
           <SettingsSection title="Notificaciones Push" description="Selecciona los tipos de notificaciones que quieres recibir.">
-            <FormField
-              control={form.control}
-              name="security"
-              render={({ field }: FormFieldContext<NotificationsFormValues>) => (
-                <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Alertas de seguridad</FormLabel>
-                    <FormDescription>Recibe notificaciones sobre actividad sospechosa y alertas de seguridad.</FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
             <FormField
               control={form.control}
               name="prompts"
@@ -134,12 +85,28 @@ export default function NotificationsPage() {
 
             <FormField
               control={form.control}
-              name="mentions"
+              name="likes"
               render={({ field }: FormFieldContext<NotificationsFormValues>) => (
                 <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Menciones</FormLabel>
-                    <FormDescription>Notificaciones cuando alguien te menciona en un comentario.</FormDescription>
+                    <FormLabel className="text-base">Likes</FormLabel>
+                    <FormDescription>Notificaciones cuando alguien te da like a tus prompts.</FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="reviews"
+              render={({ field }: FormFieldContext<NotificationsFormValues>) => (
+                <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5 mb-4 sm:mb-0">
+                    <FormLabel className="text-base">Reviews</FormLabel>
+                    <FormDescription>Notificaciones cuando alguien escribe una review a tus prompts.</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />

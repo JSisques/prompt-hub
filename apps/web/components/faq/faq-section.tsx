@@ -1,5 +1,6 @@
 import { FAQ } from '@/types/faq';
 import { FAQCategory } from './faq-category';
+import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 
 interface FAQSectionProps {
   title: string;
@@ -9,10 +10,13 @@ interface FAQSectionProps {
 
 export function FAQSection({ title, description, faqs }: FAQSectionProps) {
   return (
-    <div className="mx-auto max-w-4xl">
-      <div className="mb-8 text-center">
-        <h1 className="mb-2 text-3xl font-bold">{title}</h1>
-        {description && <p className="text-muted-foreground">{description}</p>}
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold flex items-center gap-2">
+          <QuestionMarkCircledIcon className="h-8 w-8 text-primary" />
+          Preguntas Frecuentes
+        </h1>
+        {description && <p className="text-muted-foreground mt-2">{description}</p>}
       </div>
 
       <div className="space-y-8">

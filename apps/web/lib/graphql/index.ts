@@ -29,4 +29,4 @@ export * from './social/mutations';
 
 // User
 export * from './user/queries';
-export * from './user/current';
+export * from './user/mutations';

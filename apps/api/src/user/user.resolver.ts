@@ -25,13 +25,13 @@ export class UserResolver {
   }
 
   @Mutation(() => UserDto)
-  createUser(@Args('user') user: CreateUserDto): Promise<User> {
+  createUser(@Args('input') user: CreateUserDto): Promise<User> {
     return this.userService.createUser(user);
   }
 
   @Mutation(() => UserDto)
-  updateUser(@Args('id') id: string, @Args('user') user: UpdateUserDto): Promise<User> {
-    return this.userService.updateUser(id, user);
+  updateUser(@Args('id') id: string, @Args('input') input: UpdateUserDto): Promise<User> {
+    return this.userService.updateUser(id, input);
   }
 
   @Mutation(() => UserDto)

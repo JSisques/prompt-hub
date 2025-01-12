@@ -1,5 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { UserSettingsDto } from 'src/user-settings/dto/user-settings.dto';
 
 @ObjectType('UserType')
 @InputType('UserInput')
@@ -14,10 +15,30 @@ export class UserDto {
   @IsEmail()
   email: string;
 
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  username?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  avatar?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  bio?: string;
+
   @Field()
   @IsNotEmpty()
   @IsString()
-  name: string;
+  userSettings: UserSettingsDto;
 
   @Field({ nullable: true, defaultValue: true })
   @IsOptional()

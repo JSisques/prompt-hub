@@ -5,6 +5,7 @@ import { BlogCard } from '@/components/blog/card';
 import { FeaturedPost } from '@/components/blog/featured-post';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { redirect } from 'next/navigation';
 
 // Datos de ejemplo - esto vendría de una API o CMS
 const featuredPost = {
@@ -66,6 +67,9 @@ const posts = [
 const categories = ['Todos', 'Tutoriales', 'Guías', 'Noticias', 'Creatividad', 'Casos de Uso', 'Mejores Prácticas'];
 
 export default function BlogPage() {
+  // TODO: Remove this redirect and implement the blog page
+  redirect('/under-construction');
+
   return (
     <div className="space-y-8">
       <div>

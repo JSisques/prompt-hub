@@ -23,6 +23,7 @@
     "prisma:migrate": "prisma migrate dev --schema=src/prisma/schema.prisma",
     "prisma:studio": "prisma studio --schema=src/prisma/schema.prisma",
     "prisma:push": "prisma db push --schema=src/prisma/schema.prisma",
+    "prisma:format": "prisma format --schema=src/prisma/schema.prisma",
     "docker:local": "docker run --name ph-postgres-local -e POSTGRES_DB=prompthub -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:15"
   },
   "dependencies": {
