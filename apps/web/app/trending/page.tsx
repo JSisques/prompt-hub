@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PromptCard } from '@/components/prompts/card';
 import { Clock, Flame, Star, TrendingUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // Datos de ejemplo - esto vendría de una API
 const mockTrendingPrompts = {
@@ -58,14 +59,16 @@ const categories = [
 ];
 
 export default function TrendingPage() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold flex items-center gap-2">
           <TrendingUp className="h-8 w-8 text-primary" />
-          Trending
+          {t('pages.trending.title')}
         </h1>
-        <p className="text-muted-foreground mt-2">Descubre los prompts más populares y tendencias actuales.</p>
+        <p className="text-muted-foreground mt-2">{t('pages.trending.subtitle')}</p>
       </div>
 
       {/* Categorías */}
@@ -73,7 +76,7 @@ export default function TrendingPage() {
         {categories.map(category => (
           <Button key={category.id} variant="outline" className="flex items-center gap-2 whitespace-nowrap">
             <category.icon className="h-4 w-4" />
-            {category.label}
+            {t(`pages.trending.categories.${category.id}`)}
           </Button>
         ))}
       </div>
@@ -83,15 +86,15 @@ export default function TrendingPage() {
         <TabsList className="w-full grid grid-cols-3">
           <TabsTrigger value="today" className="flex-1 flex items-center justify-center gap-2">
             <Clock className="h-4 w-4" />
-            Hoy
+            {t('pages.trending.timePeriods.today')}
           </TabsTrigger>
           <TabsTrigger value="week" className="flex-1 flex items-center justify-center gap-2">
             <TrendingUp className="h-4 w-4" />
-            Esta Semana
+            {t('pages.trending.timePeriods.week')}
           </TabsTrigger>
           <TabsTrigger value="month" className="flex-1 flex items-center justify-center gap-2">
             <Star className="h-4 w-4" />
-            Este Mes
+            {t('pages.trending.timePeriods.month')}
           </TabsTrigger>
         </TabsList>
 
@@ -124,8 +127,8 @@ export default function TrendingPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Prompts Populares</CardTitle>
-            <CardDescription>En las últimas 24 horas</CardDescription>
+            <CardTitle className="text-lg">{t('pages.trending.stats.popularPrompts.title')}</CardTitle>
+            <CardDescription>{t('pages.trending.stats.popularPrompts.description')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-primary">1,234</div>
@@ -134,8 +137,8 @@ export default function TrendingPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Interacciones</CardTitle>
-            <CardDescription>Likes y comentarios</CardDescription>
+            <CardTitle className="text-lg">{t('pages.trending.stats.interactions.title')}</CardTitle>
+            <CardDescription>{t('pages.trending.stats.interactions.description')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-primary">5,678</div>
@@ -144,8 +147,8 @@ export default function TrendingPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Usuarios Activos</CardTitle>
-            <CardDescription>Creadores de contenido</CardDescription>
+            <CardTitle className="text-lg">{t('pages.trending.stats.activeUsers.title')}</CardTitle>
+            <CardDescription>{t('pages.trending.stats.activeUsers.description')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-primary">890</div>

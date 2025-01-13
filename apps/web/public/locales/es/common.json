@@ -27,6 +27,39 @@
     "confirmPassword": "Confirmar contraseña",
     "rememberMe": "Recordarme"
   },
+  "components": {
+    "footer": {
+      "description": "Crea, comparte y descubre los mejores prompts para IA",
+      "copyright": "© {{year}} Prompt Hub. Todos los derechos reservados.",
+      "madeWith": "Hecho con 🖤 por",
+      "sections": {
+        "product": {
+          "title": "Producto",
+          "links": {
+            "prompts": "Prompts",
+            "explore": "Explorar",
+            "news": "Novedades"
+          }
+        },
+        "resources": {
+          "title": "Recursos",
+          "links": {
+            "guide": "Guía",
+            "blog": "Blog",
+            "faq": "FAQ"
+          }
+        },
+        "legal": {
+          "title": "Legal",
+          "links": {
+            "privacy": "Privacidad",
+            "terms": "Términos",
+            "cookies": "Cookies"
+          }
+        }
+      }
+    }
+  },
   "pages": {
     "home": {
       "title": "Potencia tu Creatividad con IA",
@@ -69,6 +102,832 @@
       },
       "select": {
         "placeholder": "Seleccionar {{field}}"
+      }
+    },
+    "trending": {
+      "title": "Tendencias",
+      "subtitle": "Descubre los prompts más populares y tendencias actuales",
+      "categories": {
+        "all": "Todo"
+      },
+      "timePeriods": {
+        "today": "Hoy",
+        "week": "Esta Semana",
+        "month": "Este Mes"
+      },
+      "stats": {
+        "popularPrompts": {
+          "title": "Prompts Populares",
+          "description": "En las últimas 24 horas"
+        },
+        "interactions": {
+          "title": "Interacciones",
+          "description": "Likes y comentarios"
+        },
+        "activeUsers": {
+          "title": "Usuarios Activos",
+          "description": "Creadores de contenido"
+        }
+      }
+    },
+    "marketplace": {
+      "title": "Marketplace",
+      "subtitle": "Descubre y adquiere prompts premium creados por expertos",
+      "search": {
+        "placeholder": "Buscar prompts premium..."
+      },
+      "filters": {
+        "title": "Filtros",
+        "categories": "Categorías"
+      },
+      "categories": {
+        "all": "Todo",
+        "business": "Negocios",
+        "development": "Desarrollo",
+        "design": "Diseño",
+        "writing": "Escritura"
+      },
+      "priceRanges": {
+        "all": "Todos los precios",
+        "under20": "Menos de 20€",
+        "20to50": "20€ - 50€",
+        "over50": "Más de 50€"
+      },
+      "tabs": {
+        "featured": "Destacados",
+        "new": "Nuevos",
+        "trending": "Tendencias"
+      },
+      "promptCard": {
+        "reviews": "reseñas",
+        "buyNow": "Comprar Ahora"
+      }
+    },
+    "learn": {
+      "title": "Aprende",
+      "subtitle": "Domina el arte de crear prompts efectivos y aprovecha al máximo las capacidades de la IA",
+      "guides": {
+        "basics": {
+          "title": "Fundamentos de Prompts",
+          "description": "Aprende los conceptos básicos para crear prompts efectivos",
+          "level": "Principiante"
+        },
+        "bestPractices": {
+          "title": "Mejores Prácticas",
+          "description": "Descubre las mejores prácticas y consejos de expertos",
+          "level": "Intermedio"
+        },
+        "advanced": {
+          "title": "Técnicas Avanzadas",
+          "description": "Domina técnicas avanzadas para mejorar tus resultados",
+          "level": "Avanzado"
+        },
+        "promptEngineering": {
+          "title": "Ingeniería de Prompts",
+          "description": "Aprende técnicas de ingeniería para crear prompts más sofisticados",
+          "level": "Avanzado"
+        },
+        "aiModels": {
+          "title": "Modelos de IA",
+          "description": "Comprende las diferencias entre modelos y cómo optimizar para cada uno",
+          "level": "Intermedio"
+        },
+        "creativity": {
+          "title": "Prompts Creativos",
+          "description": "Explora técnicas para maximizar la creatividad en tus prompts",
+          "level": "Intermedio"
+        },
+        "businessCases": {
+          "title": "Casos de Negocio",
+          "description": "Implementa prompts efectivos en contextos empresariales",
+          "level": "Avanzado"
+        },
+        "troubleshooting": {
+          "title": "Resolución de Problemas",
+          "description": "Aprende a identificar y resolver problemas comunes con prompts",
+          "level": "Intermedio"
+        },
+        "evaluation": {
+          "title": "Evaluación de Prompts",
+          "description": "Métodos para evaluar y mejorar la calidad de tus prompts",
+          "level": "Avanzado"
+        }
+      }
+    },
+    "favorites": {
+      "title": "Mis Favoritos",
+      "subtitle": "Accede rápidamente a tus prompts guardados",
+      "search": {
+        "placeholder": "Buscar en favoritos..."
+      },
+      "views": {
+        "grid": "Vista en cuadrícula",
+        "list": "Vista en lista"
+      },
+      "empty": "No se encontraron prompts favoritos."
+    },
+    "createPrompt": {
+      "title": "Crear Prompt",
+      "subtitle": "Comparte tu prompt con la comunidad. Te guiaremos paso a paso en el proceso.",
+      "steps": {
+        "basicInfo": {
+          "title": "Información Básica",
+          "description": "Comienza con los detalles esenciales de tu prompt",
+          "fields": {
+            "title": {
+              "label": "Título",
+              "placeholder": "Un título descriptivo para tu prompt"
+            },
+            "description": {
+              "label": "Descripción",
+              "placeholder": "Explica brevemente qué hace tu prompt"
+            },
+            "llm": {
+              "label": "Modelo de IA",
+              "placeholder": "Selecciona un modelo de IA",
+              "loading": "Cargando modelos..."
+            }
+          }
+        },
+        "content": {
+          "title": "Contenido del Prompt",
+          "description": "Escribe y formatea tu prompt",
+          "fields": {
+            "content": {
+              "label": "Prompt",
+              "placeholder": "Escribe tu prompt aquí..."
+            },
+            "example": {
+              "label": "Ejemplo de Uso",
+              "placeholder": "Proporciona un ejemplo de cómo usar el prompt"
+            }
+          }
+        },
+        "finalDetails": {
+          "title": "Detalles Finales",
+          "description": "Añade los últimos detalles antes de publicar",
+          "fields": {
+            "category": {
+              "label": "Categoría",
+              "placeholder": "Selecciona una categoría",
+              "loading": "Cargando categorías..."
+            },
+            "tags": {
+              "label": "Etiquetas",
+              "placeholder": "Separa las etiquetas con comas"
+            },
+            "visibility": {
+              "label": "Visibilidad",
+              "public": "Público",
+              "private": "Privado"
+            }
+          }
+        }
+      },
+      "navigation": {
+        "back": "Anterior",
+        "next": "Siguiente",
+        "publish": "Publicar Prompt",
+        "publishing": "Publicando..."
+      },
+      "messages": {
+        "success": "¡Prompt creado con éxito!",
+        "error": "Error al crear el prompt: {{message}}",
+        "validation": {
+          "categoryRequired": "Por favor, selecciona una categoría",
+          "llmRequired": "Por favor, selecciona un modelo de IA"
+        }
+      }
+    },
+    "settings": {
+      "profile": {
+        "title": "Perfil",
+        "description": "Gestiona la información de tu perfil público",
+        "sections": {
+          "avatar": {
+            "title": "Avatar",
+            "description": "Sube una foto para tu perfil",
+            "fields": {
+              "profilePicture": {
+                "label": "Foto de perfil",
+                "description": "Sube una imagen de perfil. Debe ser menor a 5MB y en formato JPG, PNG o WebP"
+              }
+            }
+          },
+          "generalInfo": {
+            "title": "Información General",
+            "description": "Actualiza tu información personal básica",
+            "fields": {
+              "username": {
+                "label": "Nombre de usuario",
+                "description": "Este es tu nombre de usuario visible en tu perfil",
+                "placeholder": "Tu nombre de usuario"
+              },
+              "email": {
+                "label": "Email",
+                "description": "Tu dirección de email no se puede cambiar"
+              },
+              "name": {
+                "label": "Nombre",
+                "description": "Este es tu nombre completo visible en tu perfil",
+                "placeholder": "Tu nombre"
+              },
+              "bio": {
+                "label": "Bio",
+                "description": "Puedes usar hasta 160 caracteres",
+                "placeholder": "Cuéntanos sobre ti..."
+              }
+            }
+          }
+        },
+        "validation": {
+          "name": {
+            "min": "El nombre debe tener al menos 2 caracteres",
+            "max": "El nombre no puede tener más de 30 caracteres"
+          },
+          "username": {
+            "min": "El nombre de usuario debe tener al menos 2 caracteres",
+            "max": "El nombre de usuario no puede tener más de 30 caracteres"
+          },
+          "bio": {
+            "max": "La bio no puede tener más de 160 caracteres"
+          },
+          "avatar": {
+            "required": "La imagen es requerida",
+            "size": "El tamaño máximo es 5MB",
+            "type": "Solo se aceptan archivos .jpg, .jpeg, .png y .webp"
+          }
+        },
+        "messages": {
+          "success": {
+            "title": "Has actualizado tu perfil",
+            "description": "Los cambios han sido guardados correctamente"
+          },
+          "error": {
+            "title": "Error",
+            "description": "Ha ocurrido un error al actualizar tu perfil"
+          }
+        },
+        "buttons": {
+          "save": "Guardar cambios"
+        }
+      },
+      "account": {
+        "title": "Cuenta",
+        "description": "Gestiona la configuración de tu cuenta",
+        "sections": {
+          "preferences": {
+            "title": "Preferencias",
+            "description": "Configura el idioma y la zona horaria de tu cuenta",
+            "fields": {
+              "language": {
+                "label": "Idioma",
+                "description": "El idioma que se usará en la interfaz",
+                "placeholder": "Selecciona un idioma",
+                "options": {
+                  "es": "Español",
+                  "en": "English"
+                }
+              }
+            }
+          },
+          "password": {
+            "title": "Contraseña",
+            "description": "Cambia tu contraseña actual",
+            "fields": {
+              "current": {
+                "label": "Contraseña actual",
+                "description": "Introduce tu contraseña actual",
+                "placeholder": "••••••••"
+              },
+              "new": {
+                "label": "Nueva contraseña",
+                "description": "Introduce tu nueva contraseña",
+                "placeholder": "••••••••"
+              }
+            }
+          }
+        },
+        "validation": {
+          "language": "Por favor selecciona un idioma",
+          "timezone": "Por favor selecciona una zona horaria",
+          "password": "La contraseña debe tener al menos 8 caracteres"
+        },
+        "messages": {
+          "success": {
+            "title": "Has actualizado tu cuenta",
+            "description": "Los cambios han sido guardados correctamente"
+          }
+        }
+      },
+      "appearance": {
+        "title": "Apariencia",
+        "description": "Personaliza la apariencia de la aplicación",
+        "sections": {
+          "theme": {
+            "title": "Tema",
+            "description": "Selecciona el tema de la aplicación",
+            "fields": {
+              "theme": {
+                "label": "Tema",
+                "description": "El tema del sistema se adaptará automáticamente a tus preferencias",
+                "placeholder": "Selecciona un tema",
+                "options": {
+                  "light": "Claro",
+                  "dark": "Oscuro",
+                  "system": "Sistema"
+                }
+              }
+            }
+          }
+        },
+        "validation": {
+          "theme": "Por favor selecciona un tema"
+        },
+        "messages": {
+          "success": {
+            "title": "Has actualizado la apariencia",
+            "description": "Los cambios se aplicarán inmediatamente"
+          }
+        }
+      },
+      "notifications": {
+        "title": "Notificaciones",
+        "description": "Configura cómo y cuándo quieres recibir notificaciones",
+        "sections": {
+          "push": {
+            "title": "Notificaciones Push",
+            "description": "Selecciona los tipos de notificaciones que quieres recibir",
+            "fields": {
+              "prompts": {
+                "label": "Nuevos prompts",
+                "description": "Notificaciones sobre nuevos prompts en tus categorías favoritas"
+              },
+              "comments": {
+                "label": "Comentarios",
+                "description": "Notificaciones cuando alguien comenta en tus prompts"
+              },
+              "likes": {
+                "label": "Likes",
+                "description": "Notificaciones cuando alguien te da like a tus prompts"
+              },
+              "reviews": {
+                "label": "Reviews",
+                "description": "Notificaciones cuando alguien escribe una review a tus prompts"
+              }
+            }
+          },
+          "marketing": {
+            "title": "Marketing",
+            "description": "Gestiona tus preferencias de comunicación marketing",
+            "fields": {
+              "emails": {
+                "label": "Emails de marketing",
+                "description": "Recibe noticias sobre nuevas características y ofertas especiales"
+              }
+            }
+          }
+        },
+        "messages": {
+          "success": {
+            "title": "Has actualizado las notificaciones",
+            "description": "Las preferencias se han guardado correctamente"
+          }
+        }
+      },
+      "privacy": {
+        "title": "Privacidad",
+        "description": "Gestiona la configuración de privacidad de tu cuenta",
+        "sections": {
+          "visibility": {
+            "title": "Visibilidad del Perfil",
+            "description": "Controla quién puede ver tu perfil y actividad",
+            "fields": {
+              "profileVisibility": {
+                "label": "Visibilidad del perfil",
+                "description": "Elige quién puede ver tu perfil",
+                "placeholder": "Selecciona la visibilidad",
+                "options": {
+                  "public": "Público - Visible para todos",
+                  "private": "Privado - Solo visible para ti"
+                }
+              },
+              "activityVisibility": {
+                "label": "Visibilidad de la actividad",
+                "description": "Elige quién puede ver tu actividad",
+                "placeholder": "Selecciona la visibilidad",
+                "options": {
+                  "public": "Público - Visible para todos",
+                  "private": "Privado - Solo visible para ti"
+                }
+              }
+            }
+          },
+          "data": {
+            "title": "Datos y Privacidad",
+            "description": "Gestiona tus datos personales y su uso",
+            "fields": {
+              "dataCollection": {
+                "label": "Recopilación de datos",
+                "description": "Permitir la recopilación de datos de uso para mejorar el servicio"
+              },
+              "cookies": {
+                "label": "Cookies",
+                "description": "Permitir el uso de cookies para personalizar tu experiencia"
+              }
+            }
+          }
+        },
+        "messages": {
+          "success": {
+            "title": "Has actualizado tu configuración de privacidad",
+            "description": "Los cambios han sido guardados correctamente"
+          }
+        }
+      },
+      "common": {
+        "buttons": {
+          "save": "Guardar cambios"
+        }
+      }
+    },
+    "legal": {
+      "lastUpdated": "Última actualización: {{date}}",
+      "privacy": {
+        "title": "Política de Privacidad",
+        "description": "En Prompt Hub, nos tomamos muy en serio la privacidad de nuestros usuarios. Esta política describe cómo recopilamos, utilizamos y protegemos tu información personal cuando utilizas nuestra plataforma.",
+        "contact": "Para cualquier consulta relacionada con la privacidad, contáctanos en",
+        "sections": {
+          "informationCollection": {
+            "title": "1. Información que Recopilamos",
+            "content": "Recopilamos diferentes tipos de información cuando utilizas Prompt Hub:\n\n• Información de registro: nombre, dirección de correo electrónico y contraseña\n• Información del perfil: foto de perfil, biografía y enlaces a redes sociales\n• Datos de uso: interacciones con la plataforma, prompts creados y guardados\n• Información técnica: dirección IP, tipo de navegador, dispositivo y sistema operativo\n• Cookies y tecnologías similares: para mejorar tu experiencia y analizar el uso del servicio"
+          },
+          "informationUse": {
+            "title": "2. Uso de la Información",
+            "content": "Utilizamos la información recopilada para:\n\n• Proporcionar y mantener nuestros servicios\n• Personalizar tu experiencia en la plataforma\n• Mejorar nuestros servicios y desarrollar nuevas funcionalidades\n• Comunicarnos contigo sobre actualizaciones y novedades\n• Detectar y prevenir actividades fraudulentas o abusivas\n• Cumplir con obligaciones legales"
+          },
+          "informationSharing": {
+            "title": "3. Compartir Información",
+            "content": "Podemos compartir tu información en las siguientes circunstancias:\n\n• Con otros usuarios según tus configuraciones de privacidad\n• Con proveedores de servicios que nos ayudan a operar la plataforma\n• En respuesta a requerimientos legales\n• En caso de fusión, venta o transferencia de activos\n• Con tu consentimiento explícito"
+          },
+          "userRights": {
+            "title": "4. Tus Derechos",
+            "content": "Como usuario, tienes derecho a:\n\n• Acceder a tu información personal\n• Rectificar datos inexactos\n• Solicitar la eliminación de tus datos\n• Oponerte al procesamiento de tus datos\n• Portar tus datos a otro servicio\n• Retirar tu consentimiento en cualquier momento\n\nPuedes ejercer estos derechos contactando con nosotros a través de privacy@prompthub.es"
+          },
+          "dataSecurity": {
+            "title": "5. Seguridad de Datos",
+            "content": "Implementamos medidas de seguridad técnicas y organizativas para proteger tu información:\n\n• Encriptación de datos sensibles\n• Acceso restringido a datos personales\n• Monitorización regular de sistemas\n• Copias de seguridad periódicas\n• Protocolos de respuesta ante incidentes"
+          },
+          "dataRetention": {
+            "title": "6. Retención de Datos",
+            "content": "Mantenemos tu información personal mientras tu cuenta esté activa o sea necesaria para proporcionarte servicios. Si solicitas la eliminación de tu cuenta, eliminaremos o anonimizaremos tu información personal, excepto cuando sea necesario mantenerla por motivos legales o de interés legítimo."
+          },
+          "minors": {
+            "title": "7. Menores de Edad",
+            "content": "Prompt Hub no está dirigido a menores de 16 años. No recopilamos intencionalmente información de menores. Si descubrimos que hemos recopilado información de un menor, tomaremos medidas para eliminar dicha información."
+          },
+          "internationalTransfers": {
+            "title": "8. Transferencias Internacionales",
+            "content": "Tus datos pueden ser transferidos y procesados en países fuera del Espacio Económico Europeo (EEE). Cuando esto ocurra, nos aseguraremos de que se apliquen las salvaguardas adecuadas para proteger tus datos de acuerdo con el RGPD."
+          },
+          "cookies": {
+            "title": "9. Cookies y Tecnologías Similares",
+            "content": "Utilizamos cookies y tecnologías similares para:\n\n• Mantener tu sesión activa\n• Recordar tus preferencias\n• Analizar el uso de nuestro servicio\n• Personalizar el contenido y la publicidad\n\nPuedes gestionar tus preferencias de cookies a través de la configuración de tu navegador."
+          },
+          "policyChanges": {
+            "title": "10. Cambios en esta Política",
+            "content": "Podemos actualizar esta política de privacidad periódicamente. Te notificaremos sobre cambios significativos a través de un aviso visible en nuestro sitio web o por correo electrónico. El uso continuado del servicio después de dichos cambios constituye tu aceptación de la política actualizada."
+          }
+        }
+      },
+      "cookies": {
+        "title": "Política de Cookies",
+        "description": "Esta política explica cómo Prompt Hub utiliza cookies y tecnologías similares para mejorar tu experiencia en nuestra plataforma. Te recomendamos leer esta política para comprender qué son las cookies, cómo las usamos y cómo puedes controlarlas.",
+        "contact": "Para más información sobre cookies y privacidad, contáctanos en",
+        "sections": {
+          "whatAreCookies": {
+            "title": "1. ¿Qué son las Cookies?",
+            "content": "Las cookies son pequeños archivos de texto que los sitios web colocan en tu dispositivo para almacenar información sobre tus preferencias, mejorar tu experiencia y proporcionar datos anónimos a los propietarios del sitio."
+          },
+          "cookieTypes": {
+            "title": "2. Tipos de Cookies que Utilizamos",
+            "content": "En Prompt Hub utilizamos los siguientes tipos de cookies:\n\n• Cookies Esenciales\n  - Necesarias para el funcionamiento básico del sitio\n  - Mantienen tu sesión activa\n  - Guardan tus preferencias de privacidad\n\n• Cookies de Rendimiento\n  - Recopilan información anónima sobre cómo usas el sitio\n  - Ayudan a identificar posibles problemas técnicos\n  - Miden el rendimiento del sitio web\n\n• Cookies de Funcionalidad\n  - Recuerdan tus preferencias de idioma\n  - Personalizan tu experiencia\n  - Mantienen tus preferencias de visualización\n\n• Cookies de Publicidad\n  - Muestran anuncios relevantes\n  - Miden la efectividad de las campañas publicitarias\n  - Limitan la frecuencia de los anuncios"
+          },
+          "thirdPartyCookies": {
+            "title": "3. Cookies de Terceros",
+            "content": "Trabajamos con proveedores de servicios que pueden establecer cookies en tu dispositivo cuando visitas Prompt Hub:\n\n• Google Analytics: análisis de uso del sitio\n• Redes sociales: botones de compartir y contenido integrado\n• Proveedores de publicidad: anuncios personalizados\n• Servicios de seguridad: prevención de fraude y protección"
+          },
+          "cookieDuration": {
+            "title": "4. Duración de las Cookies",
+            "content": "Utilizamos dos tipos de cookies según su duración:\n\n• Cookies de Sesión\n  - Temporales\n  - Se eliminan cuando cierras el navegador\n  - Usadas para mantener tu sesión activa\n\n• Cookies Persistentes\n  - Permanecen en tu dispositivo por un tiempo determinado\n  - Ayudan a recordar tus preferencias\n  - Caducan después de un período específico"
+          },
+          "cookieControl": {
+            "title": "5. Control de Cookies",
+            "content": "Puedes controlar y gestionar las cookies de varias formas:\n\n• Configuración del Navegador\n  - Bloquear todas las cookies\n  - Aceptar solo cookies esenciales\n  - Eliminar cookies existentes\n\n• Preferencias en Prompt Hub\n  - Panel de preferencias de privacidad\n  - Opciones de personalización\n  - Configuración de publicidad\n\n• Herramientas de Terceros\n  - Complementos del navegador\n  - Plataformas de gestión de consentimiento\n  - Servicios de opt-out"
+          },
+          "essentialCookies": {
+            "title": "6. Cookies Esenciales",
+            "content": "Las cookies esenciales son necesarias para el funcionamiento básico de Prompt Hub y no pueden ser desactivadas en nuestros sistemas. Generalmente se establecen solo en respuesta a acciones realizadas por ti, como establecer tus preferencias de privacidad, iniciar sesión o completar formularios."
+          },
+          "userExperience": {
+            "title": "7. Impacto en la Experiencia de Usuario",
+            "content": "La desactivación de cookies puede afectar a tu experiencia en Prompt Hub:\n\n• Algunas funciones pueden no estar disponibles\n• Tus preferencias no se guardarán entre sesiones\n• Tendrás que iniciar sesión con más frecuencia\n• Los contenidos personalizados no estarán disponibles"
+          },
+          "policyUpdates": {
+            "title": "8. Actualizaciones de la Política",
+            "content": "Podemos actualizar esta política de cookies periódicamente para reflejar cambios en nuestras prácticas o por otros motivos operativos, legales o regulatorios. Te recomendamos revisarla regularmente para estar informado sobre cómo utilizamos las cookies."
+          },
+          "privacyAndCookies": {
+            "title": "9. Cookies y Privacidad",
+            "content": "Nuestra política de cookies forma parte de nuestra política de privacidad. Te recomendamos leer ambas para comprender completamente cómo protegemos tu información y respetamos tu privacidad."
+          },
+          "contact": {
+            "title": "10. Contacto",
+            "content": "Si tienes preguntas sobre nuestro uso de cookies o necesitas ayuda para gestionarlas, puedes:\n\n• Enviarnos un email a privacy@prompthub.es\n• Usar nuestro formulario de contacto\n• Consultar nuestra sección de ayuda"
+          }
+        }
+      },
+      "terms": {
+        "title": "Términos y Condiciones",
+        "description": "Bienvenido a Prompt Hub. Estos términos y condiciones describen las reglas y regulaciones para el uso de nuestra plataforma.",
+        "contact": "Si tienes alguna pregunta sobre estos términos, por favor contáctanos a través de",
+        "sections": {
+          "acceptance": {
+            "title": "1. Aceptación de los Términos",
+            "content": "Al acceder y utilizar Prompt Hub, aceptas estar legalmente vinculado por estos Términos y Condiciones. Si no estás de acuerdo con alguna parte de estos términos, no podrás acceder al servicio."
+          },
+          "serviceDescription": {
+            "title": "2. Descripción del Servicio",
+            "content": "Prompt Hub es una plataforma que permite a los usuarios crear, compartir y descubrir prompts para diferentes modelos de inteligencia artificial. Nos reservamos el derecho de modificar, suspender o discontinuar cualquier aspecto del servicio en cualquier momento."
+          },
+          "userAccounts": {
+            "title": "3. Registro y Cuentas de Usuario",
+            "content": "Para acceder a ciertas funcionalidades de Prompt Hub, deberás crear una cuenta. Eres responsable de mantener la confidencialidad de tu cuenta y contraseña, así como de restringir el acceso a tu computadora. Aceptas asumir la responsabilidad de todas las actividades que ocurran bajo tu cuenta."
+          },
+          "userContent": {
+            "title": "4. Contenido del Usuario",
+            "content": "Al publicar contenido en Prompt Hub, garantizas que tienes los derechos necesarios sobre dicho contenido y que no infringe derechos de terceros. Nos otorgas una licencia mundial, no exclusiva y libre de regalías para usar, modificar, ejecutar públicamente, mostrar públicamente y distribuir tu contenido en relación con el servicio."
+          },
+          "intellectualProperty": {
+            "title": "5. Propiedad Intelectual",
+            "content": "Prompt Hub y su contenido original, características y funcionalidad son propiedad de Prompt Hub y están protegidos por leyes internacionales de derechos de autor, marcas registradas, patentes, secretos comerciales y otros derechos de propiedad intelectual."
+          },
+          "useRestrictions": {
+            "title": "6. Restricciones de Uso",
+            "content": "Te comprometes a no utilizar Prompt Hub para:\n• Publicar contenido ilegal, abusivo, difamatorio o fraudulento\n• Interferir con el funcionamiento normal del servicio\n• Intentar acceder a áreas restringidas del sistema\n• Recopilar información de usuarios sin su consentimiento\n• Promover actividades ilegales o dañinas"
+          },
+          "privacyData": {
+            "title": "7. Privacidad y Protección de Datos",
+            "content": "Tu privacidad es importante para nosotros. Nuestra Política de Privacidad describe cómo recopilamos, usamos y protegemos tu información personal. Al usar nuestro servicio, aceptas nuestras prácticas de privacidad."
+          },
+          "liability": {
+            "title": "8. Limitación de Responsabilidad",
+            "content": "Prompt Hub se proporciona \"tal cual\" y \"según disponibilidad\". No garantizamos que el servicio será ininterrumpido, oportuno, seguro o libre de errores. No seremos responsables por daños indirectos, incidentales, especiales o consecuentes."
+          },
+          "modifications": {
+            "title": "9. Modificaciones de los Términos",
+            "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Te notificaremos sobre cambios significativos publicando un aviso en nuestro sitio web. El uso continuado del servicio después de dichos cambios constituye tu aceptación de los nuevos términos."
+          },
+          "applicableLaw": {
+            "title": "10. Ley Aplicable",
+            "content": "Estos términos se regirán e interpretarán de acuerdo con las leyes de España, sin tener en cuenta sus conflictos de disposiciones legales."
+          }
+        }
+      }
+    },
+    "about": {
+      "title": "Sobre Nosotros",
+      "description": "Somos una plataforma dedicada a democratizar el acceso a prompts de calidad para IA, facilitando la colaboración y el aprendizaje en la comunidad.",
+      "mission": {
+        "title": "Nuestra Misión",
+        "description": "Nuestra misión es crear un ecosistema donde los usuarios puedan compartir, descubrir y aprender a crear prompts efectivos para diferentes modelos de IA, fomentando la innovación y el crecimiento colectivo."
+      },
+      "values": {
+        "title": "Nuestros Valores",
+        "items": {
+          "community": {
+            "title": "Comunidad",
+            "description": "Creemos en el poder de compartir conocimiento y experiencias para crecer juntos."
+          },
+          "collaboration": {
+            "title": "Colaboración",
+            "description": "Fomentamos un ambiente de colaboración donde todos pueden contribuir y aprender."
+          },
+          "innovation": {
+            "title": "Innovación",
+            "description": "Buscamos constantemente nuevas formas de mejorar la interacción con la IA."
+          },
+          "trust": {
+            "title": "Confianza",
+            "description": "Priorizamos la seguridad y privacidad de nuestra comunidad en todo momento."
+          }
+        }
+      },
+      "team": {
+        "title": "Nuestro Equipo",
+        "members": {
+          "maria": {
+            "name": "María García",
+            "role": "Fundadora & CEO",
+            "bio": "Experta en IA con más de 10 años de experiencia en el sector tecnológico."
+          },
+          "carlos": {
+            "name": "Carlos Ruiz",
+            "role": "CTO",
+            "bio": "Desarrollador full-stack con pasión por crear herramientas que mejoren la productividad."
+          },
+          "ana": {
+            "name": "Ana López",
+            "role": "Directora de Producto",
+            "bio": "Especialista en UX/UI con enfoque en crear experiencias intuitivas y accesibles."
+          }
+        }
+      }
+    },
+    "contact": {
+      "title": "Contacto",
+      "description": "¿Tienes alguna pregunta o sugerencia? Nos encantaría escucharte.",
+      "contactInfo": {
+        "email": {
+          "title": "Email",
+          "description": "Nuestro equipo responderá en 24-48 horas",
+          "value": "soporte@prompthub.es"
+        },
+        "chat": {
+          "title": "Chat en Vivo",
+          "description": "Disponible de Lunes a Viernes",
+          "value": "9:00 AM - 6:00 PM (CET)"
+        },
+        "phone": {
+          "title": "Teléfono",
+          "description": "Llámanos para soporte inmediato",
+          "value": "+34 900 123 456"
+        }
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Consulta nuestra sección de preguntas frecuentes para respuestas rápidas.",
+        "button": "Ver Preguntas Frecuentes"
+      },
+      "form": {
+        "title": "Envíanos un Mensaje",
+        "description": "Completa el formulario y te responderemos lo antes posible.",
+        "fields": {
+          "firstName": {
+            "label": "Nombre",
+            "placeholder": "Tu nombre"
+          },
+          "lastName": {
+            "label": "Apellidos",
+            "placeholder": "Tus apellidos"
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": "tu@email.com"
+          },
+          "subject": {
+            "label": "Asunto",
+            "placeholder": "Selecciona un asunto",
+            "options": {
+              "support": "Soporte Técnico",
+              "feedback": "Sugerencias",
+              "business": "Colaboraciones",
+              "other": "Otro"
+            }
+          },
+          "message": {
+            "label": "Mensaje",
+            "placeholder": "Escribe tu mensaje aquí..."
+          }
+        },
+        "submit": "Enviar Mensaje"
+      }
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "description": "Encuentra respuestas a las preguntas más comunes sobre Prompt Hub",
+      "categories": {
+        "general": {
+          "title": "General",
+          "questions": {
+            "whatIs": {
+              "question": "¿Qué es Prompt Hub?",
+              "answer": "Prompt Hub es una plataforma que te permite crear, compartir y descubrir los mejores prompts para Inteligencia Artificial. Nuestra misión es ayudar a la comunidad a aprovechar al máximo las capacidades de la IA."
+            },
+            "isFree": {
+              "question": "¿Es gratis usar Prompt Hub?",
+              "answer": "Sí, Prompt Hub es completamente gratuito para uso básico. Ofrecemos funcionalidades premium para usuarios que necesitan características avanzadas."
+            },
+            "needAccount": {
+              "question": "¿Necesito una cuenta para usar Prompt Hub?",
+              "answer": "Puedes explorar los prompts públicos sin una cuenta, pero necesitarás registrarte para guardar tus prompts favoritos, crear nuevos prompts o interactuar con la comunidad."
+            },
+            "howToStart": {
+              "question": "¿Cómo empiezo a usar Prompt Hub?",
+              "answer": "Puedes empezar explorando los prompts públicos en nuestra página principal. Si quieres crear o guardar prompts, regístrate gratuitamente y accede a todas las funcionalidades básicas."
+            },
+            "supportedLanguages": {
+              "question": "¿Qué idiomas soporta Prompt Hub?",
+              "answer": "Actualmente soportamos español e inglés, con planes de expandirnos a más idiomas en el futuro. Los prompts pueden ser creados en cualquier idioma."
+            }
+          }
+        },
+        "prompts": {
+          "title": "Prompts",
+          "questions": {
+            "whatIsPrompt": {
+              "question": "¿Qué es un prompt?",
+              "answer": "Un prompt es una instrucción o pregunta que se da a un modelo de IA para obtener una respuesta específica. Un buen prompt puede ayudarte a obtener mejores resultados de la IA."
+            },
+            "howToCreate": {
+              "question": "¿Cómo puedo crear un buen prompt?",
+              "answer": "Un buen prompt debe ser claro, específico y proporcionar contexto suficiente. Recomendamos seguir nuestra guía de mejores prácticas y estudiar ejemplos exitosos de la comunidad."
+            },
+            "canShare": {
+              "question": "¿Puedo compartir mis prompts?",
+              "answer": "Sí, puedes compartir tus prompts con la comunidad. También puedes elegir mantenerlos privados o compartirlos solo con usuarios específicos."
+            },
+            "promptTypes": {
+              "question": "¿Qué tipos de prompts puedo crear?",
+              "answer": "Puedes crear prompts para diferentes propósitos: generación de texto, código, imágenes, análisis de datos, traducción, y más. Cada tipo tiene sus mejores prácticas específicas."
+            },
+            "promptModels": {
+              "question": "¿Con qué modelos de IA son compatibles los prompts?",
+              "answer": "Soportamos prompts para varios modelos populares como ChatGPT, GPT-4, DALL-E, Midjourney, Stable Diffusion, Claude, y más. La lista se actualiza regularmente."
+            },
+            "promptVersioning": {
+              "question": "¿Puedo versionar mis prompts?",
+              "answer": "Sí, ofrecemos control de versiones para tus prompts. Puedes crear diferentes versiones, comparar resultados y mantener un historial de cambios."
+            }
+          }
+        },
+        "accountAndPrivacy": {
+          "title": "Cuenta y Privacidad",
+          "questions": {
+            "changePassword": {
+              "question": "¿Cómo puedo cambiar mi contraseña?",
+              "answer": "Puedes cambiar tu contraseña en la sección de Configuración > Seguridad de tu cuenta."
+            },
+            "dataCollection": {
+              "question": "¿Qué datos recopilan sobre mí?",
+              "answer": "Solo recopilamos la información necesaria para proporcionar nuestros servicios. Puedes revisar nuestra política de privacidad para más detalles."
+            },
+            "deleteAccount": {
+              "question": "¿Cómo puedo eliminar mi cuenta?",
+              "answer": "Puedes solicitar la eliminación de tu cuenta en la sección de Configuración > Cuenta. Ten en cuenta que esta acción es irreversible."
+            },
+            "dataExport": {
+              "question": "¿Puedo exportar mis datos?",
+              "answer": "Sí, puedes solicitar una exportación completa de tus datos, incluyendo tus prompts, configuraciones y actividad, desde la sección de Configuración > Privacidad."
+            },
+            "accountSecurity": {
+              "question": "¿Cómo puedo proteger mi cuenta?",
+              "answer": "Recomendamos usar contraseñas fuertes, activar la autenticación de dos factores y mantener actualizada tu información de contacto para recuperación."
+            }
+          }
+        },
+        "marketplace": {
+          "title": "Marketplace",
+          "questions": {
+            "howToBuy": {
+              "question": "¿Cómo puedo comprar prompts premium?",
+              "answer": "Puedes comprar prompts premium directamente desde el marketplace usando tarjeta de crédito, PayPal o criptomonedas. Cada prompt incluye una descripción detallada y ejemplos de uso."
+            },
+            "sellingPrompts": {
+              "question": "¿Cómo puedo vender mis prompts?",
+              "answer": "Para vender prompts, necesitas verificar tu cuenta como vendedor. Una vez verificado, podrás listar tus prompts en el marketplace y establecer precios."
+            },
+            "pricing": {
+              "question": "¿Cómo funciona el sistema de precios?",
+              "answer": "Los vendedores establecen sus propios precios. Prompt Hub cobra una pequeña comisión por transacción para mantener la plataforma. Los precios pueden variar desde 1€ hasta 100€ por prompt."
+            },
+            "refunds": {
+              "question": "¿Hay política de reembolso?",
+              "answer": "Sí, ofrecemos una garantía de satisfacción de 7 días. Si un prompt no cumple con la descripción o no funciona como se espera, procesaremos un reembolso completo."
+            }
+          }
+        },
+        "technical": {
+          "title": "Soporte Técnico",
+          "questions": {
+            "apiAccess": {
+              "question": "¿Existe una API para desarrolladores?",
+              "answer": "Sí, ofrecemos una API RESTful para integrar Prompt Hub en tus aplicaciones. La documentación completa está disponible en nuestro portal de desarrolladores."
+            },
+            "promptTesting": {
+              "question": "¿Puedo probar los prompts antes de usarlos?",
+              "answer": "Sí, proporcionamos un entorno de pruebas integrado donde puedes probar los prompts con diferentes modelos de IA antes de comprarlos o publicarlos."
+            },
+            "promptOptimization": {
+              "question": "¿Cómo puedo optimizar mis prompts?",
+              "answer": "Ofrecemos herramientas de análisis y optimización que te ayudan a mejorar tus prompts basándose en métricas de rendimiento y feedback de la comunidad."
+            },
+            "technicalIssues": {
+              "question": "¿Qué hago si encuentro un error?",
+              "answer": "Puedes reportar errores a través de nuestro sistema de soporte o en GitHub. Nuestro equipo técnico responde normalmente en menos de 24 horas."
+            }
+          }
+        }
       }
     }
   }

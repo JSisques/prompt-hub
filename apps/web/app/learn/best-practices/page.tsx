@@ -291,140 +291,138 @@ function isMethodologyItem(item: PracticeItem): item is MethodologyItem {
 
 export default function BestPracticesPage() {
   return (
-    <div className="container max-w-4xl mx-auto py-4 px-4 md:px-0">
-      <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <BookOpen className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold">Mejores Prácticas</h1>
-        </div>
+    <div className="space-y-8">
+      <div className="flex items-center gap-3">
+        <BookOpen className="h-8 w-8 text-primary" />
+        <h1 className="text-3xl font-bold">Mejores Prácticas</h1>
+      </div>
 
-        <p className="text-muted-foreground text-lg">
-          Descubre las mejores prácticas y recomendaciones para crear prompts efectivos y seguros. Aprende a evitar errores comunes y optimiza tus
-          interacciones con IA.
-        </p>
+      <p className="text-muted-foreground text-lg">
+        Descubre las mejores prácticas y recomendaciones para crear prompts efectivos y seguros. Aprende a evitar errores comunes y optimiza tus
+        interacciones con IA.
+      </p>
 
-        <div className="grid gap-6">
-          {practices.map((section, index) => (
-            <Card key={index}>
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                    <section.icon className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <CardTitle>{section.title}</CardTitle>
-                    {section.description && <p className="text-sm text-muted-foreground mt-1">{section.description}</p>}
-                  </div>
+      <div className="grid gap-6">
+        {practices.map((section, index) => (
+          <Card key={index}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <section.icon className="h-6 w-6" />
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-6">
-                  {section.items.map((item, i) => (
-                    <div key={i} className="space-y-3">
-                      <h3 className="font-medium">{item.title}</h3>
-                      <p className="text-muted-foreground">{item.description}</p>
+                <div>
+                  <CardTitle>{section.title}</CardTitle>
+                  {section.description && <p className="text-sm text-muted-foreground mt-1">{section.description}</p>}
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6">
+                {section.items.map((item, i) => (
+                  <div key={i} className="space-y-3">
+                    <h3 className="font-medium">{item.title}</h3>
+                    <p className="text-muted-foreground">{item.description}</p>
 
-                      {isExampleItem(item) && item.examples && (
-                        <div className="space-y-3">
-                          {item.examples.map((example, j) => (
-                            <div key={j} className="bg-muted/50 p-4 rounded-lg space-y-3">
-                              <div className="space-y-2">
-                                <div>
-                                  <p className="text-sm font-medium text-red-500">❌ No recomendado:</p>
-                                  <div className="bg-background p-3 rounded border mt-1">
-                                    <p className="text-sm font-mono">{example.bad}</p>
-                                  </div>
-                                </div>
-                                <div>
-                                  <p className="text-sm font-medium text-green-500">✅ Recomendado:</p>
-                                  <div className="bg-background p-3 rounded border mt-1">
-                                    <p className="text-sm font-mono whitespace-pre-wrap">{example.good}</p>
-                                  </div>
+                    {isExampleItem(item) && item.examples && (
+                      <div className="space-y-3">
+                        {item.examples.map((example, j) => (
+                          <div key={j} className="bg-muted/50 p-4 rounded-lg space-y-3">
+                            <div className="space-y-2">
+                              <div>
+                                <p className="text-sm font-medium text-red-500">❌ No recomendado:</p>
+                                <div className="bg-background p-3 rounded border mt-1">
+                                  <p className="text-sm font-mono">{example.bad}</p>
                                 </div>
                               </div>
-                              <p className="text-sm text-muted-foreground">{example.explanation}</p>
+                              <div>
+                                <p className="text-sm font-medium text-green-500">✅ Recomendado:</p>
+                                <div className="bg-background p-3 rounded border mt-1">
+                                  <p className="text-sm font-mono whitespace-pre-wrap">{example.good}</p>
+                                </div>
+                              </div>
                             </div>
-                          ))}
-                        </div>
-                      )}
+                            <p className="text-sm text-muted-foreground">{example.explanation}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-                      {isExampleItem(item) && item.tips && (
-                        <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
-                          {item.tips.map((tip, j) => (
-                            <li key={j} className="text-sm text-muted-foreground">
-                              • {tip}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                    {isExampleItem(item) && item.tips && (
+                      <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
+                        {item.tips.map((tip, j) => (
+                          <li key={j} className="text-sm text-muted-foreground">
+                            • {tip}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
-                      {isChecklistItem(item) && (
-                        <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
-                          {item.checklist.map((check, j) => (
-                            <li key={j} className="text-sm text-muted-foreground">
-                              ✓ {check}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                    {isChecklistItem(item) && (
+                      <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
+                        {item.checklist.map((check, j) => (
+                          <li key={j} className="text-sm text-muted-foreground">
+                            ✓ {check}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
-                      {isGuidelinesItem(item) && (
-                        <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
-                          {item.guidelines.map((guideline, j) => (
-                            <li key={j} className="text-sm text-muted-foreground">
-                              • {guideline}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                    {isGuidelinesItem(item) && (
+                      <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
+                        {item.guidelines.map((guideline, j) => (
+                          <li key={j} className="text-sm text-muted-foreground">
+                            • {guideline}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
-                      {isConsiderationsItem(item) && (
-                        <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
-                          {item.considerations.map((consideration, j) => (
-                            <li key={j} className="text-sm text-muted-foreground">
-                              • {consideration}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                    {isConsiderationsItem(item) && (
+                      <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
+                        {item.considerations.map((consideration, j) => (
+                          <li key={j} className="text-sm text-muted-foreground">
+                            • {consideration}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
-                      {isProcessItem(item) && (
-                        <div className="space-y-3 pl-4 border-l-2 border-primary/20">
-                          {item.process.map((step, j) => (
-                            <div key={j}>
-                              <p className="font-medium text-sm">{step.step}</p>
-                              <p className="text-sm text-muted-foreground">{step.description}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                    {isProcessItem(item) && (
+                      <div className="space-y-3 pl-4 border-l-2 border-primary/20">
+                        {item.process.map((step, j) => (
+                          <div key={j}>
+                            <p className="font-medium text-sm">{step.step}</p>
+                            <p className="text-sm text-muted-foreground">{step.description}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-                      {isBestPracticesItem(item) && (
-                        <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
-                          {item.bestPractices.map((practice, j) => (
-                            <li key={j} className="text-sm text-muted-foreground">
-                              • {practice}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                    {isBestPracticesItem(item) && (
+                      <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
+                        {item.bestPractices.map((practice, j) => (
+                          <li key={j} className="text-sm text-muted-foreground">
+                            • {practice}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
-                      {isMethodologyItem(item) && (
-                        <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
-                          {item.methodology.map((method, j) => (
-                            <li key={j} className="text-sm text-muted-foreground">
-                              • {method}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    {isMethodologyItem(item) && (
+                      <ul className="space-y-1 pl-4 border-l-2 border-primary/20">
+                        {item.methodology.map((method, j) => (
+                          <li key={j} className="text-sm text-muted-foreground">
+                            • {method}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
