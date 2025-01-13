@@ -27,7 +27,7 @@ export default function AboutPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="container space-y-8 py-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold flex items-center gap-2">
