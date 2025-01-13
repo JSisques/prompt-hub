@@ -697,49 +697,72 @@
     },
     "about": {
       "title": "Sobre Nosotros",
-      "description": "Somos una plataforma dedicada a democratizar el acceso a prompts de calidad para IA, facilitando la colaboración y el aprendizaje en la comunidad.",
-      "mission": {
-        "title": "Nuestra Misión",
-        "description": "Nuestra misión es crear un ecosistema donde los usuarios puedan compartir, descubrir y aprender a crear prompts efectivos para diferentes modelos de IA, fomentando la innovación y el crecimiento colectivo."
+      "description": "Transformando la forma en que interactuamos con la Inteligencia Artificial",
+      "hero": {
+        "title": "Nuestra Historia",
+        "description": "Prompt Hub nació de una simple idea: hacer que la IA sea accesible para todos. Desde nuestro inicio en 2023, hemos estado construyendo una comunidad vibrante de creadores, innovadores y entusiastas de la IA."
       },
-      "values": {
-        "title": "Nuestros Valores",
+      "stats": {
+        "users": {
+          "value": "50K+",
+          "label": "Usuarios Activos"
+        },
+        "prompts": {
+          "value": "100K+",
+          "label": "Prompts Creados"
+        },
+        "countries": {
+          "value": "150+",
+          "label": "Países"
+        }
+      },
+      "features": {
+        "title": "¿Por qué Prompt Hub?",
         "items": {
           "community": {
-            "title": "Comunidad",
-            "description": "Creemos en el poder de compartir conocimiento y experiencias para crecer juntos."
-          },
-          "collaboration": {
-            "title": "Colaboración",
-            "description": "Fomentamos un ambiente de colaboración donde todos pueden contribuir y aprender."
+            "title": "Comunidad Vibrante",
+            "description": "Únete a miles de creadores que comparten tu pasión por la IA"
           },
           "innovation": {
-            "title": "Innovación",
-            "description": "Buscamos constantemente nuevas formas de mejorar la interacción con la IA."
+            "title": "Innovación Constante",
+            "description": "Estamos a la vanguardia de la tecnología de IA, siempre evolucionando"
           },
-          "trust": {
-            "title": "Confianza",
-            "description": "Priorizamos la seguridad y privacidad de nuestra comunidad en todo momento."
+          "quality": {
+            "title": "Calidad Garantizada",
+            "description": "Cada prompt es revisado y validado por expertos"
+          },
+          "support": {
+            "title": "Soporte 24/7",
+            "description": "Estamos aquí para ayudarte en cada paso del camino"
+          }
+        }
+      },
+      "vision": {
+        "title": "Nuestra Visión",
+        "description": "Creemos en un futuro donde la IA sea una herramienta accesible y poderosa para todos. Trabajamos cada día para hacer este futuro realidad.",
+        "items": {
+          "accessibility": {
+            "title": "Accesibilidad",
+            "description": "Hacer que la IA sea comprensible y accesible para todos"
+          },
+          "education": {
+            "title": "Educación",
+            "description": "Proporcionar recursos y herramientas para el aprendizaje continuo"
+          },
+          "empowerment": {
+            "title": "Empoderamiento",
+            "description": "Dar a las personas el poder de crear y innovar con IA"
           }
         }
       },
       "team": {
         "title": "Nuestro Equipo",
+        "description": "Un grupo diverso de expertos apasionados por la IA y la innovación",
         "members": {
-          "maria": {
-            "name": "María García",
-            "role": "Fundadora & CEO",
-            "bio": "Experta en IA con más de 10 años de experiencia en el sector tecnológico."
-          },
-          "carlos": {
-            "name": "Carlos Ruiz",
-            "role": "CTO",
-            "bio": "Desarrollador full-stack con pasión por crear herramientas que mejoren la productividad."
-          },
-          "ana": {
-            "name": "Ana López",
-            "role": "Directora de Producto",
-            "bio": "Especialista en UX/UI con enfoque en crear experiencias intuitivas y accesibles."
+          "founder": {
+            "name": "Javier Sisques",
+            "role": "Fundador & CEO",
+            "bio": "Visionario tecnológico con más de 10 años de experiencia en IA"
           }
         }
       }
