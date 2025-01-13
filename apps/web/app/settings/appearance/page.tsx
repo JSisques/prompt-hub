@@ -16,26 +16,27 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Switch,
 } from '@/components/ui';
 import { toast } from '@/hooks/use-toast';
-import { SettingsHeader } from '@/components/settings/header';
 import { SettingsSection } from '@/components/settings/section';
 import { FormFieldContext } from '@/types/form';
-
-const appearanceFormSchema = z.object({
-  theme: z.enum(['light', 'dark', 'system'], {
-    required_error: 'Por favor selecciona un tema.',
-  }),
-});
-
-type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
-
-const defaultValues: Partial<AppearanceFormValues> = {
-  theme: 'system',
-};
+import { useTranslation } from 'react-i18next';
 
 export default function AppearancePage() {
+  const { t } = useTranslation();
+
+  const appearanceFormSchema = z.object({
+    theme: z.enum(['light', 'dark', 'system'], {
+      required_error: t('pages.settings.appearance.validation.theme'),
+    }),
+  });
+
+  type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
+
+  const defaultValues: Partial<AppearanceFormValues> = {
+    theme: 'system',
+  };
+
   const form = useForm<AppearanceFormValues>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues,
@@ -43,44 +44,45 @@ export default function AppearancePage() {
 
   function onSubmit(data: AppearanceFormValues) {
     toast({
-      title: 'Has actualizado la apariencia',
-      description: 'Los cambios se aplicarán inmediatamente.',
+      title: t('pages.settings.appearance.messages.success.title'),
+      description: t('pages.settings.appearance.messages.success.description'),
     });
   }
 
   return (
     <div className="space-y-10">
-      <SettingsHeader title="Apariencia" description="Personaliza la apariencia de la aplicación." />
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <SettingsSection title="Tema" description="Selecciona el tema de la aplicación.">
+          <SettingsSection
+            title={t('pages.settings.appearance.sections.theme.title')}
+            description={t('pages.settings.appearance.sections.theme.description')}
+          >
             <FormField
               control={form.control}
               name="theme"
               render={({ field }: FormFieldContext<AppearanceFormValues>) => (
                 <FormItem>
-                  <FormLabel>Tema</FormLabel>
+                  <FormLabel>{t('pages.settings.appearance.sections.theme.fields.theme.label')}</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecciona un tema" />
+                        <SelectValue placeholder={t('pages.settings.appearance.sections.theme.fields.theme.placeholder')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="light">Claro</SelectItem>
-                      <SelectItem value="dark">Oscuro</SelectItem>
-                      <SelectItem value="system">Sistema</SelectItem>
+                      <SelectItem value="light">{t('pages.settings.appearance.sections.theme.fields.theme.options.light')}</SelectItem>
+                      <SelectItem value="dark">{t('pages.settings.appearance.sections.theme.fields.theme.options.dark')}</SelectItem>
+                      <SelectItem value="system">{t('pages.settings.appearance.sections.theme.fields.theme.options.system')}</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormDescription>El tema del sistema se adaptará automáticamente a tus preferencias.</FormDescription>
+                  <FormDescription>{t('pages.settings.appearance.sections.theme.fields.theme.description')}</FormDescription>
                 </FormItem>
               )}
             />
           </SettingsSection>
 
           <Button type="submit" className="w-full sm:w-auto mt-6">
-            Guardar cambios
+            {t('pages.settings.common.buttons.save')}
           </Button>
         </form>
       </Form>

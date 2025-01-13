@@ -141,84 +141,82 @@ Proporciona:
 
 export default function AdvancedPage() {
   return (
-    <div className="container max-w-4xl mx-auto py-4 px-4 md:px-0">
-      <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <BookOpen className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold">Técnicas Avanzadas</h1>
-        </div>
+    <div className="space-y-8">
+      <div className="flex items-center gap-3">
+        <BookOpen className="h-8 w-8 text-primary" />
+        <h1 className="text-3xl font-bold">Técnicas Avanzadas</h1>
+      </div>
 
-        <p className="text-muted-foreground text-lg">
-          Domina técnicas avanzadas de prompt engineering para obtener resultados más precisos y efectivos en tus interacciones con IA. Estas técnicas
-          te permitirán crear prompts más sofisticados y obtener mejores resultados.
-        </p>
+      <p className="text-muted-foreground text-lg">
+        Domina técnicas avanzadas de prompt engineering para obtener resultados más precisos y efectivos en tus interacciones con IA. Estas técnicas
+        te permitirán crear prompts más sofisticados y obtener mejores resultados.
+      </p>
 
-        <div className="grid gap-6">
-          {techniques.map((technique, index) => (
-            <Card key={index}>
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                    <technique.icon className="h-6 w-6" />
-                  </div>
-                  <CardTitle>{technique.title}</CardTitle>
+      <div className="grid gap-6">
+        {techniques.map((technique, index) => (
+          <Card key={index}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <technique.icon className="h-6 w-6" />
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <p className="text-muted-foreground">{technique.description}</p>
+                <CardTitle>{technique.title}</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <p className="text-muted-foreground">{technique.description}</p>
 
-                  {technique.details && (
-                    <div className="pl-4 border-l-2 border-primary/20">
-                      <h3 className="font-medium mb-2">Características principales:</h3>
-                      <ul className="space-y-2">
-                        {technique.details.map((detail, i) => (
-                          <li key={i} className="text-muted-foreground">
-                            • {detail}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {technique.example && (
-                    <div className="bg-muted/50 p-4 rounded-lg space-y-3">
-                      <h3 className="font-medium">Ejemplo de Aplicación</h3>
-                      <div>
-                        <p className="text-sm font-medium text-muted-foreground">Prompt básico:</p>
-                        <div className="bg-background p-3 rounded border mt-1">
-                          <p className="text-sm font-mono">{technique.example.prompt}</p>
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-muted-foreground">Prompt mejorado:</p>
-                        <div className="bg-background p-3 rounded border mt-1">
-                          <p className="text-sm font-mono whitespace-pre-wrap">{technique.example.improved}</p>
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground">{technique.example.explanation}</p>
-                    </div>
-                  )}
-
-                  {technique.templates && (
-                    <div className="space-y-4">
-                      <h3 className="font-medium">Plantillas de Ejemplo</h3>
-                      {technique.templates.map((template, i) => (
-                        <div key={i} className="bg-muted/50 p-4 rounded-lg space-y-2">
-                          <h4 className="font-medium">{template.name}</h4>
-                          <div className="bg-background p-3 rounded border">
-                            <p className="text-sm font-mono whitespace-pre-wrap">{template.template}</p>
-                          </div>
-                          <p className="text-sm text-muted-foreground">{template.useCase}</p>
-                        </div>
+                {technique.details && (
+                  <div className="pl-4 border-l-2 border-primary/20">
+                    <h3 className="font-medium mb-2">Características principales:</h3>
+                    <ul className="space-y-2">
+                      {technique.details.map((detail, i) => (
+                        <li key={i} className="text-muted-foreground">
+                          • {detail}
+                        </li>
                       ))}
+                    </ul>
+                  </div>
+                )}
+
+                {technique.example && (
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-3">
+                    <h3 className="font-medium">Ejemplo de Aplicación</h3>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Prompt básico:</p>
+                      <div className="bg-background p-3 rounded border mt-1">
+                        <p className="text-sm font-mono">{technique.example.prompt}</p>
+                      </div>
                     </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Prompt mejorado:</p>
+                      <div className="bg-background p-3 rounded border mt-1">
+                        <p className="text-sm font-mono whitespace-pre-wrap">{technique.example.improved}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{technique.example.explanation}</p>
+                  </div>
+                )}
+
+                {technique.templates && (
+                  <div className="space-y-4">
+                    <h3 className="font-medium">Plantillas de Ejemplo</h3>
+                    {technique.templates.map((template, i) => (
+                      <div key={i} className="bg-muted/50 p-4 rounded-lg space-y-2">
+                        <h4 className="font-medium">{template.name}</h4>
+                        <div className="bg-background p-3 rounded border">
+                          <p className="text-sm font-mono whitespace-pre-wrap">{template.template}</p>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{template.useCase}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );

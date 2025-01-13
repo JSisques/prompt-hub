@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search, Star, TrendingUp, Filter, Tag, ShoppingBag } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // Datos de ejemplo - esto vendría de una API
 const mockPrompts = {
@@ -76,30 +77,32 @@ const priceRanges = [
 ];
 
 export default function MarketplacePage() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-8">
       {/* Hero Section */}
       <div>
         <h1 className="text-3xl font-bold flex items-center gap-2">
           <ShoppingBag className="h-8 w-8 text-primary" />
-          Marketplace
+          {t('pages.marketplace.title')}
         </h1>
-        <p className="text-muted-foreground mt-2">Descubre y adquiere prompts premium creados por expertos.</p>
+        <p className="text-muted-foreground mt-2">{t('pages.marketplace.subtitle')}</p>
       </div>
 
       {/* Búsqueda y Filtros */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input placeholder="Buscar prompts premium..." className="pl-9" />
+          <Input placeholder={t('pages.marketplace.search.placeholder')} className="pl-9" />
         </div>
         <Button variant="outline" className="flex items-center gap-2">
           <Filter className="h-4 w-4" />
-          Filtros
+          {t('pages.marketplace.filters.title')}
         </Button>
         <Button variant="outline" className="flex items-center gap-2">
           <Tag className="h-4 w-4" />
-          Categorías
+          {t('pages.marketplace.filters.categories')}
         </Button>
       </div>
 
@@ -108,7 +111,7 @@ export default function MarketplacePage() {
         {categories.map(category => (
           <Button key={category.id} variant="outline" className="flex items-center gap-2 whitespace-nowrap">
             <category.icon className="h-4 w-4" />
-            {category.label}
+            {t(`pages.marketplace.categories.${category.id}`)}
           </Button>
         ))}
       </div>
@@ -117,13 +120,13 @@ export default function MarketplacePage() {
       <Tabs defaultValue="featured" className="space-y-8">
         <TabsList className="w-full grid grid-cols-3">
           <TabsTrigger value="featured" className="flex-1">
-            Destacados
+            {t('pages.marketplace.tabs.featured')}
           </TabsTrigger>
           <TabsTrigger value="new" className="flex-1">
-            Nuevos
+            {t('pages.marketplace.tabs.new')}
           </TabsTrigger>
           <TabsTrigger value="trending" className="flex-1">
-            Tendencias
+            {t('pages.marketplace.tabs.trending')}
           </TabsTrigger>
         </TabsList>
 
@@ -140,7 +143,9 @@ export default function MarketplacePage() {
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
                       <span className="font-medium">{prompt.rating}</span>
-                      <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
+                      <span className="text-muted-foreground">
+                        ({prompt.reviews} {t('pages.marketplace.promptCard.reviews')})
+                      </span>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {prompt.tags.map(tag => (
@@ -151,7 +156,7 @@ export default function MarketplacePage() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-bold">{prompt.price}€</span>
-                      <Button>Comprar Ahora</Button>
+                      <Button>{t('pages.marketplace.promptCard.buyNow')}</Button>
                     </div>
                   </div>
                 </CardContent>
@@ -173,7 +178,9 @@ export default function MarketplacePage() {
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
                       <span className="font-medium">{prompt.rating}</span>
-                      <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
+                      <span className="text-muted-foreground">
+                        ({prompt.reviews} {t('pages.marketplace.promptCard.reviews')})
+                      </span>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {prompt.tags.map(tag => (
@@ -184,7 +191,7 @@ export default function MarketplacePage() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-bold">{prompt.price}€</span>
-                      <Button>Comprar Ahora</Button>
+                      <Button>{t('pages.marketplace.promptCard.buyNow')}</Button>
                     </div>
                   </div>
                 </CardContent>
@@ -206,7 +213,9 @@ export default function MarketplacePage() {
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
                       <span className="font-medium">{prompt.rating}</span>
-                      <span className="text-muted-foreground">({prompt.reviews} reseñas)</span>
+                      <span className="text-muted-foreground">
+                        ({prompt.reviews} {t('pages.marketplace.promptCard.reviews')})
+                      </span>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {prompt.tags.map(tag => (
@@ -217,7 +226,7 @@ export default function MarketplacePage() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-bold">{prompt.price}€</span>
-                      <Button>Comprar Ahora</Button>
+                      <Button>{t('pages.marketplace.promptCard.buyNow')}</Button>
                     </div>
                   </div>
                 </CardContent>

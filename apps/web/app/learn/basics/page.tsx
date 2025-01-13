@@ -162,101 +162,99 @@ const sections: Section[] = [
 
 export default function BasicsPage() {
   return (
-    <div className="container max-w-4xl mx-auto py-4 px-4 md:px-0">
-      <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <BookOpen className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold">Fundamentos de Prompts</h1>
-        </div>
+    <div className="space-y-8">
+      <div className="flex items-center gap-3">
+        <BookOpen className="h-8 w-8 text-primary" />
+        <h1 className="text-3xl font-bold">Fundamentos de Prompts</h1>
+      </div>
 
-        <p className="text-muted-foreground text-lg">
-          Aprende los conceptos básicos para crear prompts efectivos y comenzar tu viaje en la ingeniería de prompts. Esta guía te proporcionará las
-          bases necesarias para comunicarte eficazmente con modelos de IA.
-        </p>
+      <p className="text-muted-foreground text-lg">
+        Aprende los conceptos básicos para crear prompts efectivos y comenzar tu viaje en la ingeniería de prompts. Esta guía te proporcionará las
+        bases necesarias para comunicarte eficazmente con modelos de IA.
+      </p>
 
-        <div className="grid gap-6">
-          {sections.map((section, index) => (
-            <Card key={index}>
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
-                    <section.icon className="h-6 w-6" />
-                  </div>
-                  <CardTitle>{section.title}</CardTitle>
+      <div className="grid gap-6">
+        {sections.map((section, index) => (
+          <Card key={index}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <section.icon className="h-6 w-6" />
                 </div>
-              </CardHeader>
-              <CardContent>
-                {section.content && <p className="text-muted-foreground mb-4">{section.content}</p>}
+                <CardTitle>{section.title}</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {section.content && <p className="text-muted-foreground mb-4">{section.content}</p>}
 
-                {section.examples && (
-                  <div className="space-y-4 mt-4">
-                    {section.examples.map((example, i) => (
-                      <div key={i} className="bg-muted/50 p-4 rounded-lg space-y-2">
-                        <h3 className="font-medium">{example.title}</h3>
-                        {isSimpleExample(example) && (
+              {section.examples && (
+                <div className="space-y-4 mt-4">
+                  {section.examples.map((example, i) => (
+                    <div key={i} className="bg-muted/50 p-4 rounded-lg space-y-2">
+                      <h3 className="font-medium">{example.title}</h3>
+                      {isSimpleExample(example) && (
+                        <div className="bg-background p-3 rounded border">
+                          <p className="text-sm font-mono">{example.prompt}</p>
+                        </div>
+                      )}
+                      {isSimpleExample(example) && <p className="text-sm text-muted-foreground">{example.explanation}</p>}
+                      {isComplexExample(example) && (
+                        <>
                           <div className="bg-background p-3 rounded border">
-                            <p className="text-sm font-mono">{example.prompt}</p>
+                            <p className="text-sm font-mono">{example.mejora}</p>
                           </div>
-                        )}
-                        {isSimpleExample(example) && <p className="text-sm text-muted-foreground">{example.explanation}</p>}
-                        {isComplexExample(example) && (
-                          <>
-                            <div className="bg-background p-3 rounded border">
-                              <p className="text-sm font-mono">{example.mejora}</p>
+                          <p className="text-sm text-muted-foreground">{example.explicacion}</p>
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {section.subsections && (
+                <div className="mt-4 space-y-4">
+                  {section.subsections.map((subsection, subIndex) => (
+                    <div key={subIndex} className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <ArrowRight className="h-5 w-5 text-primary mt-0.5" />
+                        <div>
+                          <h3 className="font-medium">{subsection.title}</h3>
+                          <p className="text-muted-foreground">{subsection.content}</p>
+
+                          {subsection.example && (
+                            <div className="mt-2 bg-muted/50 p-3 rounded-lg">
+                              <p className="text-sm font-mono">{subsection.example}</p>
                             </div>
-                            <p className="text-sm text-muted-foreground">{example.explicacion}</p>
-                          </>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                          )}
 
-                {section.subsections && (
-                  <div className="mt-4 space-y-4">
-                    {section.subsections.map((subsection, subIndex) => (
-                      <div key={subIndex} className="space-y-2">
-                        <div className="flex items-start gap-2">
-                          <ArrowRight className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <h3 className="font-medium">{subsection.title}</h3>
-                            <p className="text-muted-foreground">{subsection.content}</p>
+                          {subsection.tips && (
+                            <ul className="mt-2 space-y-1">
+                              {subsection.tips.map((tip, i) => (
+                                <li key={i} className="text-sm text-muted-foreground">
+                                  • {tip}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
 
-                            {subsection.example && (
-                              <div className="mt-2 bg-muted/50 p-3 rounded-lg">
-                                <p className="text-sm font-mono">{subsection.example}</p>
-                              </div>
-                            )}
-
-                            {subsection.tips && (
-                              <ul className="mt-2 space-y-1">
-                                {subsection.tips.map((tip, i) => (
-                                  <li key={i} className="text-sm text-muted-foreground">
-                                    • {tip}
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-
-                            {subsection.examples && (
-                              <ul className="mt-2 space-y-1">
-                                {subsection.examples.map((example, i) => (
-                                  <li key={i} className="text-sm text-muted-foreground">
-                                    • {example}
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </div>
+                          {subsection.examples && (
+                            <ul className="mt-2 space-y-1">
+                              {subsection.examples.map((example, i) => (
+                                <li key={i} className="text-sm text-muted-foreground">
+                                  • {example}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
