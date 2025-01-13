@@ -21,6 +21,7 @@ import { LlmModule } from './llm/llm.module';
 import { HealthModule } from './health/health.module';
 import { CommentModule } from './comment/comment.module';
 import { UserSettingsModule } from './user-settings/user-settings.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { UserSettingsModule } from './user-settings/user-settings.module';
     HealthModule,
     CommentModule,
     UserSettingsModule,
+    TagsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, CategoryService, PromptService, UserService, ReviewService, CryptoService],

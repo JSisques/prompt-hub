@@ -244,8 +244,10 @@
             },
             "llm": {
               "label": "Modelo de IA",
-              "placeholder": "Selecciona un modelo de IA",
-              "loading": "Cargando modelos..."
+              "placeholder": "Busca o selecciona un modelo de IA",
+              "loading": "Cargando modelos...",
+              "noResults": "No se encontraron modelos",
+              "willCreate": "Se creará un nuevo modelo con este nombre"
             }
           }
         },
@@ -269,12 +271,15 @@
           "fields": {
             "category": {
               "label": "Categoría",
-              "placeholder": "Selecciona una categoría",
-              "loading": "Cargando categorías..."
+              "placeholder": "Busca o selecciona una categoría",
+              "loading": "Cargando categorías...",
+              "noResults": "No se encontraron categorías",
+              "willCreate": "Se creará una nueva categoría con este nombre"
             },
             "tags": {
               "label": "Etiquetas",
-              "placeholder": "Separa las etiquetas con comas"
+              "placeholder": "Separa las etiquetas con comas",
+              "help": "Escribe las etiquetas separadas por comas, por ejemplo: 'marketing, redes sociales, ventas'"
             },
             "visibility": {
               "label": "Visibilidad",
@@ -293,6 +298,8 @@
       "messages": {
         "success": "¡Prompt creado con éxito!",
         "error": "Error al crear el prompt: {{message}}",
+        "llmCreated": "Modelo de IA creado con éxito",
+        "categoryCreated": "Categoría creada con éxito",
         "validation": {
           "categoryRequired": "Por favor, selecciona una categoría",
           "llmRequired": "Por favor, selecciona un modelo de IA"
