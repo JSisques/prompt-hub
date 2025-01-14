@@ -102,6 +102,10 @@
       },
       "select": {
         "placeholder": "Seleccionar {{field}}"
+      },
+      "noResults": {
+        "title": "No se encontraron prompts",
+        "description": "Intenta con otros términos de búsqueda o ajusta los filtros"
       }
     },
     "trending": {
