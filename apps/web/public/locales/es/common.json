@@ -244,10 +244,10 @@
             },
             "llm": {
               "label": "Modelo de IA",
-              "placeholder": "Busca o selecciona un modelo de IA",
+              "placeholder": "Busca o selecciona un modelo de IA...",
               "loading": "Cargando modelos...",
               "noResults": "No se encontraron modelos",
-              "willCreate": "Se creará un nuevo modelo con este nombre"
+              "createNew": "Crear nuevo modelo \"{name}\""
             }
           }
         },
@@ -271,10 +271,10 @@
           "fields": {
             "category": {
               "label": "Categoría",
-              "placeholder": "Busca o selecciona una categoría",
+              "placeholder": "Busca o selecciona una categoría...",
               "loading": "Cargando categorías...",
               "noResults": "No se encontraron categorías",
-              "willCreate": "Se creará una nueva categoría con este nombre"
+              "createNew": "Crear nueva categoría \"s{name}\""
             },
             "tags": {
               "label": "Etiquetas",
@@ -298,8 +298,6 @@
       "messages": {
         "success": "¡Prompt creado con éxito!",
         "error": "Error al crear el prompt: {{message}}",
-        "llmCreated": "Modelo de IA creado con éxito",
-        "categoryCreated": "Categoría creada con éxito",
         "validation": {
           "categoryRequired": "Por favor, selecciona una categoría",
           "llmRequired": "Por favor, selecciona un modelo de IA"

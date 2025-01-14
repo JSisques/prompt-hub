@@ -11,9 +11,9 @@ export class CreatePromptDto {
   userId: string;
 
   @Field()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  categoryId: string;
+  categoryId?: string;
 
   @Field({ nullable: true })
   @IsOptional()
@@ -36,9 +36,9 @@ export class CreatePromptDto {
   content: string;
 
   @Field()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  llmId: string;
+  llmId?: string;
 
   @Field({ nullable: true })
   @IsOptional()

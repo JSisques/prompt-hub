@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { CREATE_PROMPT, GET_CATEGORIES, GET_LLMS } from '@/lib/graphql';
@@ -15,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { useSession } from 'next-auth/react';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Combobox } from '@/components/ui/combobox';
 
 export default function CreatePromptPage() {
   const { t } = useTranslation();
@@ -27,10 +26,12 @@ export default function CreatePromptPage() {
     title: '',
     description: '',
     categoryId: '',
+    categoryName: '',
     llmId: '',
+    llmName: '',
     content: '',
     example: '',
-    tags: [] as string[],
+    tags: '',
     published: true,
   });
   const [step, setStep] = useState(1);
@@ -61,6 +62,7 @@ export default function CreatePromptPage() {
     setFormData(prev => ({
       ...prev,
       categoryId: value,
+      categoryName: '',
     }));
   };
 
@@ -68,6 +70,23 @@ export default function CreatePromptPage() {
     setFormData(prev => ({
       ...prev,
       llmId: value,
+      llmName: '',
+    }));
+  };
+
+  const handleCreateCategory = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      categoryId: '',
+      categoryName: value,
+    }));
+  };
+
+  const handleCreateLlm = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      llmId: '',
+      llmName: value,
     }));
   };
 
@@ -82,24 +101,26 @@ export default function CreatePromptPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.categoryId) {
+    if (!formData.categoryId && !formData.categoryName) {
       toast.error(t('pages.createPrompt.messages.validation.categoryRequired'));
       return;
     }
 
-    if (!formData.llmId) {
+    if (!formData.llmId && !formData.llmName) {
       toast.error(t('pages.createPrompt.messages.validation.llmRequired'));
       return;
     }
 
     const processedTags = formData.tags
-      .toString()
-      .split(',')
-      .map(tag => tag.trim())
-      .filter(tag => tag !== '')
-      .map(tag => ({
-        name: tag,
-      }));
+      ? formData.tags
+          .toString()
+          .split(',')
+          .map(tag => tag.trim())
+          .filter(tag => tag !== '')
+          .map(tag => ({
+            name: tag,
+          }))
+      : [];
 
     await createPrompt({
       variables: {
@@ -108,7 +129,9 @@ export default function CreatePromptPage() {
           title: formData.title,
           description: formData.description,
           categoryId: formData.categoryId,
+          categoryName: formData.categoryName,
           llmId: formData.llmId,
+          llmName: formData.llmName,
           content: formData.content,
           example: formData.example,
           tags: processedTags,
@@ -178,51 +201,17 @@ export default function CreatePromptPage() {
                 </div>
                 <div className="space-y-2">
                   <Label>{t('pages.createPrompt.steps.basicInfo.fields.llm.label')}</Label>
-                  <Command className="border rounded-md">
-                    <CommandInput
-                      placeholder={t('pages.createPrompt.steps.basicInfo.fields.llm.placeholder')}
-                      value={formData.llmId}
-                      onValueChange={value => {
-                        setFormData(prev => ({
-                          ...prev,
-                          llmId: value,
-                        }));
-                      }}
-                    />
-                    {formData.llmId?.length > 0 && (
-                      <CommandList>
-                        <CommandEmpty className="py-6 text-sm">
-                          <p className="text-muted-foreground text-left px-2">{t('pages.createPrompt.steps.basicInfo.fields.llm.noResults')}</p>
-                          <Button
-                            variant="link"
-                            className="mt-2 text-primary w-full justify-start px-2"
-                            onClick={() => {
-                              // Aquí iría la lógica para crear un nuevo LLM
-                              console.log('Crear nuevo LLM:', formData.llmId);
-                            }}
-                          >
-                            + Crear "{formData.llmId}"
-                          </Button>
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {loadingLlms ? (
-                            <CommandItem disabled className="py-3">
-                              <span className="flex items-center gap-2">
-                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                                {t('pages.createPrompt.steps.basicInfo.fields.llm.loading')}
-                              </span>
-                            </CommandItem>
-                          ) : (
-                            llmsData?.getLlms?.map((llm: { id: string; name: string }) => (
-                              <CommandItem key={llm.id} value={llm.id} onSelect={() => handleLlmChange(llm.id)}>
-                                {llm.name}
-                              </CommandItem>
-                            ))
-                          )}
-                        </CommandGroup>
-                      </CommandList>
-                    )}
-                  </Command>
+                  <Combobox
+                    value={formData.llmId}
+                    onValueChange={handleLlmChange}
+                    items={llmsData?.getLlms || []}
+                    isLoading={loadingLlms}
+                    placeholder={t('pages.createPrompt.steps.basicInfo.fields.llm.placeholder')}
+                    noResultsMessage={t('pages.createPrompt.steps.basicInfo.fields.llm.noResults')}
+                    loadingMessage={t('pages.createPrompt.steps.basicInfo.fields.llm.loading')}
+                    createNewMessage={t('pages.createPrompt.steps.basicInfo.fields.llm.createNew')}
+                    onCreateNew={handleCreateLlm}
+                  />
                 </div>
               </div>
             </CardContent>
@@ -270,53 +259,17 @@ export default function CreatePromptPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="category">{t('pages.createPrompt.steps.finalDetails.fields.category.label')}</Label>
-                  <Command className="border rounded-md">
-                    <CommandInput
-                      placeholder={t('pages.createPrompt.steps.finalDetails.fields.category.placeholder')}
-                      value={formData.categoryId}
-                      onValueChange={value => {
-                        setFormData(prev => ({
-                          ...prev,
-                          categoryId: value,
-                        }));
-                      }}
-                    />
-                    {formData.categoryId?.length > 0 && (
-                      <CommandList>
-                        <CommandEmpty className="py-6 text-sm">
-                          <p className="text-muted-foreground text-left px-2">
-                            {t('pages.createPrompt.steps.finalDetails.fields.category.noResults')}
-                          </p>
-                          <Button
-                            variant="link"
-                            className="mt-2 text-primary w-full justify-start px-2"
-                            onClick={() => {
-                              // Aquí iría la lógica para crear una nueva categoría
-                              console.log('Crear nueva categoría:', formData.categoryId);
-                            }}
-                          >
-                            + Crear "{formData.categoryId}"
-                          </Button>
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {loadingCategories ? (
-                            <CommandItem disabled className="py-3">
-                              <span className="flex items-center gap-2">
-                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                                {t('pages.createPrompt.steps.finalDetails.fields.category.loading')}
-                              </span>
-                            </CommandItem>
-                          ) : (
-                            categoriesData?.getCategories?.map((category: { id: string; name: string }) => (
-                              <CommandItem key={category.id} value={category.id} onSelect={() => handleCategoryChange(category.id)}>
-                                {category.name}
-                              </CommandItem>
-                            ))
-                          )}
-                        </CommandGroup>
-                      </CommandList>
-                    )}
-                  </Command>
+                  <Combobox
+                    value={formData.categoryId}
+                    onValueChange={handleCategoryChange}
+                    items={categoriesData?.getCategories || []}
+                    isLoading={loadingCategories}
+                    placeholder={t('pages.createPrompt.steps.finalDetails.fields.category.placeholder')}
+                    noResultsMessage={t('pages.createPrompt.steps.finalDetails.fields.category.noResults')}
+                    loadingMessage={t('pages.createPrompt.steps.finalDetails.fields.category.loading')}
+                    createNewMessage={t('pages.createPrompt.steps.finalDetails.fields.category.createNew')}
+                    onCreateNew={handleCreateCategory}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="tagIds">{t('pages.createPrompt.steps.finalDetails.fields.tags.label')}</Label>
