@@ -3,35 +3,33 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { Button, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, Switch, RadioGroup, RadioGroupItem } from '@/components/ui/';
+import { Button, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, Switch } from '@/components/ui/';
 import { toast } from '@/hooks/use-toast';
-import { SettingsHeader } from '@/components/settings/header';
 import { SettingsSection } from '@/components/settings/section';
 import { FormFieldContext } from '@/types/form';
-
-const notificationsFormSchema = z.object({
-  emailDigest: z.enum(['daily', 'weekly', 'never'], {
-    required_error: 'Por favor selecciona una frecuencia.',
-  }),
-  marketing: z.boolean().default(true),
-  security: z.boolean().default(true),
-  prompts: z.boolean().default(true),
-  comments: z.boolean().default(true),
-  mentions: z.boolean().default(true),
-});
-
-type NotificationsFormValues = z.infer<typeof notificationsFormSchema>;
-
-const defaultValues: Partial<NotificationsFormValues> = {
-  emailDigest: 'weekly',
-  marketing: true,
-  security: true,
-  prompts: true,
-  comments: true,
-  mentions: true,
-};
+import { useTranslation } from 'react-i18next';
 
 export default function NotificationsPage() {
+  const { t } = useTranslation();
+
+  const notificationsFormSchema = z.object({
+    prompts: z.boolean().default(true),
+    comments: z.boolean().default(true),
+    likes: z.boolean().default(true),
+    reviews: z.boolean().default(true),
+    marketing: z.boolean().default(true),
+  });
+
+  type NotificationsFormValues = z.infer<typeof notificationsFormSchema>;
+
+  const defaultValues: Partial<NotificationsFormValues> = {
+    prompts: true,
+    comments: true,
+    likes: true,
+    reviews: true,
+    marketing: true,
+  };
+
   const form = useForm<NotificationsFormValues>({
     resolver: zodResolver(notificationsFormSchema),
     defaultValues,
@@ -39,26 +37,27 @@ export default function NotificationsPage() {
 
   function onSubmit(data: NotificationsFormValues) {
     toast({
-      title: 'Has actualizado las notificaciones',
-      description: 'Las preferencias se han guardado correctamente.',
+      title: t('pages.settings.notifications.messages.success.title'),
+      description: t('pages.settings.notifications.messages.success.description'),
     });
   }
 
   return (
     <div className="space-y-6">
-      <SettingsHeader title="Notificaciones" description="Configura cómo y cuándo quieres recibir notificaciones." />
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <SettingsSection title="Notificaciones Push" description="Selecciona los tipos de notificaciones que quieres recibir.">
+          <SettingsSection
+            title={t('pages.settings.notifications.sections.push.title')}
+            description={t('pages.settings.notifications.sections.push.description')}
+          >
             <FormField
               control={form.control}
               name="prompts"
               render={({ field }: FormFieldContext<NotificationsFormValues>) => (
                 <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Nuevos prompts</FormLabel>
-                    <FormDescription>Notificaciones sobre nuevos prompts en tus categorías favoritas.</FormDescription>
+                    <FormLabel className="text-base">{t('pages.settings.notifications.sections.push.fields.prompts.label')}</FormLabel>
+                    <FormDescription>{t('pages.settings.notifications.sections.push.fields.prompts.description')}</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -73,8 +72,8 @@ export default function NotificationsPage() {
               render={({ field }: FormFieldContext<NotificationsFormValues>) => (
                 <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Comentarios</FormLabel>
-                    <FormDescription>Notificaciones cuando alguien comenta en tus prompts.</FormDescription>
+                    <FormLabel className="text-base">{t('pages.settings.notifications.sections.push.fields.comments.label')}</FormLabel>
+                    <FormDescription>{t('pages.settings.notifications.sections.push.fields.comments.description')}</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -89,8 +88,8 @@ export default function NotificationsPage() {
               render={({ field }: FormFieldContext<NotificationsFormValues>) => (
                 <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Likes</FormLabel>
-                    <FormDescription>Notificaciones cuando alguien te da like a tus prompts.</FormDescription>
+                    <FormLabel className="text-base">{t('pages.settings.notifications.sections.push.fields.likes.label')}</FormLabel>
+                    <FormDescription>{t('pages.settings.notifications.sections.push.fields.likes.description')}</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -105,8 +104,8 @@ export default function NotificationsPage() {
               render={({ field }: FormFieldContext<NotificationsFormValues>) => (
                 <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Reviews</FormLabel>
-                    <FormDescription>Notificaciones cuando alguien escribe una review a tus prompts.</FormDescription>
+                    <FormLabel className="text-base">{t('pages.settings.notifications.sections.push.fields.reviews.label')}</FormLabel>
+                    <FormDescription>{t('pages.settings.notifications.sections.push.fields.reviews.description')}</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -116,15 +115,18 @@ export default function NotificationsPage() {
             />
           </SettingsSection>
 
-          <SettingsSection title="Marketing" description="Gestiona tus preferencias de comunicación marketing.">
+          <SettingsSection
+            title={t('pages.settings.notifications.sections.marketing.title')}
+            description={t('pages.settings.notifications.sections.marketing.description')}
+          >
             <FormField
               control={form.control}
               name="marketing"
               render={({ field }: FormFieldContext<NotificationsFormValues>) => (
                 <FormItem className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5 mb-4 sm:mb-0">
-                    <FormLabel className="text-base">Emails de marketing</FormLabel>
-                    <FormDescription>Recibe noticias sobre nuevas características y ofertas especiales.</FormDescription>
+                    <FormLabel className="text-base">{t('pages.settings.notifications.sections.marketing.fields.emails.label')}</FormLabel>
+                    <FormDescription>{t('pages.settings.notifications.sections.marketing.fields.emails.description')}</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -135,7 +137,7 @@ export default function NotificationsPage() {
           </SettingsSection>
 
           <Button type="submit" className="w-full sm:w-auto mt-6">
-            Guardar cambios
+            {t('pages.settings.common.buttons.save')}
           </Button>
         </form>
       </Form>

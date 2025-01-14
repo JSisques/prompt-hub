@@ -2,87 +2,102 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Lightbulb, Sparkles, Star, Target, Video } from 'lucide-react';
+import { BookOpen, Lightbulb, Sparkles, Star, Target, Video, Code, Brain, Palette, Briefcase, Wrench, LineChart } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 const guides = [
   {
-    title: 'Fundamentos de Prompts',
-    description: 'Aprende los conceptos básicos para crear prompts efectivos.',
+    id: 'basics',
     icon: BookOpen,
     href: '/learn/basics',
-    level: 'Principiante',
   },
   {
-    title: 'Mejores Prácticas',
-    description: 'Descubre las mejores prácticas y consejos de expertos.',
+    id: 'bestPractices',
     icon: Star,
     href: '/learn/best-practices',
-    level: 'Intermedio',
   },
   {
-    title: 'Técnicas Avanzadas',
-    description: 'Domina técnicas avanzadas para mejorar tus resultados.',
+    id: 'advanced',
     icon: Target,
     href: '/learn/advanced',
-    level: 'Avanzado',
+  },
+  {
+    id: 'promptEngineering',
+    icon: Code,
+    href: '/learn/prompt-engineering',
+  },
+  {
+    id: 'aiModels',
+    icon: Brain,
+    href: '/learn/ai-models',
+  },
+  {
+    id: 'creativity',
+    icon: Palette,
+    href: '/learn/creativity',
+  },
+  {
+    id: 'businessCases',
+    icon: Briefcase,
+    href: '/learn/business-cases',
+  },
+  {
+    id: 'troubleshooting',
+    icon: Wrench,
+    href: '/learn/troubleshooting',
+  },
+  {
+    id: 'evaluation',
+    icon: LineChart,
+    href: '/learn/evaluation',
   },
 ];
 
 const featuredArticles = [
   {
-    title: 'Cómo Escribir Prompts Claros y Efectivos',
-    description: 'Guía paso a paso para mejorar la claridad de tus prompts.',
-    category: 'Tutorial',
-    readTime: '5 min',
+    id: 'writingClearPrompts',
     href: '/learn/articles/writing-clear-prompts',
   },
   {
-    title: 'Optimización de Prompts para Diferentes IAs',
-    description: 'Aprende a adaptar tus prompts según el modelo de IA.',
-    category: 'Guía',
-    readTime: '8 min',
+    id: 'optimizingPrompts',
     href: '/learn/articles/optimizing-prompts',
   },
   {
-    title: 'Patrones Comunes en Prompts Exitosos',
-    description: 'Análisis de los patrones más efectivos en prompts populares.',
-    category: 'Análisis',
-    readTime: '6 min',
+    id: 'successfulPatterns',
     href: '/learn/articles/successful-patterns',
   },
 ];
 
 const resources = [
   {
-    title: 'Videotutoriales',
-    description: 'Aprende visualmente con nuestros tutoriales en video.',
+    id: 'videos',
     icon: Video,
     href: '/learn/videos',
   },
   {
-    title: 'Ejemplos Prácticos',
-    description: 'Biblioteca de ejemplos reales y casos de estudio.',
+    id: 'examples',
     icon: Lightbulb,
     href: '/learn/examples',
   },
   {
-    title: 'Ejercicios Interactivos',
-    description: 'Practica y mejora tus habilidades con ejercicios.',
+    id: 'exercises',
     icon: Sparkles,
     href: '/learn/exercises',
   },
 ];
 
 export default function LearnPage() {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold flex items-center gap-2">
           <BookOpen className="h-8 w-8 text-primary" />
-          Aprende
+          {t('pages.learn.title')}
         </h1>
-        <p className="text-muted-foreground mt-2">Domina el arte de crear prompts efectivos y aprovecha al máximo las capacidades de la IA.</p>
+        <p className="text-muted-foreground mt-2">{t('pages.learn.subtitle')}</p>
       </div>
 
       {/* Guías Principales */}
@@ -96,44 +111,16 @@ export default function LearnPage() {
                   <guide.icon className="h-6 w-6" />
                 </div>
                 <div>
-                  <CardTitle className="group-hover:text-primary transition-colors">{guide.title}</CardTitle>
-                  <CardDescription>{guide.level}</CardDescription>
+                  <CardTitle className="group-hover:text-primary transition-colors">{t(`pages.learn.guides.${guide.id}.title`)}</CardTitle>
+                  <CardDescription>{t(`pages.learn.guides.${guide.id}.level`)}</CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">{guide.description}</p>
+              <p className="text-muted-foreground">{t(`pages.learn.guides.${guide.id}.description`)}</p>
             </CardContent>
           </Card>
         ))}
-      </div>
-
-      {/* Artículos Destacados */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Artículos Destacados</h2>
-          <Button variant="outline">Ver todos</Button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featuredArticles.map(article => (
-            <Card key={article.href} className="relative group hover:shadow-lg transition-all">
-              <Link href={article.href} className="absolute inset-0" />
-              <CardHeader>
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span>{article.category}</span>
-                    <span>•</span>
-                    <span>{article.readTime}</span>
-                  </div>
-                  <CardTitle className="group-hover:text-primary transition-colors">{article.title}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{article.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
       </div>
     </div>
   );

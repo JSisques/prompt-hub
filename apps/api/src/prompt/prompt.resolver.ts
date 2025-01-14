@@ -25,6 +25,12 @@ export class PromptResolver {
     return this.promptService.getPromptById(id);
   }
 
+  @Query(() => [PromptDto])
+  async getPromptsByName(@Args('name') name: string): Promise<Prompt[]> {
+    this.logger.log(`Entering getPromptsByName(name: ${name})`);
+    return this.promptService.getPromptsByName(name);
+  }
+
   @Mutation(() => PromptDto)
   async createPrompt(@Args('input') input: CreatePromptDto): Promise<Prompt> {
     this.logger.log(`Entering createPrompt(input: ${JSON.stringify(input)})`);

@@ -1,5 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { CreateTagDto } from 'src/tags/dto/create-tag.dto';
 
 @ObjectType('CreatePromptOutput')
 @InputType('CreatePromptInput')
@@ -10,9 +11,14 @@ export class CreatePromptDto {
   userId: string;
 
   @Field()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  categoryId: string;
+  categoryId?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  categoryName?: string;
 
   @Field()
   @IsNotEmpty()
@@ -30,9 +36,14 @@ export class CreatePromptDto {
   content: string;
 
   @Field()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  llmId: string;
+  llmId?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  llmName?: string;
 
   @Field()
   @IsNotEmpty()
@@ -40,17 +51,10 @@ export class CreatePromptDto {
   published: boolean;
 
   @Field()
-  @IsNumber()
-  @IsOptional()
-  views?: number;
-
-  @Field()
-  @IsNotEmpty()
-  @IsString()
-  prompt: string;
-
-  @Field()
   @IsNotEmpty()
   @IsString()
   example: string;
+
+  @Field(() => [CreateTagDto], { nullable: true })
+  tags?: CreateTagDto[];
 }

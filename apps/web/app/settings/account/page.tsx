@@ -20,34 +20,36 @@ import {
   SelectValue,
 } from '@/components/ui';
 import { toast } from '@/hooks/use-toast';
-import { SettingsHeader } from '@/components/settings/header';
 import { SettingsSection } from '@/components/settings/section';
 import { FormFieldContext } from '@/types/form';
-
-const accountFormSchema = z.object({
-  language: z.string({
-    required_error: 'Por favor selecciona un idioma.',
-  }),
-  timezone: z.string({
-    required_error: 'Por favor selecciona una zona horaria.',
-  }),
-  password: z
-    .string()
-    .min(8, {
-      message: 'La contraseña debe tener al menos 8 caracteres.',
-    })
-    .optional(),
-  newPassword: z
-    .string()
-    .min(8, {
-      message: 'La contraseña debe tener al menos 8 caracteres.',
-    })
-    .optional(),
-});
-
-type AccountFormValues = z.infer<typeof accountFormSchema>;
+import { useTranslation } from 'react-i18next';
 
 export default function AccountPage() {
+  const { t } = useTranslation();
+
+  const accountFormSchema = z.object({
+    language: z.string({
+      required_error: t('pages.settings.account.validation.language'),
+    }),
+    timezone: z.string({
+      required_error: t('pages.settings.account.validation.timezone'),
+    }),
+    password: z
+      .string()
+      .min(8, {
+        message: t('pages.settings.account.validation.password'),
+      })
+      .optional(),
+    newPassword: z
+      .string()
+      .min(8, {
+        message: t('pages.settings.account.validation.password'),
+      })
+      .optional(),
+  });
+
+  type AccountFormValues = z.infer<typeof accountFormSchema>;
+
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues: {
@@ -58,53 +60,57 @@ export default function AccountPage() {
 
   function onSubmit(data: AccountFormValues) {
     toast({
-      title: 'Has actualizado tu cuenta',
-      description: 'Los cambios han sido guardados correctamente.',
+      title: t('pages.settings.account.messages.success.title'),
+      description: t('pages.settings.account.messages.success.description'),
     });
   }
 
   return (
     <div className="space-y-6">
-      <SettingsHeader title="Cuenta" description="Gestiona la configuración de tu cuenta." />
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <SettingsSection title="Preferencias" description="Configura el idioma y la zona horaria de tu cuenta.">
+          <SettingsSection
+            title={t('pages.settings.account.sections.preferences.title')}
+            description={t('pages.settings.account.sections.preferences.description')}
+          >
             <FormField
               control={form.control}
               name="language"
               render={({ field }: FormFieldContext<AccountFormValues>) => (
                 <FormItem>
-                  <FormLabel>Idioma</FormLabel>
+                  <FormLabel>{t('pages.settings.account.sections.preferences.fields.language.label')}</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecciona un idioma" />
+                        <SelectValue placeholder={t('pages.settings.account.sections.preferences.fields.language.placeholder')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="es">Español</SelectItem>
-                      <SelectItem value="en">English</SelectItem>
+                      <SelectItem value="es">{t('pages.settings.account.sections.preferences.fields.language.options.es')}</SelectItem>
+                      <SelectItem value="en">{t('pages.settings.account.sections.preferences.fields.language.options.en')}</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormDescription>El idioma que se usará en la interfaz.</FormDescription>
+                  <FormDescription>{t('pages.settings.account.sections.preferences.fields.language.description')}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </SettingsSection>
 
-          <SettingsSection title="Contraseña" description="Cambia tu contraseña actual.">
+          <SettingsSection
+            title={t('pages.settings.account.sections.password.title')}
+            description={t('pages.settings.account.sections.password.description')}
+          >
             <FormField
               control={form.control}
               name="password"
               render={({ field }: FormFieldContext<AccountFormValues>) => (
                 <FormItem>
-                  <FormLabel>Contraseña actual</FormLabel>
+                  <FormLabel>{t('pages.settings.account.sections.password.fields.current.label')}</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} />
+                    <Input type="password" placeholder={t('pages.settings.account.sections.password.fields.current.placeholder')} {...field} />
                   </FormControl>
-                  <FormDescription>Introduce tu contraseña actual.</FormDescription>
+                  <FormDescription>{t('pages.settings.account.sections.password.fields.current.description')}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -115,11 +121,11 @@ export default function AccountPage() {
               name="newPassword"
               render={({ field }: FormFieldContext<AccountFormValues>) => (
                 <FormItem>
-                  <FormLabel>Nueva contraseña</FormLabel>
+                  <FormLabel>{t('pages.settings.account.sections.password.fields.new.label')}</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} />
+                    <Input type="password" placeholder={t('pages.settings.account.sections.password.fields.new.placeholder')} {...field} />
                   </FormControl>
-                  <FormDescription>Introduce tu nueva contraseña.</FormDescription>
+                  <FormDescription>{t('pages.settings.account.sections.password.fields.new.description')}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -127,7 +133,7 @@ export default function AccountPage() {
           </SettingsSection>
 
           <Button type="submit" className="w-full sm:w-auto mt-6">
-            Guardar cambios
+            {t('pages.settings.common.buttons.save')}
           </Button>
         </form>
       </Form>

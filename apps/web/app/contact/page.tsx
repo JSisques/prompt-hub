@@ -7,29 +7,26 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { ContactIcon, Mail, MessageSquare, Phone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const contactInfo = [
   {
+    id: 'email',
     icon: Mail,
-    title: 'Email',
-    description: 'Nuestro equipo responderá en 24-48 horas',
-    value: 'soporte@prompthub.es',
   },
   {
+    id: 'chat',
     icon: MessageSquare,
-    title: 'Chat en Vivo',
-    description: 'Disponible de Lunes a Viernes',
-    value: '9:00 AM - 6:00 PM (CET)',
   },
   {
+    id: 'phone',
     icon: Phone,
-    title: 'Teléfono',
-    description: 'Llámanos para soporte inmediato',
-    value: '+34 900 123 456',
   },
 ];
 
 export default function ContactPage() {
+  const { t } = useTranslation();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Aquí iría la lógica de envío del formulario
@@ -39,22 +36,23 @@ export default function ContactPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold flex items-center gap-2">
-          <ContactIcon className="h-8 w-8 text-primary" /> Contacto
+          <ContactIcon className="h-8 w-8 text-primary" />
+          {t('pages.contact.title')}
         </h1>
-        <p className="text-muted-foreground mt-2">¿Tienes alguna pregunta o sugerencia? Nos encantaría escucharte.</p>
+        <p className="text-muted-foreground mt-2">{t('pages.contact.description')}</p>
       </div>
 
       <div className="grid gap-6">
-        {contactInfo.map((item, index) => (
-          <Card key={index}>
+        {contactInfo.map(item => (
+          <Card key={item.id}>
             <CardContent className="flex items-center gap-4 p-6">
               <div className="p-3 rounded-full bg-primary/10">
                 <item.icon className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
-                <p className="text-sm font-medium mt-1">{item.value}</p>
+                <h3 className="font-semibold">{t(`pages.contact.contactInfo.${item.id}.title`)}</h3>
+                <p className="text-sm text-muted-foreground">{t(`pages.contact.contactInfo.${item.id}.description`)}</p>
+                <p className="text-sm font-medium mt-1">{t(`pages.contact.contactInfo.${item.id}.value`)}</p>
               </div>
             </CardContent>
           </Card>
@@ -63,12 +61,12 @@ export default function ContactPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>FAQ</CardTitle>
-          <CardDescription>Consulta nuestra sección de preguntas frecuentes para respuestas rápidas.</CardDescription>
+          <CardTitle>{t('pages.contact.faq.title')}</CardTitle>
+          <CardDescription>{t('pages.contact.faq.description')}</CardDescription>
         </CardHeader>
         <CardContent>
           <Button variant="outline" className="w-full" asChild>
-            <a href="/faq">Ver Preguntas Frecuentes</a>
+            <a href="/faq">{t('pages.contact.faq.button')}</a>
           </Button>
         </CardContent>
       </Card>
@@ -76,49 +74,49 @@ export default function ContactPage() {
       {/* Formulario de Contacto */}
       <Card>
         <CardHeader>
-          <CardTitle>Envíanos un Mensaje</CardTitle>
-          <CardDescription>Completa el formulario y te responderemos lo antes posible.</CardDescription>
+          <CardTitle>{t('pages.contact.form.title')}</CardTitle>
+          <CardDescription>{t('pages.contact.form.description')}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName">Nombre</Label>
-                <Input id="firstName" placeholder="Tu nombre" />
+                <Label htmlFor="firstName">{t('pages.contact.form.fields.firstName.label')}</Label>
+                <Input id="firstName" placeholder={t('pages.contact.form.fields.firstName.placeholder')} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName">Apellidos</Label>
-                <Input id="lastName" placeholder="Tus apellidos" />
+                <Label htmlFor="lastName">{t('pages.contact.form.fields.lastName.label')}</Label>
+                <Input id="lastName" placeholder={t('pages.contact.form.fields.lastName.placeholder')} />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="tu@email.com" />
+              <Label htmlFor="email">{t('pages.contact.form.fields.email.label')}</Label>
+              <Input id="email" type="email" placeholder={t('pages.contact.form.fields.email.placeholder')} />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="subject">Asunto</Label>
+              <Label htmlFor="subject">{t('pages.contact.form.fields.subject.label')}</Label>
               <Select>
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecciona un asunto" />
+                  <SelectValue placeholder={t('pages.contact.form.fields.subject.placeholder')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="support">Soporte Técnico</SelectItem>
-                  <SelectItem value="feedback">Sugerencias</SelectItem>
-                  <SelectItem value="business">Colaboraciones</SelectItem>
-                  <SelectItem value="other">Otro</SelectItem>
+                  <SelectItem value="support">{t('pages.contact.form.fields.subject.options.support')}</SelectItem>
+                  <SelectItem value="feedback">{t('pages.contact.form.fields.subject.options.feedback')}</SelectItem>
+                  <SelectItem value="business">{t('pages.contact.form.fields.subject.options.business')}</SelectItem>
+                  <SelectItem value="other">{t('pages.contact.form.fields.subject.options.other')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="message">Mensaje</Label>
-              <Textarea id="message" placeholder="Escribe tu mensaje aquí..." className="min-h-[150px]" />
+              <Label htmlFor="message">{t('pages.contact.form.fields.message.label')}</Label>
+              <Textarea id="message" placeholder={t('pages.contact.form.fields.message.placeholder')} className="min-h-[150px]" />
             </div>
 
             <Button type="submit" className="w-full">
-              Enviar Mensaje
+              {t('pages.contact.form.submit')}
             </Button>
           </form>
         </CardContent>
