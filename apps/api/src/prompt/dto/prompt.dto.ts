@@ -4,6 +4,7 @@ import { CategoryDto } from 'src/category/dto/category.dto';
 import { CommentDto } from 'src/comment/dto/comment.dto';
 import { LlmDto } from 'src/llm/dto/llm.dto';
 import { ReviewDto } from 'src/review/dto/review.dto';
+import { TagDto } from 'src/tags/dto/tag.dto';
 import { UserDto } from 'src/user/dto/user.dto';
 
 @ObjectType('Prompt')
@@ -15,7 +16,7 @@ export class PromptDto {
 
   @Field(() => UserDto)
   @IsNotEmpty()
-  author: UserDto;
+  user: UserDto;
 
   @Field(() => CategoryDto)
   @IsNotEmpty()
@@ -43,19 +44,21 @@ export class PromptDto {
 
   @Field(() => String)
   @IsNotEmpty()
+  slug: string;
+
+  @Field(() => String)
+  @IsNotEmpty()
   content: string;
 
-  @Field(() => [String])
+  @Field(() => [TagDto])
   @IsNotEmpty()
-  tags: string[];
+  tags: TagDto[];
 
-  @Field(() => [String])
-  @IsNotEmpty()
-  likes: string[];
+  @Field(() => [String], { nullable: true })
+  likes?: string[];
 
-  @Field(() => [CommentDto])
-  @IsNotEmpty()
-  comments: CommentDto[];
+  @Field(() => [CommentDto], { nullable: true })
+  comments?: CommentDto[];
 
   @Field(() => LlmDto)
   @IsNotEmpty()

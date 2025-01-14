@@ -1,25 +1,69 @@
 import { gql } from '@apollo/client';
 
-export const SEARCH_PROMPTS = gql`
-  query SearchPrompts($input: SearchPromptsInput!) {
-    searchPrompts(input: $input) {
-      prompts {
+export const GET_PROMPTS_BY_NAME = gql`
+  query GetPromptsByName($name: String!) {
+    getPromptsByName(name: $name) {
+      id
+      title
+      slug
+      description
+      content
+      example
+      published
+      likes
+      createdAt
+      updatedAt
+      user {
         id
-        title
+        email
+        username
+        name
+        avatar
+        bio
+        active
+        createdAt
+        updatedAt
+      }
+      category {
+        id
+        name
         description
-        prompt
-        category
-        tags
+        createdAt
+        updatedAt
+      }
+      llm {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      comments {
+        id
+        content
         author {
           id
           username
+          email
+          avatar
         }
         createdAt
-        likes
-        comments
+        updatedAt
       }
-      total
-      hasMore
+      reviews {
+        id
+        comment
+        rating
+        likes
+        author {
+          id
+          username
+          email
+          avatar
+        }
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

@@ -19,6 +19,10 @@ export class PromptService {
     this.logger = new Logger(PromptService.name);
   }
 
+  private async generateSlug(title: string): Promise<string> {
+    return title.toLowerCase().replace(/\s+/g, '-');
+  }
+
   async getPrompts(): Promise<Prompt[]> {
     this.logger.log('Entering getPrompts()');
     return this.prisma.prompt.findMany({
@@ -27,13 +31,55 @@ export class PromptService {
         llm: true,
         user: true,
         comments: true,
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+        reviews: true,
+        likes: true,
       },
     });
   }
 
   async getPromptById(id: string): Promise<Prompt | null> {
     this.logger.log(`Entering getPromptById(id: ${id})`);
-    return this.prisma.prompt.findUnique({ where: { id } });
+    return this.prisma.prompt.findUnique({
+      where: { id },
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        comments: true,
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+        reviews: true,
+        likes: true,
+      },
+    });
+  }
+
+  async getPromptsByName(name: string): Promise<Prompt[]> {
+    this.logger.log(`Entering getPromptsByName(name: ${name})`);
+    return this.prisma.prompt.findMany({
+      where: { title: { contains: name } },
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        comments: true,
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+        reviews: true,
+        likes: true,
+      },
+    });
   }
 
   async createPrompt(data: CreatePromptDto): Promise<Prompt> {
@@ -71,7 +117,7 @@ export class PromptService {
     return this.prisma.prompt.create({
       data: {
         ...promptData,
-        slug: promptData.title.toLowerCase().replace(/\s+/g, '-'),
+        slug: await this.generateSlug(promptData.title),
         content: promptData.content,
         user: { connect: { id: userId } },
         category: { connect: { id: finalCategoryId } },
@@ -95,11 +141,42 @@ export class PromptService {
 
   async updatePrompt(id: string, data: UpdatePromptDto): Promise<Prompt> {
     this.logger.log(`Entering updatePrompt(id: ${id}, data: ${JSON.stringify(data)})`);
-    return this.prisma.prompt.update({ where: { id }, data });
+    return this.prisma.prompt.update({
+      where: { id },
+      data,
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        comments: true,
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+        reviews: true,
+        likes: true,
+      },
+    });
   }
 
   async deletePrompt(id: string): Promise<Prompt> {
     this.logger.log(`Entering deletePrompt(id: ${id})`);
-    return this.prisma.prompt.delete({ where: { id } });
+    return this.prisma.prompt.delete({
+      where: { id },
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        comments: true,
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+        reviews: true,
+        likes: true,
+      },
+    });
   }
 }
