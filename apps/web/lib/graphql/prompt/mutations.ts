@@ -4,20 +4,6 @@ export const CREATE_PROMPT = gql`
   mutation CreatePrompt($input: CreatePromptInput!) {
     createPrompt(input: $input) {
       id
-      title
-      description
-      prompt
-      example
-      category {
-        id
-        name
-      }
-      tags
-      author {
-        id
-        name
-      }
-      createdAt
     }
   }
 `;

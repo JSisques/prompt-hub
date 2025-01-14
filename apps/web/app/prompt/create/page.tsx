@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { CREATE_PROMPT, GET_CATEGORIES, GET_LLMS } from '@/lib/graphql';
@@ -14,18 +13,25 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { useSession } from 'next-auth/react';
+import { Combobox } from '@/components/ui/combobox';
 
 export default function CreatePromptPage() {
   const { t } = useTranslation();
   const router = useRouter();
+
+  const { data: session } = useSession();
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     categoryId: '',
+    categoryName: '',
     llmId: '',
+    llmName: '',
     content: '',
     example: '',
-    tagIds: [] as string[],
+    tags: '',
     published: true,
   });
   const [step, setStep] = useState(1);
@@ -56,6 +62,7 @@ export default function CreatePromptPage() {
     setFormData(prev => ({
       ...prev,
       categoryId: value,
+      categoryName: '',
     }));
   };
 
@@ -63,6 +70,23 @@ export default function CreatePromptPage() {
     setFormData(prev => ({
       ...prev,
       llmId: value,
+      llmName: '',
+    }));
+  };
+
+  const handleCreateCategory = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      categoryId: '',
+      categoryName: value,
+    }));
+  };
+
+  const handleCreateLlm = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      llmId: '',
+      llmName: value,
     }));
   };
 
@@ -77,34 +101,40 @@ export default function CreatePromptPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.categoryId) {
+    if (!formData.categoryId && !formData.categoryName) {
       toast.error(t('pages.createPrompt.messages.validation.categoryRequired'));
       return;
     }
 
-    if (!formData.llmId) {
+    if (!formData.llmId && !formData.llmName) {
       toast.error(t('pages.createPrompt.messages.validation.llmRequired'));
       return;
     }
 
-    const tags =
-      formData.tagIds.length > 0
-        ? formData.tagIds
-        : formData.tagIds
-            .toString()
-            .split(',')
-            .map(tag => tag.trim());
+    const processedTags = formData.tags
+      ? formData.tags
+          .toString()
+          .split(',')
+          .map(tag => tag.trim())
+          .filter(tag => tag !== '')
+          .map(tag => ({
+            name: tag,
+          }))
+      : [];
 
     await createPrompt({
       variables: {
         input: {
+          userId: session?.user?.id,
           title: formData.title,
           description: formData.description,
           categoryId: formData.categoryId,
+          categoryName: formData.categoryName,
           llmId: formData.llmId,
+          llmName: formData.llmName,
           content: formData.content,
           example: formData.example,
-          tagIds: tags,
+          tags: processedTags,
           published: formData.published,
         },
       },
@@ -171,24 +201,17 @@ export default function CreatePromptPage() {
                 </div>
                 <div className="space-y-2">
                   <Label>{t('pages.createPrompt.steps.basicInfo.fields.llm.label')}</Label>
-                  <Select value={formData.llmId} onValueChange={handleLlmChange}>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t('pages.createPrompt.steps.basicInfo.fields.llm.placeholder')} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {loadingLlms ? (
-                        <SelectItem value="loading" disabled>
-                          {t('pages.createPrompt.steps.basicInfo.fields.llm.loading')}
-                        </SelectItem>
-                      ) : (
-                        llmsData?.getLlms?.map((llm: { id: string; name: string }) => (
-                          <SelectItem key={llm.id} value={llm.id}>
-                            {llm.name}
-                          </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
+                  <Combobox
+                    value={formData.llmId}
+                    onValueChange={handleLlmChange}
+                    items={llmsData?.getLlms || []}
+                    isLoading={loadingLlms}
+                    placeholder={t('pages.createPrompt.steps.basicInfo.fields.llm.placeholder')}
+                    noResultsMessage={t('pages.createPrompt.steps.basicInfo.fields.llm.noResults')}
+                    loadingMessage={t('pages.createPrompt.steps.basicInfo.fields.llm.loading')}
+                    createNewMessage={t('pages.createPrompt.steps.basicInfo.fields.llm.createNew')}
+                    onCreateNew={handleCreateLlm}
+                  />
                 </div>
               </div>
             </CardContent>
@@ -236,34 +259,28 @@ export default function CreatePromptPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="category">{t('pages.createPrompt.steps.finalDetails.fields.category.label')}</Label>
-                  <Select value={formData.categoryId} onValueChange={handleCategoryChange}>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t('pages.createPrompt.steps.finalDetails.fields.category.placeholder')} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {loadingCategories ? (
-                        <SelectItem value="loading" disabled>
-                          {t('pages.createPrompt.steps.finalDetails.fields.category.loading')}
-                        </SelectItem>
-                      ) : (
-                        categoriesData?.getCategories?.map((category: { id: string; name: string }) => (
-                          <SelectItem key={category.id} value={category.id}>
-                            {category.name}
-                          </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
+                  <Combobox
+                    value={formData.categoryId}
+                    onValueChange={handleCategoryChange}
+                    items={categoriesData?.getCategories || []}
+                    isLoading={loadingCategories}
+                    placeholder={t('pages.createPrompt.steps.finalDetails.fields.category.placeholder')}
+                    noResultsMessage={t('pages.createPrompt.steps.finalDetails.fields.category.noResults')}
+                    loadingMessage={t('pages.createPrompt.steps.finalDetails.fields.category.loading')}
+                    createNewMessage={t('pages.createPrompt.steps.finalDetails.fields.category.createNew')}
+                    onCreateNew={handleCreateCategory}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="tagIds">{t('pages.createPrompt.steps.finalDetails.fields.tags.label')}</Label>
                   <Input
                     id="tagIds"
-                    name="tagIds"
-                    value={formData.tagIds}
+                    name="tags"
+                    value={formData.tags}
                     onChange={handleInputChange}
                     placeholder={t('pages.createPrompt.steps.finalDetails.fields.tags.placeholder')}
                   />
+                  <p className="text-sm text-muted-foreground">{t('pages.createPrompt.steps.finalDetails.fields.tags.help')}</p>
                 </div>
                 <div className="space-y-2">
                   <Label>{t('pages.createPrompt.steps.finalDetails.fields.visibility.label')}</Label>

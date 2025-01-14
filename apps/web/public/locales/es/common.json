@@ -244,8 +244,10 @@
             },
             "llm": {
               "label": "Modelo de IA",
-              "placeholder": "Selecciona un modelo de IA",
-              "loading": "Cargando modelos..."
+              "placeholder": "Busca o selecciona un modelo de IA...",
+              "loading": "Cargando modelos...",
+              "noResults": "No se encontraron modelos",
+              "createNew": "Crear nuevo modelo \"{name}\""
             }
           }
         },
@@ -269,12 +271,15 @@
           "fields": {
             "category": {
               "label": "Categoría",
-              "placeholder": "Selecciona una categoría",
-              "loading": "Cargando categorías..."
+              "placeholder": "Busca o selecciona una categoría...",
+              "loading": "Cargando categorías...",
+              "noResults": "No se encontraron categorías",
+              "createNew": "Crear nueva categoría \"s{name}\""
             },
             "tags": {
               "label": "Etiquetas",
-              "placeholder": "Separa las etiquetas con comas"
+              "placeholder": "Separa las etiquetas con comas",
+              "help": "Escribe las etiquetas separadas por comas, por ejemplo: 'marketing, redes sociales, ventas'"
             },
             "visibility": {
               "label": "Visibilidad",
