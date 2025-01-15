@@ -961,6 +961,46 @@
           }
         }
       }
+    },
+    "promptDetail": {
+      "metadata": {
+        "reviews": "reviews",
+        "comments": "comentarios"
+      },
+      "actions": {
+        "share": "Compartir",
+        "like": "Me gusta",
+        "copy": "Copiar",
+        "copied": "¡Copiado!"
+      },
+      "content": {
+        "prompt": "Prompt",
+        "example": "Ejemplo de Uso"
+      },
+      "tabs": {
+        "reviews": "Reviews",
+        "comments": "Comentarios"
+      },
+      "additionalInfo": {
+        "title": "Información Adicional",
+        "author": {
+          "title": "Autor",
+          "publishedOn": "Publicado el {{date}}"
+        },
+        "details": {
+          "title": "Detalles",
+          "category": "Categoría",
+          "aiModel": "Modelo IA",
+          "tags": "Etiquetas"
+        },
+        "stats": {
+          "title": "Estadísticas",
+          "likes": "Me gusta",
+          "averageRating": "Valoración media",
+          "reviews": "Reviews",
+          "comments": "Comentarios"
+        }
+      }
     }
   }
 }
