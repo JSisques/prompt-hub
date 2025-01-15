@@ -38,12 +38,11 @@ export function PromptCard({ id, title, description, tags, user, createdAt, like
       <CardContent>
         <div className="space-y-4">
           <div className="flex flex-wrap gap-2">
-            {tags &&
-              tags.map(tag => (
-                <span key={tag.id} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                  {tag.name}
-                </span>
-              ))}
+            {tags.map(tag => (
+              <span key={tag.id} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                {tag.name}
+              </span>
+            ))}
           </div>
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <div>

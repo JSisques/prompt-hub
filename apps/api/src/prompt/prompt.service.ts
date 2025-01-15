@@ -31,11 +31,7 @@ export class PromptService {
         llm: true,
         user: true,
         comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
+        tags: true,
         reviews: true,
         likes: true,
       },
@@ -51,11 +47,7 @@ export class PromptService {
         llm: true,
         user: true,
         comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
+        tags: true,
         reviews: true,
         likes: true,
       },
@@ -71,11 +63,7 @@ export class PromptService {
         llm: true,
         user: true,
         comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
+        tags: true,
         reviews: true,
         likes: true,
       },
@@ -106,14 +94,6 @@ export class PromptService {
       finalLlmId = llm.id;
     }
 
-    // Crear o encontrar los tags existentes usando TagsService
-    const tagConnections = await Promise.all(
-      tags.map(async tagData => {
-        const existingTag = await this.tagsService.createOrGetTag({ name: tagData.name });
-        return { tagId: existingTag.id };
-      }),
-    );
-
     return this.prisma.prompt.create({
       data: {
         ...promptData,
@@ -123,18 +103,20 @@ export class PromptService {
         category: { connect: { id: finalCategoryId } },
         llm: { connect: { id: finalLlmId } },
         tags: {
-          create: tagConnections,
+          connectOrCreate: tags.map(tagData => ({
+            where: { name: tagData.name },
+            create: {
+              name: tagData.name,
+              slug: tagData.name.toLowerCase().replace(/\s+/g, '-'),
+            },
+          })),
         },
       },
       include: {
         category: true,
         llm: true,
         user: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
+        tags: true,
       },
     });
   }
@@ -149,11 +131,7 @@ export class PromptService {
         llm: true,
         user: true,
         comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
+        tags: true,
         reviews: true,
         likes: true,
       },
@@ -169,11 +147,7 @@ export class PromptService {
         llm: true,
         user: true,
         comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
+        tags: true,
         reviews: true,
         likes: true,
       },

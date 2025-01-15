@@ -38,6 +38,13 @@ export const GET_PROMPTS = gql`
         createdAt
         updatedAt
       }
+      tags {
+        id
+        name
+        slug
+        createdAt
+        updatedAt
+      }
       comments {
         id
         content
