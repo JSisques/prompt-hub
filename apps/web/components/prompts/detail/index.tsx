@@ -30,7 +30,7 @@ export function PromptDetail({
 }: PromptDetailProps) {
   const [copied, setCopied] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(likes);
+  const [likeCount, setLikeCount] = useState(likes > 0 ? likes : 0);
   const { t } = useTranslation();
 
   const handleCopy = async () => {
@@ -180,30 +180,6 @@ export function PromptDetail({
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Clock className="h-4 w-4" />
                   <span>{t('pages.promptDetail.additionalInfo.author.publishedOn', { date: moment(createdAt).format('DD/MM/YYYY') })}</span>
-                </div>
-              </div>
-
-              {/* Detalles del Prompt */}
-              <div className="space-y-4">
-                <h3 className="font-semibold flex items-center gap-2">
-                  <Hash className="h-4 w-4" />
-                  {t('pages.promptDetail.additionalInfo.details.title')}
-                </h3>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm font-medium">{t('pages.promptDetail.additionalInfo.details.category')}</p>
-                    <p className="text-sm text-muted-foreground">{category.description || category.name}</p>
-                  </div>
-                  {llm && (
-                    <div>
-                      <p className="text-sm font-medium">{t('pages.promptDetail.additionalInfo.details.aiModel')}</p>
-                      <p className="text-sm text-muted-foreground">{llm.description || llm.name}</p>
-                    </div>
-                  )}
-                  <div>
-                    <p className="text-sm font-medium">{t('pages.promptDetail.additionalInfo.details.tags')}</p>
-                    <p className="text-sm text-muted-foreground">{tags.map(t => t.name).join(', ')}</p>
-                  </div>
                 </div>
               </div>
 

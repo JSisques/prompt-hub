@@ -49,15 +49,10 @@ input CreateLlmInput {
 }
 
 input CreatePromptInput {
-  categoryId: String!
-  categoryName: String
   content: String!
   description: String!
   example: String!
-  llmId: String!
-  llmName: String
   published: Boolean!
-  tags: [CreateTagInput!]
   title: String!
   userId: String!
 }
@@ -67,16 +62,6 @@ input CreateReviewInput {
   promptId: String!
   rating: Int!
   userId: String!
-}
-
-type CreateTag {
-  name: String!
-  slug: String
-}
-
-input CreateTagInput {
-  name: String!
-  slug: String
 }
 
 input CreateUserInput {

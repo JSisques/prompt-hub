@@ -32,6 +32,44 @@
       "description": "Crea, comparte y descubre los mejores prompts para IA",
       "copyright": "© {{year}} Prompt Hub. Todos los derechos reservados.",
       "madeWith": "Hecho con 🖤 por",
+      "links": {
+        "home": {
+          "name": "Inicio",
+          "href": "/"
+        },
+        "explore": {
+          "name": "Explorar",
+          "href": "/explore"
+        },
+        "news": {
+          "name": "Novedades",
+          "href": "/trending"
+        },
+        "guide": {
+          "name": "Guía",
+          "href": "/guide"
+        },
+        "blog": {
+          "name": "Blog",
+          "href": "/blog"
+        },
+        "faq": {
+          "name": "FAQ",
+          "href": "/faq"
+        },
+        "privacy": {
+          "name": "Privacidad",
+          "href": "/privacy"
+        },
+        "terms": {
+          "name": "Términos",
+          "href": "/terms"
+        },
+        "cookies": {
+          "name": "Cookies",
+          "href": "/cookies"
+        }
+      },
       "sections": {
         "product": {
           "title": "Producto",
