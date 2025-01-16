@@ -2,18 +2,38 @@ import { Card } from '@/components/ui/card';
 import { CommentCard } from '../card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CommentsSectionProps } from '@/types/comment';
+import { graphqlClient } from '@/lib/apollo-client';
+import { CREATE_COMMENT } from '@/lib/graphql/comment/mutations';
+import { useSession } from 'next-auth/react';
 
-export function CommentsSection({ promptId, comments }: CommentsSectionProps) {
+export function CommentsSection({ promptId, comments: initialComments, onCommentAdded }: CommentsSectionProps) {
+  const { data: session } = useSession();
   const [newComment, setNewComment] = useState('');
+  const [comments, setComments] = useState(initialComments);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar la llamada a la API para crear el comentario
-    console.log({ content: newComment, promptId });
+    const { data } = await graphqlClient.mutate({
+      mutation: CREATE_COMMENT,
+      variables: {
+        input: {
+          content: newComment,
+          promptId,
+          userId: session?.user?.id,
+        },
+      },
+    });
+    const newCommentData = data.createComment;
+    setComments(prevComments => [...prevComments, newCommentData]);
+    onCommentAdded?.(newCommentData);
     setNewComment('');
   };
+
+  useEffect(() => {
+    console.log({ comments });
+  }, [comments]);
 
   return (
     <div className="space-y-6">
@@ -49,7 +69,7 @@ export function CommentsSection({ promptId, comments }: CommentsSectionProps) {
         {comments.length > 0 ? (
           <div className="space-y-4">
             {comments.map(comment => (
-              <CommentCard key={comment.id} content={comment.content} userId={comment.userId} createdAt={comment.createdAt} />
+              <CommentCard key={comment.id} content={comment.content} user={comment.user} createdAt={comment.createdAt} />
             ))}
           </div>
         ) : (

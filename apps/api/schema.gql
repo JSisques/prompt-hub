@@ -19,28 +19,32 @@ type CategoryType {
 }
 
 input CommentInput {
-  author: UserInput!
   content: String!
   createdAt: DateTime!
   id: String!
-  postId: String
-  promptId: String
+  promptId: String!
   updatedAt: DateTime!
+  user: UserInput!
 }
 
 type CommentType {
-  author: UserType!
   content: String!
   createdAt: DateTime!
   id: String!
-  postId: String
-  promptId: String
+  promptId: String!
   updatedAt: DateTime!
+  user: UserType!
 }
 
 input CreateCategoryInput {
   description: String!
   name: String!
+}
+
+input CreateCommentInput {
+  content: String!
+  promptId: String!
+  userId: String!
 }
 
 input CreateLlmInput {
@@ -108,12 +112,14 @@ type LlmType {
 
 type Mutation {
   createCategory(data: CreateCategoryInput!): CategoryType!
+  createComment(input: CreateCommentInput!): CommentType!
   createLlm(llm: CreateLlmInput!): LlmType!
   createPrompt(input: CreatePromptInput!): Prompt!
   createReview(review: CreateReviewInput!): ReviewType!
   createUser(input: CreateUserInput!): UserType!
   createUserSettings(createUserSettingsInput: CreateUserSettingsInput!): UserSettings!
   deleteCategory(id: String!): CategoryType!
+  deleteComment(id: String!): CommentType!
   deleteLlm(id: String!): LlmType!
   deletePrompt(id: String!): Prompt!
   deleteReview(id: String!): ReviewType!
@@ -123,6 +129,7 @@ type Mutation {
   logout(id: String!): UserType!
   register(input: CreateUserInput!): UserType!
   updateCategory(data: UpdateCategoryInput!, id: String!): CategoryType!
+  updateComment(content: String!, id: String!): CommentType!
   updateLlm(id: String!, llm: UpdateLlmInput!): LlmType!
   updatePrompt(id: String!, input: UpdatePromptInput!): Prompt!
   updateReview(id: String!, review: UpdateReviewInput!): ReviewType!
@@ -173,6 +180,8 @@ input PromptInput {
 type Query {
   getCategories: [CategoryType!]!
   getCategoryById(id: String!): CategoryType!
+  getComments: [CommentType!]!
+  getCommentsByPromptId(promptId: String!): [CommentType!]!
   getHealth: Health!
   getLlmById(id: String!): LlmType!
   getLlms: [LlmType!]!
@@ -189,7 +198,6 @@ type Query {
 }
 
 input ReviewInput {
-  author: UserInput!
   comment: String!
   comments: [CommentInput!]
   createdAt: DateTime!
@@ -198,10 +206,10 @@ input ReviewInput {
   promptId: String!
   rating: Float!
   updatedAt: DateTime!
+  user: UserInput!
 }
 
 type ReviewType {
-  author: UserType!
   comment: String!
   comments: [CommentType!]
   createdAt: DateTime!
@@ -210,6 +218,7 @@ type ReviewType {
   promptId: String!
   rating: Float!
   updatedAt: DateTime!
+  user: UserType!
 }
 
 type Tag {

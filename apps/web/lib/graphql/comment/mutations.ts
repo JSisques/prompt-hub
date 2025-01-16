@@ -5,7 +5,11 @@ export const CREATE_COMMENT = gql`
     createComment(input: $input) {
       id
       content
-      userId
+      user {
+        id
+        username
+        avatar
+      }
       promptId
       createdAt
       updatedAt
@@ -18,7 +22,11 @@ export const UPDATE_COMMENT = gql`
     updateComment(id: $id, content: $content) {
       id
       content
-      userId
+      user {
+        id
+        username
+        avatar
+      }
       promptId
       createdAt
       updatedAt

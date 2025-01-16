@@ -7,7 +7,7 @@ import { Clock, User, MessageSquare, ThumbsUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { PromptCardProps } from '@/types/prompt';
 
-export function PromptCard({ id, title, description, tags, author, createdAt, likes = 0, comments = 0 }: PromptCardProps) {
+export function PromptCard({ id, title, description, tags, user, createdAt, likes = 0, comments = 0 }: PromptCardProps) {
   const router = useRouter();
 
   const handleClick = () => {
@@ -44,12 +44,12 @@ export function PromptCard({ id, title, description, tags, author, createdAt, li
           ))}
         </div>
       </CardContent>
-      {(author || createdAt) && (
+      {(user || createdAt) && (
         <CardFooter className="text-sm text-muted-foreground border-t pt-4">
-          {author && (
+          {user && (
             <div className="flex items-center gap-2">
               <User size={14} />
-              <span>{author}</span>
+              <span>{user.username}</span>
             </div>
           )}
           {createdAt && (

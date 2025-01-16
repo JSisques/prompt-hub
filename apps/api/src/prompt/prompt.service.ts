@@ -118,6 +118,7 @@ export class PromptService {
         llm: true,
         user: true,
         tags: true,
+        comments: true,
       },
     });
   }

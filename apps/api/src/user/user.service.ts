@@ -38,6 +38,7 @@ export class UserService {
       return this.prisma.user.create({
         data: {
           ...user,
+          avatar: 'https://ui.shadcn.com/avatars/shadcn.jpg',
           settings: {
             create: {},
           },
