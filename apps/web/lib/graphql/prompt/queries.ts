@@ -74,3 +74,78 @@ export const GET_PROMPTS = gql`
     }
   }
 `;
+
+export const GET_PROMPT_BY_ID = gql`
+  query GetPromptById($id: String!) {
+    getPromptById(id: $id) {
+      id
+      title
+      slug
+      description
+      content
+      example
+      published
+      likes
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        username
+        name
+        avatar
+        bio
+        active
+        createdAt
+        updatedAt
+      }
+      category {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      llm {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      tags {
+        id
+        name
+        slug
+        createdAt
+        updatedAt
+      }
+      comments {
+        id
+        content
+        author {
+          id
+          username
+          email
+          avatar
+        }
+        createdAt
+        updatedAt
+      }
+      reviews {
+        id
+        comment
+        rating
+        likes
+        author {
+          id
+          username
+          email
+          avatar
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;

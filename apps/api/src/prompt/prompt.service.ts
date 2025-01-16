@@ -6,6 +6,7 @@ import { UpdatePromptDto } from './dto/update-prompt.dto';
 import { TagsService } from '../tags/tags.service';
 import { CategoryService } from '../category/category.service';
 import { LlmService } from '../llm/llm.service';
+import { IAService } from '../ia/ia.service';
 
 @Injectable()
 export class PromptService {
@@ -15,6 +16,7 @@ export class PromptService {
     private readonly tagsService: TagsService,
     private readonly categoryService: CategoryService,
     private readonly llmService: LlmService,
+    private readonly iaService: IAService,
   ) {
     this.logger = new Logger(PromptService.name);
   }
@@ -72,27 +74,26 @@ export class PromptService {
 
   async createPrompt(data: CreatePromptDto): Promise<Prompt> {
     this.logger.log(`Entering createPrompt(data: ${JSON.stringify(data)})`);
-    const { tags, userId, categoryId, categoryName, llmId, llmName, ...promptData } = data;
+    const { userId, ...promptData } = data;
 
-    // Manejar la categoría
-    let finalCategoryId = categoryId;
-    if (categoryName && !categoryId) {
-      const category = await this.categoryService.createCategory({
-        name: categoryName,
-        description: `Categoría generada automáticamente para ${categoryName}`,
-      });
-      finalCategoryId = category.id;
+    // Analizar el prompt con IA
+    const analysis = await this.iaService.analyzePrompt(promptData.content);
+    if (!analysis.success) {
+      throw new Error(`No se pudo analizar el prompt con IA: ${analysis.error}`);
     }
 
-    // Manejar el LLM
-    let finalLlmId = llmId;
-    if (llmName && !llmId) {
-      const llm = await this.llmService.createLlm({
-        name: llmName,
-        description: `LLM generado automáticamente para ${llmName}`,
-      });
-      finalLlmId = llm.id;
-    }
+    // Crear o obtener la categoría basada en el análisis de IA
+    const category = await this.categoryService.createOrGetCategory({
+      name: analysis.data.category,
+      description: `Categoría generada automáticamente por IA para ${analysis.data.category}`,
+    });
+
+    // Crear o obtener el LLM principal recomendado
+    const recommendedLlm = analysis.data.llm; // Tomamos el primer LLM recomendado
+    const llm = await this.llmService.createOrGetLlm({
+      name: recommendedLlm,
+      description: `LLM recomendado por IA para este prompt`,
+    });
 
     return this.prisma.prompt.create({
       data: {
@@ -100,14 +101,14 @@ export class PromptService {
         slug: await this.generateSlug(promptData.title),
         content: promptData.content,
         user: { connect: { id: userId } },
-        category: { connect: { id: finalCategoryId } },
-        llm: { connect: { id: finalLlmId } },
+        category: { connect: { id: category.id } },
+        llm: { connect: { id: llm.id } },
         tags: {
-          connectOrCreate: tags.map(tagData => ({
-            where: { name: tagData.name },
+          connectOrCreate: analysis.data.tags.map(tagName => ({
+            where: { name: tagName },
             create: {
-              name: tagData.name,
-              slug: tagData.name.toLowerCase().replace(/\s+/g, '-'),
+              name: tagName,
+              slug: tagName.toLowerCase().replace(/\s+/g, '-'),
             },
           })),
         },

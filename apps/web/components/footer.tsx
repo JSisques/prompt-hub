@@ -8,36 +8,19 @@ import { useTranslation } from 'react-i18next';
 const footerLinks = [
   {
     id: 'product',
-    links: [
-      { id: 'prompts', href: '/prompts' },
-      { id: 'explore', href: '/explore' },
-      { id: 'news', href: '#' },
-    ],
+    links: [{ id: 'home' }, { id: 'explore' }, { id: 'news' }],
   },
   {
     id: 'resources',
-    links: [
-      { id: 'guide', href: '/guide' },
-      { id: 'blog', href: '/blog' },
-      { id: 'faq', href: '/faq' },
-    ],
+    links: [{ id: 'guide' }, { id: 'blog' }, { id: 'faq' }],
   },
   {
     id: 'legal',
-    links: [
-      { id: 'privacy', href: '/privacy' },
-      { id: 'terms', href: '/terms' },
-      { id: 'cookies', href: '/cookies' },
-    ],
+    links: [{ id: 'privacy' }, { id: 'terms' }, { id: 'cookies' }],
   },
 ];
 
-const mobileLinks = [
-  { id: 'prompts', href: '/prompts' },
-  { id: 'explore', href: '/explore' },
-  { id: 'faq', href: '/faq' },
-  { id: 'blog', href: '#' },
-];
+const mobileLinks = [{ id: 'home' }, { id: 'explore' }, { id: 'faq' }, { id: 'blog' }];
 
 const socialLinks = [
   {
@@ -87,8 +70,12 @@ export function Footer() {
 
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             {mobileLinks.map(link => (
-              <Link key={link.id} href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                {t(`components.footer.sections.product.links.${link.id}`)}
+              <Link
+                key={link.id}
+                href={t(`components.footer.links.${link.id}.href`)}
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                {t(`components.footer.links.${link.id}.name`)}
               </Link>
             ))}
           </nav>
@@ -116,7 +103,7 @@ export function Footer() {
       {/* Versión Desktop */}
       <div className="hidden md:block">
         <div className="container max-w-none px-8 py-12">
-          <div className="flex gap-24">
+          <div className="grid grid-cols-2 gap-24">
             {/* Logo y descripción */}
             <div className="flex flex-col gap-4 md:max-w-xs">
               <Link href="/" className="flex items-center gap-2">
@@ -148,8 +135,11 @@ export function Footer() {
                   <ul className="flex flex-col gap-2">
                     {group.links.map(link => (
                       <li key={link.id}>
-                        <Link href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                          {t(`components.footer.sections.${group.id}.links.${link.id}`)}
+                        <Link
+                          href={t(`components.footer.links.${link.id}.href`)}
+                          className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          {t(`components.footer.links.${link.id}.name`)}
                         </Link>
                       </li>
                     ))}
