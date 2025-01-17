@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Copy, Share, FolderIcon, Heart, MessageSquare, Star, Bot, Clock, Info, Hash } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ReviewsSection } from '@/components/reviews/list';
 import { CommentsSection } from '@/components/comments/list';
 import moment from 'moment';
@@ -31,7 +31,14 @@ export function PromptDetail({
   const [copied, setCopied] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes > 0 ? likes : 0);
+  const [commentCount, setCommentCount] = useState(comments.length);
   const { t } = useTranslation();
+
+  const averageRating = useMemo(() => {
+    if (reviews.length === 0) return 0;
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return (sum / reviews.length).toFixed(1);
+  }, [reviews]);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(content);
@@ -44,7 +51,7 @@ export function PromptDetail({
     setLikeCount((prev: number) => (isLiked ? prev - 1 : prev + 1));
   };
 
-  const averageRating = reviews.length > 0 ? (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1) : '0.0';
+  console.log(JSON.stringify(comments));
 
   return (
     <div className="container">
@@ -91,7 +98,7 @@ export function PromptDetail({
             <div className="flex items-center gap-2">
               <MessageSquare size={16} className="text-primary shrink-0" />
               <span className="font-medium">
-                {comments.length} {t('pages.promptDetail.metadata.comments')}
+                {commentCount} {t('pages.promptDetail.metadata.comments')}
               </span>
             </div>
           </div>
@@ -143,7 +150,7 @@ export function PromptDetail({
               </TabsTrigger>
               <TabsTrigger value="comments" className="flex items-center gap-2">
                 <MessageSquare className="h-4 w-4" />
-                {t('pages.promptDetail.tabs.comments')} ({comments.length})
+                {t('pages.promptDetail.tabs.comments')} ({commentCount})
               </TabsTrigger>
             </TabsList>
 
@@ -152,7 +159,7 @@ export function PromptDetail({
             </TabsContent>
 
             <TabsContent value="comments">
-              <CommentsSection promptId={id} comments={comments} />
+              <CommentsSection promptId={id} comments={comments} onCommentAdded={comment => setCommentCount(prev => prev + 1)} />
             </TabsContent>
           </Tabs>
         </div>
@@ -200,7 +207,7 @@ export function PromptDetail({
                     <p className="text-sm text-muted-foreground">{t('pages.promptDetail.additionalInfo.stats.reviews')}</p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-2xl font-bold">{comments.length}</p>
+                    <p className="text-2xl font-bold">{commentCount}</p>
                     <p className="text-sm text-muted-foreground">{t('pages.promptDetail.additionalInfo.stats.comments')}</p>
                   </div>
                 </div>

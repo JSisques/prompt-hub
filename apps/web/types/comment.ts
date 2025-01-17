@@ -1,7 +1,13 @@
+export interface User {
+  id: string;
+  username: string;
+  avatar?: string;
+}
+
 export interface Comment {
   id: string;
   content: string;
-  userId: string;
+  user: User;
   promptId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -9,11 +15,12 @@ export interface Comment {
 
 export interface CommentCardProps {
   content: string;
-  userId: string;
+  user: User;
   createdAt: Date;
 }
 
 export interface CommentsSectionProps {
   promptId: string;
   comments: Comment[];
+  onCommentAdded?: (comment: Comment) => void;
 }

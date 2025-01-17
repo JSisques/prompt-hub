@@ -47,29 +47,9 @@ export const GET_PROMPTS = gql`
       }
       comments {
         id
-        content
-        author {
-          id
-          username
-          email
-          avatar
-        }
-        createdAt
-        updatedAt
       }
       reviews {
         id
-        comment
-        rating
-        likes
-        author {
-          id
-          username
-          email
-          avatar
-        }
-        createdAt
-        updatedAt
       }
     }
   }
@@ -123,7 +103,7 @@ export const GET_PROMPT_BY_ID = gql`
       comments {
         id
         content
-        author {
+        user {
           id
           username
           email
@@ -137,7 +117,7 @@ export const GET_PROMPT_BY_ID = gql`
         comment
         rating
         likes
-        author {
+        user {
           id
           username
           email
