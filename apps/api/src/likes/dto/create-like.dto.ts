@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
 @ObjectType('CreateLikeOutput')
