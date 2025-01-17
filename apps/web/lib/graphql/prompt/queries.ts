@@ -191,3 +191,60 @@ export const GET_FAVORITES_BY_USER_ID = gql`
     }
   }
 `;
+
+export const GET_TRENDING_PROMPTS = gql`
+  query GetTrendingPrompts($timePeriod: String!, $categoryId: String) {
+    getTrendingPrompts(timePeriod: $timePeriod, categoryId: $categoryId) {
+      id
+      title
+      slug
+      description
+      content
+      example
+      published
+      likes {
+        id
+      }
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        username
+        name
+        avatar
+        bio
+        active
+        createdAt
+        updatedAt
+      }
+      category {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      llm {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      tags {
+        id
+        name
+        slug
+        createdAt
+        updatedAt
+      }
+      comments {
+        id
+      }
+      reviews {
+        id
+      }
+    }
+  }
+`;

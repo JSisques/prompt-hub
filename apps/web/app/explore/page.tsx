@@ -181,7 +181,7 @@ export default function ExplorePage() {
                 category={prompt.category}
                 createdAt={prompt.createdAt}
                 likes={prompt.likes}
-                comments={prompt.comments?.length || 0}
+                comments={prompt.comments}
               />
             </a>
           ))

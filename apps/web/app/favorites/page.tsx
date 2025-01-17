@@ -81,7 +81,7 @@ export default function FavoritesPage() {
               category={prompt.category}
               createdAt={prompt.createdAt}
               likes={prompt.likes}
-              comments={prompt.comments?.length || 0}
+              comments={prompt.comments}
             />
           ))}
         </div>
