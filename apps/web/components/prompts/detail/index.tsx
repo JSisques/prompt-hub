@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,6 +12,8 @@ import moment from 'moment';
 import 'moment/locale/es';
 import { PromptDetailProps } from '@/types/prompt';
 import { useTranslation } from 'react-i18next';
+import { graphqlClient } from '@/lib/apollo-client';
+import { CREATE_LIKE, DELETE_LIKE } from '@/lib/graphql';
 
 export function PromptDetail({
   id,
@@ -22,15 +24,16 @@ export function PromptDetail({
   tags,
   user,
   createdAt,
-  likes = 0,
+  likes = [],
   reviews = [],
   comments = [],
   example,
   llm,
 }: PromptDetailProps) {
   const [copied, setCopied] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(likes > 0 ? likes : 0);
+  const [isLiked, setIsLiked] = useState<boolean>(likes.find(like => like.userId === user.id) ? true : false);
+  const [likeId, setLikeId] = useState<string | null>(likes.find(like => like.userId === user.id)?.id || null);
+  const [likeCount, setLikeCount] = useState(likes.length);
   const [commentCount, setCommentCount] = useState(comments.length);
   const { t } = useTranslation();
 
@@ -46,9 +49,30 @@ export function PromptDetail({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const updateLikes = async (likeId: string) => {
+    if (!isLiked) {
+      const { data } = await graphqlClient.mutate({
+        mutation: CREATE_LIKE,
+        variables: {
+          input: {
+            promptId: id,
+            userId: user.id,
+          },
+        },
+      });
+      setLikeId(data.createLike.id);
+    } else {
+      await graphqlClient.mutate({
+        mutation: DELETE_LIKE,
+        variables: { id: likeId },
+      });
+    }
+  };
+
   const handleLike = () => {
     setIsLiked(!isLiked);
     setLikeCount((prev: number) => (isLiked ? prev - 1 : prev + 1));
+    updateLikes(likeId || '');
   };
 
   console.log(JSON.stringify(comments));

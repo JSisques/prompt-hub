@@ -30,3 +30,7 @@ export * from './social/mutations';
 // User
 export * from './user/queries';
 export * from './user/mutations';
+
+// Likes
+export * from './likes/queries';
+export * from './likes/mutations';

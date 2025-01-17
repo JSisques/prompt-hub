@@ -24,7 +24,7 @@ export interface Review {
   id: string;
   comment: string;
   rating: number;
-  likes: number;
+  likes: Like[];
   comments?: Comment[];
   author: User;
   promptId: string;
@@ -56,6 +56,16 @@ export interface Tag {
   updatedAt: Date;
 }
 
+export interface Like {
+  id: string;
+  userId: string;
+  promptId?: string;
+  reviewId?: string;
+  commentId?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface Prompt {
   id: string;
   slug: string;
@@ -70,7 +80,7 @@ export interface Prompt {
   tags: Tag[];
   comments?: Comment[];
   reviews?: Review[];
-  likes?: string[];
+  likes?: Like[];
   createdAt: Date;
   updatedAt: Date;
 }

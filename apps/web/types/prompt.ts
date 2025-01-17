@@ -1,6 +1,6 @@
 import { Review } from './review';
 import { Comment } from './comment';
-import { User } from '@/lib/types';
+import { Like, User } from '@/lib/types';
 
 export interface Category {
   id: string;
@@ -40,7 +40,7 @@ export interface Prompt {
   llm: LLM;
   createdAt: Date;
   updatedAt: Date;
-  likes: number;
+  likes: Like[];
   comments: Comment[];
   reviews: Review[];
 }
@@ -53,7 +53,7 @@ export interface PromptCardProps {
   user: User;
   category: Category;
   createdAt?: Date;
-  likes?: number;
+  likes?: Like[];
   comments?: number;
 }
 
@@ -71,7 +71,7 @@ export interface PromptDetailProps {
   llm: LLM;
   createdAt: Date;
   updatedAt: Date;
-  likes: number;
+  likes: Like[];
   reviews: Review[];
   comments: Comment[];
 }

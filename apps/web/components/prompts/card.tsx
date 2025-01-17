@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Clock, Heart, MessageSquare } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
-import { Prompt, User, Tag } from '@/lib/types';
+import { Prompt, User, Tag, Like, Comment, Category } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 
 interface PromptCardProps {
@@ -12,12 +12,13 @@ interface PromptCardProps {
   description: string;
   tags: Tag[];
   user: User;
+  category: Category;
   createdAt: Date;
-  likes?: string[];
-  comments?: { id: string }[];
+  likes?: Like[];
+  comments?: number;
 }
 
-export function PromptCard({ id, title, description, tags, user, createdAt, likes, comments }: PromptCardProps) {
+export function PromptCard({ id, title, description, tags, user, category, createdAt, likes, comments }: PromptCardProps) {
   const [formattedDate, setFormattedDate] = useState<string>('');
   const [visibleTags, setVisibleTags] = useState<Tag[]>([]);
   const [hiddenTagsCount, setHiddenTagsCount] = useState(0);
@@ -107,10 +108,10 @@ export function PromptCard({ id, title, description, tags, user, createdAt, like
                   <span>{likes.length}</span>
                 </div>
               )}
-              {comments && (
+              {comments !== undefined && (
                 <div className="flex items-center gap-1">
                   <MessageSquare className="h-4 w-4" />
-                  <span>{comments.length}</span>
+                  <span>{comments}</span>
                 </div>
               )}
               <div className="flex items-center gap-1">
