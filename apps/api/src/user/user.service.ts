@@ -57,7 +57,10 @@ export class UserService {
     this.logger.log(`Entering updateUser(id: ${id}, user: ${JSON.stringify(user)})`);
     return this.prisma.user.update({
       where: { id },
-      data: user,
+      data: {
+        ...user,
+        username: user.username.toLowerCase().trim(),
+      },
       include: { settings: true },
     });
   }
