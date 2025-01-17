@@ -21,9 +21,18 @@ export class LlmService {
     return this.prisma.llm.findUnique({ where: { id } });
   }
 
+  async createOrGetLlm(data: CreateLlmDto): Promise<Llm> {
+    this.logger.log(`Entering createOrGetLlm(data: ${JSON.stringify(data)})`);
+    return this.prisma.llm.upsert({
+      where: { name: data.name },
+      update: {},
+      create: data,
+    });
+  }
+
   async createLlm(data: CreateLlmDto): Promise<Llm> {
     this.logger.log(`Entering createLlm(data: ${JSON.stringify(data)})`);
-    return this.prisma.llm.create({ data });
+    return this.createOrGetLlm(data);
   }
 
   async updateLlm(id: string, data: UpdateLlmDto): Promise<Llm> {

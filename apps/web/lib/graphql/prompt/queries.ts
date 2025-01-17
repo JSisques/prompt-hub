@@ -10,7 +10,9 @@ export const GET_PROMPTS = gql`
       content
       example
       published
-      likes
+      likes {
+        id
+      }
       createdAt
       updatedAt
       user {
@@ -38,10 +40,75 @@ export const GET_PROMPTS = gql`
         createdAt
         updatedAt
       }
+      tags {
+        id
+        name
+        slug
+        createdAt
+        updatedAt
+      }
+      comments {
+        id
+      }
+      reviews {
+        id
+      }
+    }
+  }
+`;
+
+export const GET_PROMPT_BY_ID = gql`
+  query GetPromptById($id: String!) {
+    getPromptById(id: $id) {
+      id
+      title
+      slug
+      description
+      content
+      example
+      published
+      likes {
+        id
+        userId
+      }
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        username
+        name
+        avatar
+        bio
+        active
+        createdAt
+        updatedAt
+      }
+      category {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      llm {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      tags {
+        id
+        name
+        slug
+        createdAt
+        updatedAt
+      }
       comments {
         id
         content
-        author {
+        user {
           id
           username
           email
@@ -55,7 +122,7 @@ export const GET_PROMPTS = gql`
         comment
         rating
         likes
-        author {
+        user {
           id
           username
           email
@@ -63,6 +130,120 @@ export const GET_PROMPTS = gql`
         }
         createdAt
         updatedAt
+      }
+    }
+  }
+`;
+
+export const GET_FAVORITES_BY_USER_ID = gql`
+  query GetFavoritesByUserId($userId: String!) {
+    getFavoritesByUserId(userId: $userId) {
+      id
+      title
+      slug
+      description
+      content
+      example
+      published
+      likes {
+        id
+      }
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        username
+        name
+        avatar
+        bio
+        active
+        createdAt
+        updatedAt
+      }
+      category {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      llm {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      tags {
+        id
+        name
+        slug
+        createdAt
+        updatedAt
+      }
+      comments {
+        id
+      }
+      reviews {
+        id
+      }
+    }
+  }
+`;
+
+export const GET_TRENDING_PROMPTS = gql`
+  query GetTrendingPrompts($timePeriod: String!, $categoryId: String) {
+    getTrendingPrompts(timePeriod: $timePeriod, categoryId: $categoryId) {
+      id
+      title
+      slug
+      description
+      content
+      example
+      published
+      likes {
+        id
+      }
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        username
+        name
+        avatar
+        bio
+        active
+        createdAt
+        updatedAt
+      }
+      category {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      llm {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      tags {
+        id
+        name
+        slug
+        createdAt
+        updatedAt
+      }
+      comments {
+        id
+      }
+      reviews {
+        id
       }
     }
   }

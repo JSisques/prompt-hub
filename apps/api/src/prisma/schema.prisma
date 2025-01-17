@@ -70,7 +70,7 @@ model Prompt {
   comments  Comment[]
   favorites Favorite[]
   likes     Like[]
-  tags      TagsOnPrompts[]
+  tags      Tag[]
 
   user     User     @relation(fields: [userId], references: [id])
   category Category @relation(fields: [categoryId], references: [id])
@@ -153,25 +153,11 @@ model Tag {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  prompts TagsOnPrompts[]
+  prompts Prompt[]
 
   @@index([name])
   @@index([slug])
   @@map("tags")
-}
-
-model TagsOnPrompts {
-  promptId  String   @map("prompt_id")
-  tagId     String   @map("tag_id")
-  createdAt DateTime @default(now()) @map("created_at")
-
-  prompt Prompt @relation(fields: [promptId], references: [id])
-  tag    Tag    @relation(fields: [tagId], references: [id])
-
-  @@id([promptId, tagId])
-  @@index([promptId])
-  @@index([tagId])
-  @@map("tags_on_prompts")
 }
 
 model Favorite {
@@ -196,7 +182,7 @@ model Like {
   reviewId  String?  @map("review_id")
   commentId String?  @map("comment_id")
   createdAt DateTime @default(now()) @map("created_at")
-
+  updatedAt DateTime @updatedAt @map("updated_at")
   user    User     @relation(fields: [userId], references: [id])
   prompt  Prompt?  @relation(fields: [promptId], references: [id])
   review  Review?  @relation(fields: [reviewId], references: [id])

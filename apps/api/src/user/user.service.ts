@@ -38,6 +38,9 @@ export class UserService {
       return this.prisma.user.create({
         data: {
           ...user,
+          email: user.email.toLowerCase().trim(),
+          username: user.username.toLowerCase().trim(),
+          avatar: 'https://ui.shadcn.com/avatars/shadcn.jpg',
           settings: {
             create: {},
           },
@@ -54,7 +57,10 @@ export class UserService {
     this.logger.log(`Entering updateUser(id: ${id}, user: ${JSON.stringify(user)})`);
     return this.prisma.user.update({
       where: { id },
-      data: user,
+      data: {
+        ...user,
+        username: user.username.toLowerCase().trim(),
+      },
       include: { settings: true },
     });
   }

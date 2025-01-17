@@ -15,17 +15,14 @@ export class CommentDto {
   @IsString()
   content: string;
 
+  @Field(() => UserDto)
+  @IsNotEmpty()
+  user: UserDto;
+
   @Field()
   @IsNotEmpty()
-  author: UserDto;
-
-  @Field({ nullable: true })
   @IsString()
-  promptId?: string;
-
-  @Field({ nullable: true })
-  @IsString()
-  postId?: string;
+  promptId: string;
 
   @Field(() => Date)
   @IsNotEmpty()

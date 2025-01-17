@@ -34,7 +34,7 @@ export class ReviewDto {
 
   @Field()
   @IsNotEmpty()
-  author: UserDto;
+  user: UserDto;
 
   @Field()
   @IsNotEmpty()

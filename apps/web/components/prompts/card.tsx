@@ -2,8 +2,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Clock, Heart, MessageSquare } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { Prompt, User, Tag } from '@/lib/types';
+import { useState, useEffect, useRef } from 'react';
+import { Prompt, User, Tag, Like, Comment, Category } from '@/lib/types';
+import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
 
 interface PromptCardProps {
   id: string;
@@ -11,13 +13,17 @@ interface PromptCardProps {
   description: string;
   tags: Tag[];
   user: User;
+  category: Category;
   createdAt: Date;
-  likes?: string[];
-  comments?: { id: string }[];
+  likes?: Like[];
+  comments?: Comment[];
 }
 
-export function PromptCard({ id, title, description, tags, user, createdAt, likes, comments }: PromptCardProps) {
+export function PromptCard({ id, title, description, tags, user, category, createdAt, likes, comments }: PromptCardProps) {
   const [formattedDate, setFormattedDate] = useState<string>('');
+  const [visibleTags, setVisibleTags] = useState<Tag[]>([]);
+  const [hiddenTagsCount, setHiddenTagsCount] = useState(0);
+  const tagsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setFormattedDate(
@@ -29,24 +35,72 @@ export function PromptCard({ id, title, description, tags, user, createdAt, like
     );
   }, [createdAt]);
 
+  useEffect(() => {
+    const calculateVisibleTags = () => {
+      if (!tagsContainerRef.current) return;
+
+      let totalWidth = 0;
+      const containerWidth = tagsContainerRef.current.offsetWidth;
+      const tempDiv = document.createElement('div');
+      tempDiv.style.visibility = 'hidden';
+      tempDiv.style.position = 'absolute';
+      document.body.appendChild(tempDiv);
+
+      const visibleTags: Tag[] = [];
+      let remainingTags = 0;
+
+      for (const tag of tags) {
+        tempDiv.innerHTML = `<span class="px-2 py-1 text-sm">${tag.name}</span>`;
+        const element = tempDiv.firstElementChild as HTMLElement;
+        if (!element) continue;
+
+        const tagWidth = element.getBoundingClientRect().width;
+
+        if (totalWidth + tagWidth + (visibleTags.length > 0 ? 8 : 0) <= containerWidth - 60) {
+          totalWidth += tagWidth + (visibleTags.length > 0 ? 8 : 0);
+          visibleTags.push(tag);
+        } else {
+          remainingTags = tags.length - visibleTags.length;
+          break;
+        }
+      }
+
+      document.body.removeChild(tempDiv);
+      setVisibleTags(visibleTags);
+      setHiddenTagsCount(remainingTags);
+    };
+
+    calculateVisibleTags();
+    window.addEventListener('resize', calculateVisibleTags);
+
+    return () => {
+      window.removeEventListener('resize', calculateVisibleTags);
+    };
+  }, [tags]);
+
   return (
-    <Card className="w-full hover:shadow-lg transition-all">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+    <Card className="w-full hover:shadow-lg transition-all h-60 flex flex-col">
+      <CardHeader className="flex-none">
+        <CardTitle className="line-clamp-1">{title}</CardTitle>
+        <CardDescription className="line-clamp-3 break-words whitespace-pre-wrap min-h-[3rem] text-sm">{description}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 flex flex-col justify-end">
         <div className="space-y-4">
-          <div className="flex flex-wrap gap-2">
-            {tags &&
-              tags.map(tag => (
-                <span key={tag.id} className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                  {tag.name}
-                </span>
-              ))}
+          <div ref={tagsContainerRef} className="flex flex-wrap gap-2 items-center">
+            {visibleTags.map(tag => (
+              <Badge key={tag.id} variant="secondary" className="text-xs">
+                {tag.name}
+              </Badge>
+            ))}
+            {hiddenTagsCount > 0 && (
+              <Badge variant="outline" className="text-xs">
+                +{hiddenTagsCount} más
+              </Badge>
+            )}
           </div>
           <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <div>
+            <div className="flex items-center">
+              {user.avatar && <Image src={user.avatar} alt={user.username || ''} width={24} height={24} className="rounded-full inline-block mr-2" />}
               <span>@{user.username}</span>
             </div>
             <div className="flex items-center gap-4">
@@ -56,7 +110,7 @@ export function PromptCard({ id, title, description, tags, user, createdAt, like
                   <span>{likes.length}</span>
                 </div>
               )}
-              {comments && (
+              {comments !== undefined && (
                 <div className="flex items-center gap-1">
                   <MessageSquare className="h-4 w-4" />
                   <span>{comments.length}</span>

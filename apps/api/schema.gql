@@ -19,28 +19,39 @@ type CategoryType {
 }
 
 input CommentInput {
-  author: UserInput!
   content: String!
   createdAt: DateTime!
   id: String!
-  postId: String
-  promptId: String
+  promptId: String!
   updatedAt: DateTime!
+  user: UserInput!
 }
 
 type CommentType {
-  author: UserType!
   content: String!
   createdAt: DateTime!
   id: String!
-  postId: String
-  promptId: String
+  promptId: String!
   updatedAt: DateTime!
+  user: UserType!
 }
 
 input CreateCategoryInput {
   description: String!
   name: String!
+}
+
+input CreateCommentInput {
+  content: String!
+  promptId: String!
+  userId: String!
+}
+
+input CreateLikeInput {
+  commentId: String
+  promptId: String
+  reviewId: String
+  userId: String!
 }
 
 input CreateLlmInput {
@@ -49,15 +60,10 @@ input CreateLlmInput {
 }
 
 input CreatePromptInput {
-  categoryId: String!
-  categoryName: String
   content: String!
   description: String!
   example: String!
-  llmId: String!
-  llmName: String
   published: Boolean!
-  tags: [CreateTagInput!]
   title: String!
   userId: String!
 }
@@ -67,16 +73,6 @@ input CreateReviewInput {
   promptId: String!
   rating: Int!
   userId: String!
-}
-
-type CreateTag {
-  name: String!
-  slug: String
-}
-
-input CreateTagInput {
-  name: String!
-  slug: String
 }
 
 input CreateUserInput {
@@ -105,6 +101,26 @@ type Health {
   isHealthy: Boolean!
 }
 
+type Like {
+  commentId: String
+  createdAt: DateTime!
+  id: String!
+  promptId: String
+  reviewId: String
+  updatedAt: DateTime!
+  userId: String!
+}
+
+input LikeInput {
+  commentId: String
+  createdAt: DateTime!
+  id: String!
+  promptId: String
+  reviewId: String
+  updatedAt: DateTime!
+  userId: String!
+}
+
 input LlmInput {
   createdAt: DateTime!
   description: String!
@@ -123,12 +139,16 @@ type LlmType {
 
 type Mutation {
   createCategory(data: CreateCategoryInput!): CategoryType!
+  createComment(input: CreateCommentInput!): CommentType!
+  createLike(input: CreateLikeInput!): Like!
   createLlm(llm: CreateLlmInput!): LlmType!
   createPrompt(input: CreatePromptInput!): Prompt!
   createReview(review: CreateReviewInput!): ReviewType!
   createUser(input: CreateUserInput!): UserType!
   createUserSettings(createUserSettingsInput: CreateUserSettingsInput!): UserSettings!
   deleteCategory(id: String!): CategoryType!
+  deleteComment(id: String!): CommentType!
+  deleteLike(id: String!): Like!
   deleteLlm(id: String!): LlmType!
   deletePrompt(id: String!): Prompt!
   deleteReview(id: String!): ReviewType!
@@ -138,6 +158,8 @@ type Mutation {
   logout(id: String!): UserType!
   register(input: CreateUserInput!): UserType!
   updateCategory(data: UpdateCategoryInput!, id: String!): CategoryType!
+  updateComment(content: String!, id: String!): CommentType!
+  updateLike(id: String!, input: UpdateLikeInput!): Like!
   updateLlm(id: String!, llm: UpdateLlmInput!): LlmType!
   updatePrompt(id: String!, input: UpdatePromptInput!): Prompt!
   updateReview(id: String!, review: UpdateReviewInput!): ReviewType!
@@ -153,7 +175,7 @@ type Prompt {
   description: String!
   example: String!
   id: String!
-  likes: [String!]
+  likes: [Like!]
   llm: LlmType!
   prompt: String!
   published: Boolean!
@@ -173,7 +195,7 @@ input PromptInput {
   description: String!
   example: String!
   id: String!
-  likes: [String!]
+  likes: [LikeInput!]
   llm: LlmInput!
   prompt: String!
   published: Boolean!
@@ -188,7 +210,15 @@ input PromptInput {
 type Query {
   getCategories: [CategoryType!]!
   getCategoryById(id: String!): CategoryType!
+  getComments: [CommentType!]!
+  getCommentsByPromptId(promptId: String!): [CommentType!]!
+  getFavoritesByUserId(userId: String!): [Prompt!]!
   getHealth: Health!
+  getLikeById(id: String!): Like!
+  getLikes(userId: String!): [Like!]!
+  getLikesByPromptId(promptId: String!): [Like!]!
+  getLikesByReviewId(reviewId: String!): [Like!]!
+  getLikesByUserId(userId: String!): [Like!]!
   getLlmById(id: String!): LlmType!
   getLlms: [LlmType!]!
   getPromptById(id: String!): Prompt!
@@ -196,6 +226,8 @@ type Query {
   getPromptsByName(name: String!): [Prompt!]!
   getReviewById(id: String!): ReviewType!
   getReviews: [ReviewType!]!
+  getTrendingCategories(timePeriod: String!): [CategoryType!]!
+  getTrendingPrompts(categoryId: String, timePeriod: String!): [Prompt!]!
   getUser(id: String!): UserType!
   getUserByEmail(email: String!): UserType!
   getUserSettings(userId: String!): UserSettings!
@@ -204,7 +236,6 @@ type Query {
 }
 
 input ReviewInput {
-  author: UserInput!
   comment: String!
   comments: [CommentInput!]
   createdAt: DateTime!
@@ -213,10 +244,10 @@ input ReviewInput {
   promptId: String!
   rating: Float!
   updatedAt: DateTime!
+  user: UserInput!
 }
 
 type ReviewType {
-  author: UserType!
   comment: String!
   comments: [CommentType!]
   createdAt: DateTime!
@@ -225,6 +256,7 @@ type ReviewType {
   promptId: String!
   rating: Float!
   updatedAt: DateTime!
+  user: UserType!
 }
 
 type Tag {
@@ -246,6 +278,12 @@ input TagInput {
 input UpdateCategoryInput {
   description: String!
   name: String!
+}
+
+input UpdateLikeInput {
+  commentId: String
+  promptId: String
+  reviewId: String
 }
 
 input UpdateLlmInput {

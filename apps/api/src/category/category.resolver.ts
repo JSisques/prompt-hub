@@ -26,6 +26,12 @@ export class CategoryResolver {
     return this.categoryService.getCategoryById(id);
   }
 
+  @Query(() => [CategoryDto])
+  async getTrendingCategories(@Args('timePeriod') timePeriod: 'today' | 'week' | 'month'): Promise<Category[]> {
+    this.logger.log(`Entering getTrendingCategories(timePeriod: ${timePeriod})`);
+    return this.categoryService.getTrendingCategories(timePeriod);
+  }
+
   @Mutation(() => CategoryDto)
   async createCategory(@Args('data') data: CreateCategoryDto): Promise<Category> {
     this.logger.log(`Entering createCategory(data: ${JSON.stringify(data)})`);

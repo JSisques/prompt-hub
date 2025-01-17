@@ -6,6 +6,7 @@ import { UpdatePromptDto } from './dto/update-prompt.dto';
 import { TagsService } from '../tags/tags.service';
 import { CategoryService } from '../category/category.service';
 import { LlmService } from '../llm/llm.service';
+import { IAService } from '../ia/ia.service';
 
 @Injectable()
 export class PromptService {
@@ -15,6 +16,7 @@ export class PromptService {
     private readonly tagsService: TagsService,
     private readonly categoryService: CategoryService,
     private readonly llmService: LlmService,
+    private readonly iaService: IAService,
   ) {
     this.logger = new Logger(PromptService.name);
   }
@@ -30,13 +32,9 @@ export class PromptService {
         category: true,
         llm: true,
         user: true,
-        comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-        reviews: true,
+        comments: { include: { user: true } },
+        tags: true,
+        reviews: { include: { user: true } },
         likes: true,
       },
     });
@@ -50,13 +48,9 @@ export class PromptService {
         category: true,
         llm: true,
         user: true,
-        comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-        reviews: true,
+        comments: { include: { user: true } },
+        tags: true,
+        reviews: { include: { user: true } },
         likes: true,
       },
     });
@@ -70,13 +64,9 @@ export class PromptService {
         category: true,
         llm: true,
         user: true,
-        comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-        reviews: true,
+        comments: { include: { user: true } },
+        tags: true,
+        reviews: { include: { user: true } },
         likes: true,
       },
     });
@@ -84,35 +74,26 @@ export class PromptService {
 
   async createPrompt(data: CreatePromptDto): Promise<Prompt> {
     this.logger.log(`Entering createPrompt(data: ${JSON.stringify(data)})`);
-    const { tags, userId, categoryId, categoryName, llmId, llmName, ...promptData } = data;
+    const { userId, ...promptData } = data;
 
-    // Manejar la categoría
-    let finalCategoryId = categoryId;
-    if (categoryName && !categoryId) {
-      const category = await this.categoryService.createCategory({
-        name: categoryName,
-        description: `Categoría generada automáticamente para ${categoryName}`,
-      });
-      finalCategoryId = category.id;
+    // Analizar el prompt con IA
+    const analysis = await this.iaService.analyzePrompt(promptData.content);
+    if (!analysis.success) {
+      throw new Error(`No se pudo analizar el prompt con IA: ${analysis.error}`);
     }
 
-    // Manejar el LLM
-    let finalLlmId = llmId;
-    if (llmName && !llmId) {
-      const llm = await this.llmService.createLlm({
-        name: llmName,
-        description: `LLM generado automáticamente para ${llmName}`,
-      });
-      finalLlmId = llm.id;
-    }
+    // Crear o obtener la categoría basada en el análisis de IA
+    const category = await this.categoryService.createOrGetCategory({
+      name: analysis.data.category,
+      description: `Categoría generada automáticamente por IA para ${analysis.data.category}`,
+    });
 
-    // Crear o encontrar los tags existentes usando TagsService
-    const tagConnections = await Promise.all(
-      tags.map(async tagData => {
-        const existingTag = await this.tagsService.createOrGetTag({ name: tagData.name });
-        return { tagId: existingTag.id };
-      }),
-    );
+    // Crear o obtener el LLM principal recomendado
+    const recommendedLlm = analysis.data.llm; // Tomamos el primer LLM recomendado
+    const llm = await this.llmService.createOrGetLlm({
+      name: recommendedLlm,
+      description: `LLM recomendado por IA para este prompt`,
+    });
 
     return this.prisma.prompt.create({
       data: {
@@ -120,21 +101,26 @@ export class PromptService {
         slug: await this.generateSlug(promptData.title),
         content: promptData.content,
         user: { connect: { id: userId } },
-        category: { connect: { id: finalCategoryId } },
-        llm: { connect: { id: finalLlmId } },
+        category: { connect: { id: category.id } },
+        llm: { connect: { id: llm.id } },
         tags: {
-          create: tagConnections,
+          connectOrCreate: analysis.data.tags.map(tagName => ({
+            where: { name: tagName },
+            create: {
+              name: tagName,
+              slug: tagName.toLowerCase().replace(/\s+/g, '-'),
+            },
+          })),
         },
       },
       include: {
         category: true,
         llm: true,
         user: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
+        tags: true,
+        comments: { include: { user: true } },
+        reviews: { include: { user: true } },
+        likes: true,
       },
     });
   }
@@ -148,13 +134,9 @@ export class PromptService {
         category: true,
         llm: true,
         user: true,
-        comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-        reviews: true,
+        comments: { include: { user: true } },
+        tags: true,
+        reviews: { include: { user: true } },
         likes: true,
       },
     });
@@ -168,15 +150,68 @@ export class PromptService {
         category: true,
         llm: true,
         user: true,
-        comments: true,
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-        reviews: true,
+        comments: { include: { user: true } },
+        tags: true,
+        reviews: { include: { user: true } },
         likes: true,
       },
+    });
+  }
+
+  async getFavoritesByUserId(userId: string): Promise<Prompt[]> {
+    this.logger.log(`Entering getFavoritesByUserId(userId: ${userId})`);
+    return this.prisma.prompt.findMany({
+      where: { likes: { some: { userId } } },
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        tags: true,
+        comments: { include: { user: true } },
+        reviews: { include: { user: true } },
+        likes: true,
+      },
+    });
+  }
+
+  async getTrendingPrompts(timePeriod: 'today' | 'week' | 'month', categoryId?: string): Promise<Prompt[]> {
+    this.logger.log(`Entering getTrendingPrompts(timePeriod: ${timePeriod}, categoryId: ${categoryId})`);
+    return this.prisma.prompt.findMany({
+      where: {
+        createdAt: {
+          gte: new Date(
+            Date.now() - (timePeriod === 'today' ? 24 * 60 * 60 * 1000 : timePeriod === 'week' ? 7 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000),
+          ),
+        },
+        categoryId: categoryId ? { equals: categoryId } : undefined,
+      },
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        tags: true,
+        comments: { include: { user: true } },
+        reviews: { include: { user: true } },
+        likes: true,
+      },
+      orderBy: [
+        {
+          likes: {
+            _count: 'desc',
+          },
+        },
+        {
+          comments: {
+            _count: 'desc',
+          },
+        },
+        {
+          reviews: {
+            _count: 'desc',
+          },
+        },
+      ],
+      take: 10,
     });
   }
 }

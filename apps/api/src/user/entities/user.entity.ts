@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Comment } from '../../comments/entities/comment.entity';
+import { Comment } from '../../comment/entities/comment.entity';
 
 @ObjectType()
 export class User {

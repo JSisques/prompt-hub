@@ -48,4 +48,19 @@ export class PromptResolver {
     this.logger.log(`Entering deletePrompt(id: ${id})`);
     return this.promptService.deletePrompt(id);
   }
+
+  @Query(() => [PromptDto])
+  async getFavoritesByUserId(@Args('userId') userId: string): Promise<Prompt[]> {
+    this.logger.log(`Entering getFavoritesByUserId(userId: ${userId})`);
+    return this.promptService.getFavoritesByUserId(userId);
+  }
+
+  @Query(() => [PromptDto])
+  async getTrendingPrompts(
+    @Args('timePeriod') timePeriod: 'today' | 'week' | 'month',
+    @Args('categoryId', { nullable: true }) categoryId?: string,
+  ): Promise<Prompt[]> {
+    this.logger.log(`Entering getTrendingPrompts(timePeriod: ${timePeriod}, categoryId: ${categoryId})`);
+    return this.promptService.getTrendingPrompts(timePeriod, categoryId);
+  }
 }

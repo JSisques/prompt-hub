@@ -51,6 +51,7 @@ export class AuthService {
   }
 
   async logout(id: string): Promise<User> {
+    this.logger.log(`Entering logout(id: ${id})`);
     return null; // this.userService.logout(id);
   }
 }

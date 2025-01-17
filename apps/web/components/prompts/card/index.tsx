@@ -5,9 +5,20 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Badge } from '@/components/ui/badge';
 import { Clock, User, MessageSquare, ThumbsUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { PromptCardProps } from '@/types/prompt';
+import { Tag, User as UserType, Like, Comment } from '@/lib/types';
 
-export function PromptCard({ id, title, description, tags, author, createdAt, likes = 0, comments = 0 }: PromptCardProps) {
+interface PromptCardProps {
+  id: string;
+  title: string;
+  description: string;
+  tags: Tag[];
+  user: UserType;
+  createdAt: Date;
+  likes: Like[];
+  comments: Comment[];
+}
+
+export function PromptCard({ id, title, description, tags, user, createdAt, likes = [], comments = [] }: PromptCardProps) {
   const router = useRouter();
 
   const handleClick = () => {
@@ -25,11 +36,11 @@ export function PromptCard({ id, title, description, tags, author, createdAt, li
           <div className="flex items-center space-x-4 text-muted-foreground text-sm">
             <div className="flex items-center space-x-1">
               <ThumbsUp size={14} />
-              <span>{likes}</span>
+              <span>{likes.length}</span>
             </div>
             <div className="flex items-center space-x-1">
               <MessageSquare size={14} />
-              <span>{comments}</span>
+              <span>{comments.length}</span>
             </div>
           </div>
         </div>
@@ -37,19 +48,19 @@ export function PromptCard({ id, title, description, tags, author, createdAt, li
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-wrap gap-2">
-          {tags.map(tag => (
-            <Badge key={tag} variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors">
-              {tag}
+          {tags.map((tag: Tag) => (
+            <Badge key={tag.id} variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors">
+              {tag.name}
             </Badge>
           ))}
         </div>
       </CardContent>
-      {(author || createdAt) && (
+      {(user || createdAt) && (
         <CardFooter className="text-sm text-muted-foreground border-t pt-4">
-          {author && (
+          {user && (
             <div className="flex items-center gap-2">
               <User size={14} />
-              <span>{author}</span>
+              <span>{user.username}</span>
             </div>
           )}
           {createdAt && (

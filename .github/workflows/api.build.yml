@@ -27,6 +27,10 @@ jobs:
         working-directory: ./apps/api
         run: yarn install --frozen-lockfile
 
+      - name: Generate Prisma client
+        working-directory: ./apps/api
+        run: yarn prisma generate --schema=src/prisma/schema.prisma
+
       - name: Build
         working-directory: ./apps/api
         run: yarn build

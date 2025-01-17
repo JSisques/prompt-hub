@@ -10,7 +10,7 @@ import { FormFieldContext } from '@/types/form';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ImageIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { graphqlClient } from '@/lib/apollo-client';
 import { UPDATE_USER } from '@/lib/graphql';
 import { useTranslation } from 'react-i18next';
@@ -239,6 +239,10 @@ export default function SettingsPage() {
           </Button>
         </form>
       </Form>
+
+      <Button variant="destructive" className="w-full sm:w-auto" onClick={() => signOut({ callbackUrl: '/' })}>
+        {t('auth.signOut')}
+      </Button>
     </div>
   );
 }

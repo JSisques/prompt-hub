@@ -10,7 +10,8 @@
     "createPrompt": "Crear Prompt",
     "favorites": "Favoritos",
     "about": "Acerca de",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "contact": "Contacto"
   },
   "common": {
     "save": "Guardar",
@@ -32,6 +33,44 @@
       "description": "Crea, comparte y descubre los mejores prompts para IA",
       "copyright": "© {{year}} Prompt Hub. Todos los derechos reservados.",
       "madeWith": "Hecho con 🖤 por",
+      "links": {
+        "home": {
+          "name": "Inicio",
+          "href": "/"
+        },
+        "explore": {
+          "name": "Explorar",
+          "href": "/explore"
+        },
+        "news": {
+          "name": "Novedades",
+          "href": "/trending"
+        },
+        "guide": {
+          "name": "Guía",
+          "href": "/guide"
+        },
+        "blog": {
+          "name": "Blog",
+          "href": "/blog"
+        },
+        "faq": {
+          "name": "FAQ",
+          "href": "/faq"
+        },
+        "privacy": {
+          "name": "Privacidad",
+          "href": "/privacy"
+        },
+        "terms": {
+          "name": "Términos",
+          "href": "/terms"
+        },
+        "cookies": {
+          "name": "Cookies",
+          "href": "/cookies"
+        }
+      },
       "sections": {
         "product": {
           "title": "Producto",
@@ -959,6 +998,46 @@
               "answer": "Puedes reportar errores a través de nuestro sistema de soporte o en GitHub. Nuestro equipo técnico responde normalmente en menos de 24 horas."
             }
           }
+        }
+      }
+    },
+    "promptDetail": {
+      "metadata": {
+        "reviews": "reviews",
+        "comments": "comentarios"
+      },
+      "actions": {
+        "share": "Compartir",
+        "like": "Me gusta",
+        "copy": "Copiar",
+        "copied": "¡Copiado!"
+      },
+      "content": {
+        "prompt": "Prompt",
+        "example": "Ejemplo de Uso"
+      },
+      "tabs": {
+        "reviews": "Reviews",
+        "comments": "Comentarios"
+      },
+      "additionalInfo": {
+        "title": "Información Adicional",
+        "author": {
+          "title": "Autor",
+          "publishedOn": "Publicado el {{date}}"
+        },
+        "details": {
+          "title": "Detalles",
+          "category": "Categoría",
+          "aiModel": "Modelo IA",
+          "tags": "Etiquetas"
+        },
+        "stats": {
+          "title": "Estadísticas",
+          "likes": "Me gusta",
+          "averageRating": "Valoración media",
+          "reviews": "Reviews",
+          "comments": "Comentarios"
         }
       }
     }
