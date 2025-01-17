@@ -38,6 +38,8 @@ export class UserService {
       return this.prisma.user.create({
         data: {
           ...user,
+          email: user.email.toLowerCase().trim(),
+          username: user.username.toLowerCase().trim(),
           avatar: 'https://ui.shadcn.com/avatars/shadcn.jpg',
           settings: {
             create: {},
