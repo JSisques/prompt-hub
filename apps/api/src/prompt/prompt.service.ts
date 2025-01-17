@@ -173,4 +173,45 @@ export class PromptService {
       },
     });
   }
+
+  async getTrendingPrompts(timePeriod: 'today' | 'week' | 'month', categoryId?: string): Promise<Prompt[]> {
+    this.logger.log(`Entering getTrendingPrompts(timePeriod: ${timePeriod}, categoryId: ${categoryId})`);
+    return this.prisma.prompt.findMany({
+      where: {
+        createdAt: {
+          gte: new Date(
+            Date.now() - (timePeriod === 'today' ? 24 * 60 * 60 * 1000 : timePeriod === 'week' ? 7 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000),
+          ),
+        },
+        categoryId: categoryId ? { equals: categoryId } : undefined,
+      },
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        tags: true,
+        comments: { include: { user: true } },
+        reviews: { include: { user: true } },
+        likes: true,
+      },
+      orderBy: [
+        {
+          likes: {
+            _count: 'desc',
+          },
+        },
+        {
+          comments: {
+            _count: 'desc',
+          },
+        },
+        {
+          reviews: {
+            _count: 'desc',
+          },
+        },
+      ],
+      take: 10,
+    });
+  }
 }

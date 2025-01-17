@@ -23,6 +23,27 @@ export class CategoryService {
     return this.prisma.category.findUnique({ where: { id } });
   }
 
+  async getTrendingCategories(timePeriod: 'today' | 'week' | 'month'): Promise<Category[]> {
+    this.logger.log(`Entering getTrendingCategories(timePeriod: ${timePeriod})`);
+    return this.prisma.category.findMany({
+      where: {
+        prompts: {
+          some: {
+            createdAt: {
+              gte: new Date(
+                Date.now() -
+                  (timePeriod === 'today' ? 24 * 60 * 60 * 1000 : timePeriod === 'week' ? 7 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000),
+              ),
+            },
+          },
+        },
+      },
+      orderBy: {
+        prompts: { _count: 'desc' },
+      },
+    });
+  }
+
   async createOrGetCategory(data: CreateCategoryDto): Promise<Category> {
     this.logger.log(`Entering createOrGetCategory(data: ${JSON.stringify(data)})`);
     const slug = slugify(data.name, { lower: true });

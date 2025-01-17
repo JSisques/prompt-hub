@@ -226,6 +226,8 @@ type Query {
   getPromptsByName(name: String!): [Prompt!]!
   getReviewById(id: String!): ReviewType!
   getReviews: [ReviewType!]!
+  getTrendingCategories(timePeriod: String!): [CategoryType!]!
+  getTrendingPrompts(categoryId: String, timePeriod: String!): [Prompt!]!
   getUser(id: String!): UserType!
   getUserByEmail(email: String!): UserType!
   getUserSettings(userId: String!): UserSettings!

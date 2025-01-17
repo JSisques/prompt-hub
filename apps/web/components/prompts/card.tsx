@@ -5,6 +5,7 @@ import { Clock, Heart, MessageSquare } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { Prompt, User, Tag, Like, Comment, Category } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
 
 interface PromptCardProps {
   id: string;
@@ -15,7 +16,7 @@ interface PromptCardProps {
   category: Category;
   createdAt: Date;
   likes?: Like[];
-  comments?: number;
+  comments?: Comment[];
 }
 
 export function PromptCard({ id, title, description, tags, user, category, createdAt, likes, comments }: PromptCardProps) {
@@ -98,7 +99,8 @@ export function PromptCard({ id, title, description, tags, user, category, creat
             )}
           </div>
           <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <div>
+            <div className="flex items-center">
+              {user.avatar && <Image src={user.avatar} alt={user.username || ''} width={24} height={24} className="rounded-full inline-block mr-2" />}
               <span>@{user.username}</span>
             </div>
             <div className="flex items-center gap-4">
@@ -111,7 +113,7 @@ export function PromptCard({ id, title, description, tags, user, category, creat
               {comments !== undefined && (
                 <div className="flex items-center gap-1">
                   <MessageSquare className="h-4 w-4" />
-                  <span>{comments}</span>
+                  <span>{comments.length}</span>
                 </div>
               )}
               <div className="flex items-center gap-1">

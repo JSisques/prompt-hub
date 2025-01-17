@@ -13,7 +13,7 @@ export interface User {
 export interface Comment {
   id: string;
   content: string;
-  author: User;
+  user: User;
   promptId?: string;
   postId?: string;
   createdAt: Date;
