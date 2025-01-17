@@ -48,4 +48,10 @@ export class PromptResolver {
     this.logger.log(`Entering deletePrompt(id: ${id})`);
     return this.promptService.deletePrompt(id);
   }
+
+  @Query(() => [PromptDto])
+  async getFavoritesByUserId(@Args('userId') userId: string): Promise<Prompt[]> {
+    this.logger.log(`Entering getFavoritesByUserId(userId: ${userId})`);
+    return this.promptService.getFavoritesByUserId(userId);
+  }
 }

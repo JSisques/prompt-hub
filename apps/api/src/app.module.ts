@@ -23,6 +23,7 @@ import { CommentModule } from './comment/comment.module';
 import { UserSettingsModule } from './user-settings/user-settings.module';
 import { TagsModule } from './tags/tags.module';
 import { IAModule } from './ia/ia.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { IAModule } from './ia/ia.module';
     UserSettingsModule,
     TagsModule,
     IAModule,
+    LikesModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, CategoryService, PromptService, UserService, ReviewService, CryptoService],

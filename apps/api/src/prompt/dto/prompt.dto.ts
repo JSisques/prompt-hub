@@ -2,6 +2,7 @@ import { Field, ObjectType, InputType } from '@nestjs/graphql';
 import { IsNotEmpty } from 'class-validator';
 import { CategoryDto } from 'src/category/dto/category.dto';
 import { CommentDto } from 'src/comment/dto/comment.dto';
+import { LikeDto } from 'src/likes/dto/like.dto';
 import { LlmDto } from 'src/llm/dto/llm.dto';
 import { ReviewDto } from 'src/review/dto/review.dto';
 import { TagDto } from 'src/tags/dto/tag.dto';
@@ -54,8 +55,8 @@ export class PromptDto {
   @IsNotEmpty()
   tags: TagDto[];
 
-  @Field(() => [String], { nullable: true })
-  likes?: string[];
+  @Field(() => [LikeDto], { nullable: true })
+  likes?: LikeDto[];
 
   @Field(() => [CommentDto], { nullable: true })
   comments?: CommentDto[];

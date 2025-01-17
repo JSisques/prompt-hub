@@ -171,7 +171,18 @@ export default function ExplorePage() {
         ) : prompts.length > 0 ? (
           prompts.map((prompt: Prompt) => (
             <a href={`/prompt/${prompt.id}`} key={prompt.id}>
-              <PromptCard key={prompt.id} {...prompt} />
+              <PromptCard
+                key={prompt.id}
+                id={prompt.id}
+                title={prompt.title}
+                description={prompt.description}
+                tags={prompt.tags}
+                user={prompt.user}
+                category={prompt.category}
+                createdAt={prompt.createdAt}
+                likes={prompt.likes}
+                comments={prompt.comments?.length || 0}
+              />
             </a>
           ))
         ) : (

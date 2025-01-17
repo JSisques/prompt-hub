@@ -10,7 +10,9 @@ export const GET_PROMPTS = gql`
       content
       example
       published
-      likes
+      likes {
+        id
+      }
       createdAt
       updatedAt
       user {
@@ -65,7 +67,10 @@ export const GET_PROMPT_BY_ID = gql`
       content
       example
       published
-      likes
+      likes {
+        id
+        userId
+      }
       createdAt
       updatedAt
       user {
@@ -125,6 +130,63 @@ export const GET_PROMPT_BY_ID = gql`
         }
         createdAt
         updatedAt
+      }
+    }
+  }
+`;
+
+export const GET_FAVORITES_BY_USER_ID = gql`
+  query GetFavoritesByUserId($userId: String!) {
+    getFavoritesByUserId(userId: $userId) {
+      id
+      title
+      slug
+      description
+      content
+      example
+      published
+      likes {
+        id
+      }
+      createdAt
+      updatedAt
+      user {
+        id
+        email
+        username
+        name
+        avatar
+        bio
+        active
+        createdAt
+        updatedAt
+      }
+      category {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      llm {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      tags {
+        id
+        name
+        slug
+        createdAt
+        updatedAt
+      }
+      comments {
+        id
+      }
+      reviews {
+        id
       }
     }
   }

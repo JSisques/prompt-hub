@@ -157,4 +157,20 @@ export class PromptService {
       },
     });
   }
+
+  async getFavoritesByUserId(userId: string): Promise<Prompt[]> {
+    this.logger.log(`Entering getFavoritesByUserId(userId: ${userId})`);
+    return this.prisma.prompt.findMany({
+      where: { likes: { some: { userId } } },
+      include: {
+        category: true,
+        llm: true,
+        user: true,
+        tags: true,
+        comments: { include: { user: true } },
+        reviews: { include: { user: true } },
+        likes: true,
+      },
+    });
+  }
 }
