@@ -1,0 +1,200 @@
+{
+  "name": "Prompt Tagger",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "99dddfee-abb6-4fd9-8c41-d533bb2a99b3",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": false
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "df7b19ee-2507-4278-9797-ac7b80ec7994",
+      "name": "Webhook",
+      "webhookId": "99dddfee-abb6-4fd9-8c41-d533bb2a99b3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an expert in prompt tagging. Your task is to analyze the given prompt and generate relevant tags that accurately describe its content, intent, and purpose.  \n\n- Tags should be concise, relevant, and comma-separated.  \n- Use general and specific tags as needed.  \n- Avoid unnecessary or redundant tags.  \n- If a prompt covers multiple topics, include multiple relevant tags.  \n\nRespond only with the tags, separated by commas. Do not provide explanations.  \n",
+        "options": {
+          "systemMessage": "=Generate relevant tags for the following prompt:  \n\n{{ $json.prompt }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        440,
+        -160
+      ],
+      "id": "30086707-ec20-4a66-82f4-a325670535aa",
+      "name": "AI Agent",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        468,
+        60
+      ],
+      "id": "983366aa-2acc-4cd6-a4ed-8434e5fe5366",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "6FPJQykHIh4SG9PR",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "x"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        588,
+        60
+      ],
+      "id": "a2413dfe-2674-426b-bd26-6bf6da9df0bc",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        816,
+        -160
+      ],
+      "id": "b7fa15a8-7a7f-48d9-a3a2-2098bd417380",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "NyNQFREC9jSpcB2W",
+          "mode": "list",
+          "cachedResultName": "Request Validator"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prompt": "={{ $json.body.prompt }}"
+          },
+          "matchingColumns": [
+            "prompt"
+          ],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        -160
+      ],
+      "id": "c1154ba3-5e71-4785-b482-84df1ffd8fa8",
+      "name": "Execute Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ee905250-d83e-440c-8d36-b9b79700720b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6d5d6902033b9441086cabcd1b99be15eaaecc5dabfefd115c5bfc9bb2ab6851"
+  },
+  "id": "JpIPPUS0lsCQzbzG",
+  "tags": []
+}
