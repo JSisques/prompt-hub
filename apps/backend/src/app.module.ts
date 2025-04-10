@@ -12,3 +12,5 @@ import { CategoriesModule } from './categories/categories.module';
   providers: [AppService, PrismaService],
 })
 export class AppModule {}
+
+// hola
